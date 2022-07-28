@@ -459,9 +459,10 @@ def save_json(structure,sampleset, bqm, use_coord = True, num_vacancies = 0,
     
     dataframe = sampleset.to_pandas_dataframe()
     
-    if chain_strength == None:
-        from dwave.embedding.chain_strength import uniform_torque_compensation
-        chain_strength = uniform_torque_compensation(bqm)
+    if 'chain_strength' in sampleset.info['embedding_context']:
+        chain_strength = sampleset.info['embedding_context']['chain_strength']
+    else:
+        chain_strength = -1
     
     if 'BinaryQuadraticModel' in str(type(bqm)):
         model = 'bqm'
@@ -478,8 +479,6 @@ def save_json(structure,sampleset, bqm, use_coord = True, num_vacancies = 0,
     elif save_qubo == False:
         qubo_matrix = None
     
-    if chain_strength == None:
-        chain_strength = -1
         
     param_dict = {'date_time': date_time,
                   'time_stamp': time_stamp,
