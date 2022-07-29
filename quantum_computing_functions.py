@@ -329,6 +329,27 @@ def build_qubo_matrix(bqm, transpose= True):
     return qubo_matrix
 
 
+def classical_solver(len_x, bqm, sort = True):
+    
+    # Calculate the energy of all possible solutions for a binary vector of len len_x
+    # whose Hamiltonian is bqm
+    
+    import itertools
+
+    x_classical = np.array(list(itertools.product([0, 1], repeat=len_x)))
+    
+    if sort == True:
+        sorting = np.argsort(np.sum(x_classical,axis=1))
+        
+        x_classical = x_classical[sorting]
+    
+    qubo_matrix = build_qubo_matrix(bqm)
+    
+    E_tmp = -np.matmul(x_classical,qubo_matrix)
+    E_classical = np.sum(x_classical*E_tmp,axis=1)
+    
+    return E_classical
+
 def find_exact_solutions(bqm):
     
     if 'BinaryQuadraticModel' in str(type(bqm)):
