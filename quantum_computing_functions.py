@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 def build_adjacency_matrix(structure):
     # structure = pymatgen Structure object
     
@@ -17,8 +18,8 @@ def build_adjacency_matrix(structure):
     return adjacency_matrix
 
 
-def build_constrained_quadratic_model(structure,use_coord = True, num_vacancies = 0, 
-                          weight_1=10, weight_2 = 1, lagrange = 1000):
+def build_constrained_quadratic_model(structure,use_coord = False, num_vacancies = 0, 
+                          weight_1=10, weight_2 = 0, lagrange = 1000):
     # structure = pymatgen Structure object
     # weight_1 = weight for the bond energy objective
     # weight_1 = weight for the bond energy objective
@@ -159,6 +160,45 @@ def build_graph(structure):
     return Graph(G.graph)
 
 
+def build_ip_matrix(structure, species, parameters, alpha=1, max_neigh = 1):
+    
+    num_sites = structure.num_sites
+    num_species = len(species)
+    num_elements = num_sites*num_species
+    
+    distance_matrix = np.round(structure.distance_matrix,5)
+    shells = np.unique(np.round(distance_matrix,5))
+    
+    # Generate an all False matrix
+    distance_matrix_filter = (distance_matrix == -1)
+
+    
+    # Only add the atoms within the shells up to max_neigh 
+    for neigh in range(1,max_neigh+1):
+        distance_matrix_filter +=  distance_matrix == shells[neigh]  
+
+    # Buckingham
+    #loop 
+    
+    ip_matrix = np.zeros((num_elements,num_elements))
+    parameters = np.array(parameters)
+    for i in range(num_sites):
+        for j in range(i,num_sites):
+            if distance_matrix_filter[i,j] == True:
+                index = -1
+                for k in range(num_species):
+                    for l in range(k,num_species):
+                        index += 1
+                        param = parameters[index]
+                        #print(i*num_species+k,j*num_species+l)
+                        ip_matrix[i*num_species+k,j*num_species+l] = \
+                        param[0] * np.exp((-distance_matrix[i,j])/(param[1]))- \
+                        ((param[2])/((distance_matrix[i,j])**6))
+                        
+                
+    return ip_matrix
+
+
 def build_quadratic_model(structure,use_coord = True, num_vacancies = 0, 
                           weight_1=10, weight_2 = 1, lagrange = 1000):
     # structure = pymatgen Structure object
@@ -208,7 +248,7 @@ def build_quadratic_model(structure,use_coord = True, num_vacancies = 0,
         return None
 
 
-def build_quadratic_model_discrete(structure,species,concentrations, parameters, weight=100, max_neigh = 1):
+def build_bqm_discrete(structure,species,concentrations, parameters, weight=100, max_neigh = 1):
     '''# structure = pymatgen Structure object
     # weight_1 = weight for the bond energy objective
     # weight_1 = weight for the bond energy objective
@@ -298,6 +338,148 @@ def build_quadratic_model_discrete(structure,species,concentrations, parameters,
     return bqm
 
 
+def build_quadratic_model_discrete_OLD(structure,species,concentrations, parameters, weight=100, max_neigh = 1):
+    '''# structure = pymatgen Structure object
+    # weight_1 = weight for the bond energy objective
+    # weight_1 = weight for the bond energy objective
+    # lagrange = weight for the number of vacancies constraint'''
+    
+    
+    from dimod import BinaryQuadraticModel, Binary
+    
+    num_sites = structure.num_sites
+    num_species = len(species)
+    
+    X = np.arange(structure.num_sites)
+    
+    adjacency_matrix = build_adjacency_matrix(structure)
+
+    Q = np.triu(adjacency_matrix.astype(int),0)
+    
+    bqm = BinaryQuadraticModel.empty(vartype='BINARY')
+
+    
+    ################## Add one-hot encoding ###########################
+
+    # -1 diagonal
+    # 2 off diagonal
+    J = np.array([[0]*num_sites*num_species]*(num_sites*num_species))
+    for i in range(num_sites*num_species):
+        for j in range(i,num_sites*num_species,num_species):            
+            J[i,j] = -1
+            for k in range(1,num_species-i%num_species):
+            #for k in range(1,num_species):
+                if j+k < num_sites*num_species:
+                    #print(i,j+k)
+                    J[i,j+k] = +2
+    J = J * weight
+    
+    
+    ################## Calculate the potentials ###############################
+    
+    distance_matrix = np.round(structure.distance_matrix,5)
+    shells = np.unique(np.round(distance_matrix,5))
+    
+    # Generate an all False matrix
+    distance_matrix_filter = (distance_matrix == -1)
+
+    
+    # Only add the atoms within the shells up to max_neigh 
+    for neigh in range(1,max_neigh+1):
+        distance_matrix_filter +=  distance_matrix == shells[neigh]  
+
+    # Buckingham
+    #loop 
+    
+    ip_matrix = np.array([[0.]*num_sites*num_species]*num_sites*num_species)
+    parameters = np.array(parameters)
+    for i in range(num_sites):
+        for j in range(i,num_sites):
+            if distance_matrix_filter[i,j] == True:
+                index = -1
+                for k in range(num_species):
+                    for l in range(k,num_species):
+                        index += 1
+                        #print(i,j)
+                        param = parameters[index]
+                        #print(i*num_species+k,j*num_species+l)
+                        ip_matrix[i*num_species+k,j*num_species+l] = param[0] * np.exp((-distance_matrix[i,j])/(param[1]))- ((param[2])/((distance_matrix[i,j])**6))
+        
+    
+    
+    ################## Add concentration constraint ###############################
+    n_species = len(species)
+    
+    n_atoms_species = np.multiply(concentrations,num_sites)
+    print(n_atoms_species)
+    C = np.array([[0.]*num_sites*num_species]*(num_sites*num_species))
+    for i in range(num_sites*num_species):
+        for j in range(i,num_sites*num_species,num_species):
+            #print(i,j, j%num_species)
+            C[i,j] = 1-(n_atoms_species[j%num_species])
+            for k in range(1,num_species-i%num_species):
+            #for k in range(1,num_species):
+                if j+k < num_sites*num_species:
+                    #print(i,j+k)
+                    C[i,j+k] = +2
+    
+    #print(J+C+ip_matrix)
+    #return J
+    return bqm
+
+
+def build_qubo_discrete_constraints(structure,species, concentration, lambda_1 = 2, theta=10):
+    
+    num_sites = structure.num_sites
+    num_species = len(species)
+    num_elements = num_sites*num_species
+    
+    A = build_adjacency_matrix(structure)
+    
+    Q = np.zeros((num_elements,num_elements))
+    
+    for n in range(num_species):
+        for i in range(n,num_elements,num_species): #i-i k-k diagonal
+            Q[i,i] = lambda_1*(1-2*concentration[n]) - theta   
+            for k in range(1,num_species-n%num_species): #i-i k-l off-diagonal
+                if i+k < num_elements:
+                    Q[i,i+k] = 2*theta
+    for n in range(num_elements):                
+        for j in range(n+num_species,num_elements,num_species): #i-i k-k diagonal
+
+                Q[n,j] = 2*lambda_1
+    return Q
+
+
+def build_qubo_discrete_vacancies(structure,num_vac, alpha = 1, lambda_1 = 2, theta=100):
+    
+    num_sites = structure.num_sites
+    num_atoms = num_sites - num_vac
+    A = build_adjacency_matrix(structure)
+    
+    Q = np.zeros((2*num_sites,2*num_sites))
+    for i in range(0,2*num_sites,2): #xc
+        Q[i,i] = lambda_1*(1-2*num_atoms) - theta
+        #print(i,lambda_1*(1-2*num_atoms) - theta)
+    for i in range(1,2*num_sites,2): #xv
+        Q[i,i] = lambda_1*(1-2*num_vac) - theta
+        #print(i,lambda_1*(1-2*num_vac) - theta)
+    for i in range(0,2*num_sites,2): #xcxv
+        Q[i,i+1] = 2*theta
+        #print(i,lambda_1*(1-2*num_vac) - theta)
+    for i in range(0,2*num_sites,2): 
+        for j in range(i+2,2*num_sites,2):
+            Q[i,j] = 2*lambda_1
+    for i in range(1,2*num_sites,2): 
+        for j in range(i+2,2*num_sites,2):
+            Q[i,j] = 2*lambda_1
+    for i in range(0,2*num_sites,2): 
+        for j in range(i+2,2*num_sites,2):
+            Q[i,j+1] = alpha*A[int(i/2),int(j/2)]
+            Q[i+1,j] = alpha*A[int(i/2),int(j/2)]
+    return Q
+
+
 def build_qubo_matrix(bqm, transpose= True):
     
     # Returns the qubo matrix from a bqm model (cqm notr supported)
@@ -329,10 +511,17 @@ def build_qubo_matrix(bqm, transpose= True):
     return qubo_matrix
 
 
+def classical_energy(x,q):
+    E_tmp = np.matmul(x,q)
+    E_classical = np.sum(x*E_tmp)
+    
+    return E_classical
+
 def classical_solver(len_x, bqm, sort = True):
     
     # Calculate the energy of all possible solutions for a binary vector of len len_x
     # whose Hamiltonian is bqm
+    # bqm can be either the bqm or the QUBO matrix
     
     import itertools
 
@@ -343,12 +532,16 @@ def classical_solver(len_x, bqm, sort = True):
         
         x_classical = x_classical[sorting]
     
-    qubo_matrix = build_qubo_matrix(bqm)
+    if 'numpy.ndarray' in str(type(bqm)): 
+        qubo_matrix = bqm
+    else:
+        qubo_matrix = build_qubo_matrix(bqm)
     
-    E_tmp = -np.matmul(x_classical,qubo_matrix)
+    E_tmp = np.matmul(x_classical,qubo_matrix)
     E_classical = np.sum(x_classical*E_tmp,axis=1)
     
-    return E_classical
+    return x_classical, E_classical
+
 
 def find_exact_solutions(bqm):
     
@@ -412,9 +605,7 @@ def plot_buckingham_potential(A, p, C, r_range=[0,5],coulomb= []):
     
 
 def run_anneal(bqm,num_reads = 1000, time_limit=5, chain_strength = None, label='Test anneal', dataframe = False, 
-
-
-               remove_broken_chains = True, return_config_E = False):
+               remove_broken_chains = False, return_config_E = False, annealing_time=20):
     
     
     if 'BinaryQuadraticModel' in str(type(bqm)):
@@ -423,9 +614,11 @@ def run_anneal(bqm,num_reads = 1000, time_limit=5, chain_strength = None, label=
         sampler = EmbeddingComposite(DWaveSampler())
         
         if chain_strength != None:
-            result = sampler.sample(bqm, num_reads = num_reads, chain_strength = chain_strength,  label=label)
+            result = sampler.sample(bqm, num_reads = num_reads, chain_strength = chain_strength, annealing_time=annealing_time,
+                                      label=label, return_embedding=True)
         else:
-            result = sampler.sample(bqm, num_reads = num_reads, label=label)
+            result = sampler.sample(bqm, num_reads = num_reads, label=label, annealing_time=annealing_time,
+                                        return_embedding=True)
         
     elif 'ConstrainedQuadraticModel' in str(type(bqm)):
         from dwave.system import LeapHybridCQMSampler
@@ -530,6 +723,80 @@ def save_json(structure,sampleset, bqm, use_coord = True, num_vacancies = 0,
     name = file_name + '_%s_%s_v%s_c%s_w1%s_w2%s_l%s_r%s_t%s_%s.json'%(structure.composition.formula,
                                                                     model,num_vacancies,str(use_coord)[0],
                                                                     weight_1,weight_2,lagrange,num_reads,                                                                    
+                                                                    time_limit,time_stamp)
+    
+    file_name = path.join(file_path,name)
+
+    with open(file_name, 'w') as f:
+        json.dump(json_object, f)
+
+
+def save_json_discrete(structure,sampleset, bqm, use_coord = True, num_vacancies = 0, 
+                          theta = 1, weight_1=10, weight_2 = 1, lagrange = 1000,
+              num_reads = 1000, time_limit=5, label='Test anneal', 
+              remove_broken_chains = True, file_path = 'data', file_name = '', save_qubo = True,
+              chain_strength = None):
+    
+    # save the dataframe as a json file
+    
+    import json
+    from datetime import datetime,timezone
+    from os import path
+    import time
+    
+    dataframe = sampleset.to_pandas_dataframe()
+    
+    if 'chain_strength' in sampleset.info['embedding_context']:
+        chain_strength = sampleset.info['embedding_context']['chain_strength']
+    else:
+        chain_strength = -1
+    
+    if 'BinaryQuadraticModel' in str(type(bqm)):
+        model = 'bqm'
+        time_limit = 0
+    elif 'ConstrainedQuadraticModel' in str(type(bqm)):
+        model = 'cqm'
+        num_reads = 0
+    
+    date_time = datetime.now(timezone.utc).strftime("%m/%d/%Y, %H:%M:%S")
+    time_stamp = int(time.time())
+    
+    if save_qubo == True:
+        qubo_matrix = build_qubo_matrix(bqm).flatten().tolist()
+    elif save_qubo == False:
+        qubo_matrix = None
+    
+        
+    param_dict = {'date_time': date_time,
+                  'time_stamp': time_stamp,
+                  'structure': structure.composition.formula,
+                  'N atoms' : structure.num_sites,
+                    'model': model,
+                  'use_coord' : use_coord,
+                  'num_vacancies': num_vacancies,
+                  'theta': theta,
+                  'weight_1': weight_1,
+                  'weight_2' : weight_2,
+                  'lagrange': lagrange,
+                     'num_reads' : num_reads, 
+                  'time_limit': time_limit,
+                  'label':label, 
+                  'remove_broken_chains' : remove_broken_chains,
+                  'chain_strength' : chain_strength,
+                  #'qubo_matrix': qubo_matrix,
+                  'qpu_anneal_time_per_sample': sampleset.info['timing']['qpu_anneal_time_per_sample'],
+                  'qubo_matrix': qubo_matrix
+                     
+    }
+    
+    json_string = dataframe.to_json()    
+    json_object = json.loads(json_string)
+    json_object['parameters'] = param_dict
+
+
+    name = file_name + '_%s_%s_v%s_c%s_t%s_w1%s_w2%s_l%s_r%s_t%s_%s.json'%(structure.composition.formula,
+                                                                    model,num_vacancies,str(use_coord)[0],
+                                                                    theta,weight_1,weight_2,lagrange,num_reads,                                                                    
                                                                     time_limit,time_stamp)
     
     file_name = path.join(file_path,name)
