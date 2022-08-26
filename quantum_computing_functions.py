@@ -160,7 +160,7 @@ def build_graph(structure):
     return Graph(G.graph)
 
 
-def build_ip_matrix(structure, species, parameters, alpha=1, max_neigh = 1):
+def build_ip_matrix(structure, species, parameters, alpha=1, max_neigh = 1, test = False):
     
     num_sites = structure.num_sites
     num_species = len(species)
@@ -176,7 +176,9 @@ def build_ip_matrix(structure, species, parameters, alpha=1, max_neigh = 1):
     # Only add the atoms within the shells up to max_neigh 
     for neigh in range(1,max_neigh+1):
         distance_matrix_filter +=  distance_matrix == shells[neigh]  
-
+    if test == True:
+        adjacency_matrix = build_adjacency_matrix(structure)
+        parameters = [-1,0,0]
     # Buckingham
     #loop 
     
@@ -189,14 +191,15 @@ def build_ip_matrix(structure, species, parameters, alpha=1, max_neigh = 1):
                 for k in range(num_species):
                     for l in range(k,num_species):
                         index += 1
-                        param = parameters[index]
-                        #print(i*num_species+k,j*num_species+l)
-                        ip_matrix[i*num_species+k,j*num_species+l] = \
-                        param[0] * np.exp((-distance_matrix[i,j])/(param[1]))- \
-                        ((param[2])/((distance_matrix[i,j])**6))
-                        
-                
-    return ip_matrix
+                        param = parameters[index]                       
+                        if test == True:
+                            ip_matrix[i*num_species+k,j*num_species+l] = \
+                            adjacency_matrix[i,j]*param
+                        else:
+                            ip_matrix[i*num_species+k,j*num_species+l] = \
+                            param[0] * np.exp((-distance_matrix[i,j])/(param[1]))- \
+                            ((param[2])/((distance_matrix[i,j])**6))            
+                        return ip_matrix
 
 
 def build_quadratic_model(structure,use_coord = True, num_vacancies = 0, 
@@ -428,7 +431,24 @@ def build_quadratic_model_discrete_OLD(structure,species,concentrations, paramet
     return bqm
 
 
-def build_qubo_discrete_constraints(structure,species, concentration, lambda_1 = 2, theta=10):
+def build_quadratic_model_discrete(structure ,species, parameters,
+    concentration = None, chem_potential=None, max_neigh = 1, alpha=1,lambda_1 = 2, theta=10, test=False):
+
+    #combine the build_qubo_discrete_constraints and build_ip_matrix to make the QUBO matrix and convert to bqm
+
+    from dimod import BinaryQuadraticModel, Binary
+    
+    Q = build_ip_matrix(structure, species, parameters, alpha=alpha, max_neigh = max_neigh, test=test)+ \
+        build_qubo_discrete_constraints(structure,species,concentration=concentration, chem_potential=chem_potential,\
+        lambda_1 = lambda_1, theta=theta) 
+   
+    bqm = BinaryQuadraticModel.from_qubo(Q)
+
+    return bqm
+
+
+def build_qubo_discrete_constraints(structure,species, concentration=None, chem_potential = None,
+                                    lambda_1 = 2, theta=100):
     
     num_sites = structure.num_sites
     num_species = len(species)
@@ -438,16 +458,27 @@ def build_qubo_discrete_constraints(structure,species, concentration, lambda_1 =
     
     Q = np.zeros((num_elements,num_elements))
     
-    for n in range(num_species):
-        for i in range(n,num_elements,num_species): #i-i k-k diagonal
-            Q[i,i] = lambda_1*(1-2*concentration[n]) - theta   
-            for k in range(1,num_species-n%num_species): #i-i k-l off-diagonal
-                if i+k < num_elements:
-                    Q[i,i+k] = 2*theta
-    for n in range(num_elements):                
-        for j in range(n+num_species,num_elements,num_species): #i-i k-k diagonal
+    if concentration is not None and type(concentration) is list:
+        
+        for n in range(num_species):
+            for i in range(n,num_elements,num_species): #i-i k-k diagonal
+                Q[i,i] = lambda_1*(1-2*concentration[n]) - theta   
+                for k in range(1,num_species-n%num_species): #i-i k-l off-diagonal
+                    if i+k < num_elements:
+                        Q[i,i+k] = 2*theta
+        for n in range(num_elements):                
+            for j in range(n+num_species,num_elements,num_species): #i-i k-k diagonal
 
-                Q[n,j] = 2*lambda_1
+                    Q[n,j] = 2*lambda_1
+    
+    elif chem_potential is not None and type(chem_potential) is list:
+        
+        for n in range(num_species):
+            for i in range(n,num_elements,num_species): #i-i k-k diagonal
+                Q[i,i] = chem_potential[n] - theta   
+                for k in range(1,num_species-n%num_species): #i-i k-l off-diagonal
+                    if i+k < num_elements:
+                        Q[i,i+k] = 2*theta
     return Q
 
 
@@ -512,12 +543,16 @@ def build_qubo_matrix(bqm, transpose= True):
 
 
 def classical_energy(x,q):
+    # x is the binary vector
+    # q is the qubo matrix
+
     E_tmp = np.matmul(x,q)
     E_classical = np.sum(x*E_tmp)
     
     return E_classical
 
-def classical_solver(len_x, bqm, sort = True):
+
+def classical_solver(len_x, bqm, sort = True, discrete = False):
     
     # Calculate the energy of all possible solutions for a binary vector of len len_x
     # whose Hamiltonian is bqm
@@ -525,12 +560,30 @@ def classical_solver(len_x, bqm, sort = True):
     
     import itertools
 
-    x_classical = np.array(list(itertools.product([0, 1], repeat=len_x)))
+    x = np.array(list(itertools.product([0, 1], repeat=len_x)))
     
     if sort == True:
-        sorting = np.argsort(np.sum(x_classical,axis=1))
+        sorting = np.argsort(np.sum(x,axis=1))
         
-        x_classical = x_classical[sorting]
+        x_1 = x[sorting]
+    else:
+        x_1 = x
+
+    if discrete == True:
+        
+        xx = np.array([[0,1]*len_x]*x.shape[0])
+        np.append(np.array(x)[:],np.array(x)[:],axis=1)
+
+        X = np.zeros((x.shape[0],2*x.shape[1]),dtype=int)
+        
+        for i in range(x.shape[0]):
+            X[i] = np.vstack([x_1[i,:], x_1[i,:]]).flatten(order='F')
+
+        x_classical = np.array(np.logical_xor(X,xx),dtype=int)
+    
+    elif discrete == False:
+        x_classical = x_1
+   
     
     if 'numpy.ndarray' in str(type(bqm)): 
         qubo_matrix = bqm
@@ -731,11 +784,10 @@ def save_json(structure,sampleset, bqm, use_coord = True, num_vacancies = 0,
         json.dump(json_object, f)
 
 
-def save_json_discrete(structure,sampleset, bqm, use_coord = True, num_vacancies = 0, 
-                          theta = 1, weight_1=10, weight_2 = 1, lagrange = 1000,
-              num_reads = 1000, time_limit=5, label='Test anneal', 
-              remove_broken_chains = True, file_path = 'data', file_name = '', save_qubo = True,
-              chain_strength = None):
+def save_json_discrete_cp(structure,sampleset, bqm, theta = 10, cp_1 = 0, cp_2 = 0, 
+                            num_reads = 1000, time_limit=5, label='Test anneal', 
+                            remove_broken_chains = False, file_path = 'data', file_name = '', save_qubo = True,
+                            chain_strength = None):
     
     # save the dataframe as a json file
     
@@ -772,12 +824,9 @@ def save_json_discrete(structure,sampleset, bqm, use_coord = True, num_vacancies
                   'structure': structure.composition.formula,
                   'N atoms' : structure.num_sites,
                     'model': model,
-                  'use_coord' : use_coord,
-                  'num_vacancies': num_vacancies,
                   'theta': theta,
-                  'weight_1': weight_1,
-                  'weight_2' : weight_2,
-                  'lagrange': lagrange,
+                  'cp_1': cp_1,
+                  'cp_2': cp_2,
                      'num_reads' : num_reads, 
                   'time_limit': time_limit,
                   'label':label, 
@@ -794,10 +843,9 @@ def save_json_discrete(structure,sampleset, bqm, use_coord = True, num_vacancies
     json_object['parameters'] = param_dict
 
 
-    name = file_name + '_%s_%s_v%s_c%s_t%s_w1%s_w2%s_l%s_r%s_t%s_%s.json'%(structure.composition.formula,
-                                                                    model,num_vacancies,str(use_coord)[0],
-                                                                    theta,weight_1,weight_2,lagrange,num_reads,                                                                    
-                                                                    time_limit,time_stamp)
+    name = file_name + '_%s_%s_cp1%s_cp2%s_t%s_r%s_t%s_%s.json'%(structure.composition.formula,
+                                                                    model,cp_1,cp_2,
+                                                                    theta,num_reads,time_limit,time_stamp)
     
     file_name = path.join(file_path,name)
 
