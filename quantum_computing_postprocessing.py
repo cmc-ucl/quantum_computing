@@ -472,7 +472,7 @@ def find_ratio_feasible_discrete(dataframe,num_vacancies, remove_broken_chains =
 
         multiplicity = df['num_occurrences'].to_numpy()
 
-        acceptable_config = np.all((all_config[:,::2]+all_config[:,1::2])-np.ones(18)==0,axis=1)
+        acceptable_config = np.all((all_config[:,::2]+all_config[:,1::2])-np.ones(int(num_atoms/2))==0,axis=1)
         
         sum_vector = np.sum(all_config[:,::2],axis=1)
 
@@ -486,7 +486,56 @@ def find_ratio_feasible_discrete(dataframe,num_vacancies, remove_broken_chains =
         return np.round(ratio_feasible,4)
 
 
+def find_symmetry_equivalent_structures(dataframe, structure):
+    
+    from pymatgen.analysis.structure_matcher import StructureMatcher 
+    
+    df = dataframe
+    configurations = df.iloc[:,0:18].to_numpy()
+    
+    multiplicity = dataframe['num_occurrences'].to_numpy()
+    energies = dataframe['energy'].to_numpy()
+    
+    #Replace the C atom with an H atom where the vacancies are
+    all_structures = []
+    for config in configurations:
+        structure_2 = copy.deepcopy(structure)
+        for j in np.where(config == 0)[0]:
+            structure_2.replace(j,1)
+        all_structures.append(structure_2)
+    
+    #Find the unique structures
+    unique_structures = StructureMatcher().group_structures(all_structures)
+    
+    unique_structures_label = []
+    
+    #Find to which class the structures belong to
+    for structure in all_structures:
+        for i in range(len(unique_structures)):
+            #print(unique_structures[i][0].composition.reduced_formula,structure.composition.reduced_formula)
+            if StructureMatcher().fit(structure,unique_structures[i][0]) == True:
+                unique_structures_label.append(i)
+                break
+    
+    unique_structures_label = np.array(unique_structures_label)
+    unique_multiplicity = []
+    for x in range(len(unique_structures)):
+        unique_multiplicity.append(np.sum(multiplicity[np.where(unique_structures_label==x)[0]]))
+    
+    df = df.iloc[np.unique(unique_structures_label,return_index=True)[1]]
+    if len(df) == len(unique_multiplicity):
+        df1 = df.copy(deep=True)
+        df1['num_occurrences'] = unique_multiplicity
+        
+        return df1
+    
+    else:
+        print('Some structures might be unfeasible, try using a smaller energy range (lower energy)')
+        
+        return None
+
 def find_unique_E_structures(dataframe, min_energy = 0, return_count = False):
+
 
     #PROBABLY OLD VERSION OFFIND EQUIVALENT ENERGY DISTRIBUTION
 
@@ -591,3 +640,6 @@ def time_to_solution(dataframe,num_vacancies, anneal_time, remove_broken_chains 
     tts = (np.log10(1-0.99) / np.log10(1-ratio) ) * anneal_time
 
     return tts
+
+
+
