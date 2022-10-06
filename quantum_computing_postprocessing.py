@@ -75,6 +75,30 @@ def classifier(structures, max_shell=2):
         return neighbours_spatial_dist_all_sorted_sliced_flat  
 
 
+def convert_discrete_df(df,num_species,remove_unfeasible=True):
+    
+    num_sites = sum([type(x) == int for x in df.columns])
+    sites = df.iloc[:,0:num_sites].to_numpy()
+    
+    test_sum = sites[:,::num_species]
+    for i in range(1,2):
+        test_sum += sites[:,i::num_species]
+    
+
+    unfeasible = np.where(np.prod(test_sum,axis=1) != 1)[0]
+
+    df.drop(unfeasible, inplace=True)
+    
+    new_labels = df.iloc[:,0:num_sites].to_numpy()[:,::num_species]
+    df.drop(np.arange(num_sites),axis=1,inplace=True)
+
+    
+    for i in range(new_labels.shape[1]):
+        df.insert(i, i, new_labels[:,i])
+    
+    return df
+
+
 def display_low_E_structures(structure,energies,configurations, min_energy = 0, view = False):
     
     from pymatgen.io.ase import AseAtomsAdaptor
@@ -96,6 +120,22 @@ def display_low_E_structures(structure,energies,configurations, min_energy = 0, 
             view(AseAtomsAdaptor().get_atoms(structure_2))
     
     return low_energy_structures
+
+
+def display_structures(structure, dataframe, index):
+    
+    from pymatgen.io.ase import AseAtomsAdaptor
+    from ase.visualize import view
+    import copy
+
+    num_atoms = structure.num_sites
+    
+    for i in index:
+        structure_2 = copy.deepcopy(structure)
+        for j in np.where(dataframe.iloc[i,0:num_atoms] == 0)[0]:
+            structure_2.replace(j,1)
+        
+        view(AseAtomsAdaptor().get_atoms(structure_2))
 
 
 def find_all_structures(dataframe, min_energy = 0., return_count = False, sort_config = False, sort_energy = False):
@@ -489,11 +529,15 @@ def find_ratio_feasible_discrete(dataframe,num_vacancies, remove_broken_chains =
 def find_symmetry_equivalent_structures(dataframe, structure):
     
     from pymatgen.analysis.structure_matcher import StructureMatcher 
-    
+    import copy 
+
+
     df = dataframe
-    configurations = df.iloc[:,0:18].to_numpy()
+    num_sites = structure.num_sites
+    configurations = df.iloc[:,0:num_sites].to_numpy()
     
     multiplicity = dataframe['num_occurrences'].to_numpy()
+    chain_break = dataframe['chain_break_fraction'].to_numpy()
     energies = dataframe['energy'].to_numpy()
     
     #Replace the C atom with an H atom where the vacancies are
@@ -519,13 +563,17 @@ def find_symmetry_equivalent_structures(dataframe, structure):
     
     unique_structures_label = np.array(unique_structures_label)
     unique_multiplicity = []
+    unique_chain_break = []
     for x in range(len(unique_structures)):
         unique_multiplicity.append(np.sum(multiplicity[np.where(unique_structures_label==x)[0]]))
+        unique_chain_break.append(np.average(chain_break[np.where(unique_structures_label==x)[0]]))
     
     df = df.iloc[np.unique(unique_structures_label,return_index=True)[1]]
+    
     if len(df) == len(unique_multiplicity):
         df1 = df.copy(deep=True)
         df1['num_occurrences'] = unique_multiplicity
+        df1['chain_break_fraction'] = unique_chain_break
         
         return df1
     
@@ -533,6 +581,7 @@ def find_symmetry_equivalent_structures(dataframe, structure):
         print('Some structures might be unfeasible, try using a smaller energy range (lower energy)')
         
         return None
+
 
 def find_unique_E_structures(dataframe, min_energy = 0, return_count = False):
 
