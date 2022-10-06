@@ -18,6 +18,23 @@ def build_adjacency_matrix(structure):
     return adjacency_matrix
 
 
+def build_adj_adjacency_matrix(structure):
+    
+    import numpy as np
+  
+    A = build_adjacency_matrix(structure)
+    B = np.zeros((structure.num_sites,structure.num_sites))
+    
+    for i in range(structure.num_sites):  
+        neighbours = np.where(A[i,:] == 1)[0]
+        for j in range(len(neighbours)):
+            for k in range(len(neighbours)):
+                if k > j:
+                    B[neighbours[j],neighbours[k]] = 1
+        
+    return B
+
+
 def build_constrained_quadratic_model(structure,use_coord = False, num_vacancies = 0, 
                           weight_1=10, weight_2 = 0, lagrange = 1000):
     # structure = pymatgen Structure object
@@ -160,50 +177,8 @@ def build_graph(structure):
     return Graph(G.graph)
 
 
-def build_ip_matrix(structure, species, parameters, alpha=1, max_neigh = 1, test = False):
-    
-    num_sites = structure.num_sites
-    num_species = len(species)
-    num_elements = num_sites*num_species
-    
-    distance_matrix = np.round(structure.distance_matrix,5)
-    shells = np.unique(np.round(distance_matrix,5))
-    
-    # Generate an all False matrix
-    distance_matrix_filter = (distance_matrix == -1)
-
-    
-    # Only add the atoms within the shells up to max_neigh 
-    for neigh in range(1,max_neigh+1):
-        distance_matrix_filter +=  distance_matrix == shells[neigh]  
-    if test == True:
-        adjacency_matrix = build_adjacency_matrix(structure)
-        parameters = [-1,0,0]
-    # Buckingham
-    #loop 
-    
-    ip_matrix = np.zeros((num_elements,num_elements))
-    parameters = np.array(parameters)
-    for i in range(num_sites):
-        for j in range(i,num_sites):
-            if distance_matrix_filter[i,j] == True:
-                index = -1
-                for k in range(num_species):
-                    for l in range(k,num_species):
-                        index += 1
-                        param = parameters[index]                       
-                        if test == True:
-                            ip_matrix[i*num_species+k,j*num_species+l] = \
-                            adjacency_matrix[i,j]*param
-                        else:
-                            ip_matrix[i*num_species+k,j*num_species+l] = \
-                            param[0] * np.exp((-distance_matrix[i,j])/(param[1]))- \
-                            ((param[2])/((distance_matrix[i,j])**6))            
-                        return ip_matrix
-
-
-def build_quadratic_model(structure,use_coord = True, num_vacancies = 0, 
-                          weight_1=10, weight_2 = 1, lagrange = 1000):
+def build_quadratic_model(structure,use_coord = False, coord_const = None, num_vacancies = 0, 
+                          alpha=1, beta = 1, lambda_1 = 2):
     # structure = pymatgen Structure object
     # weight_1 = weight for the bond energy objective
     # weight_1 = weight for the bond energy objective
@@ -215,7 +190,7 @@ def build_quadratic_model(structure,use_coord = True, num_vacancies = 0,
     
     adjacency_matrix = build_adjacency_matrix(structure)
 
-    Q = np.triu(-weight_1*adjacency_matrix.astype(int),0)
+    Q = np.triu(-alpha*adjacency_matrix,0)
     
     bqm = BinaryQuadraticModel.from_qubo(Q)
     
@@ -225,8 +200,10 @@ def build_quadratic_model(structure,use_coord = True, num_vacancies = 0,
             for j in range(len(neighbours)):
                 for k in range(len(neighbours)):
                     if k > j:
-                        bqm.add_interaction(X[neighbours[j]],X[neighbours[k]],weight_2)
-    
+                        bqm.add_interaction(X[neighbours[j]],X[neighbours[k]],beta)
+        if coord_const is not None and type(coord_const) == int:
+            for i in range(structure.num_sites):
+                bqm.add_linear(X[i],beta*np.sum(adjacency_matrix[i,:]))
 
     if num_vacancies == 0:
         print('Unconstrained quadratic model used')
@@ -240,7 +217,7 @@ def build_quadratic_model(structure,use_coord = True, num_vacancies = 0,
         bqm.add_linear_equality_constraint(
                 c_n_vacancies,
                 constant= -(structure.num_sites-num_vacancies),
-                lagrange_multiplier = lagrange
+                lagrange_multiplier = lambda_1
                 )
 
         return bqm
@@ -431,56 +408,6 @@ def build_quadratic_model_discrete_OLD(structure,species,concentrations, paramet
     return bqm
 
 
-def build_quadratic_model_discrete(structure ,species, parameters,
-    concentration = None, chem_potential=None, max_neigh = 1, alpha=1,lambda_1 = 2, theta=10, test=False):
-
-    #combine the build_qubo_discrete_constraints and build_ip_matrix to make the QUBO matrix and convert to bqm
-
-    from dimod import BinaryQuadraticModel, Binary
-    
-    Q = build_ip_matrix(structure, species, parameters, alpha=alpha, max_neigh = max_neigh, test=test)+ \
-        build_qubo_discrete_constraints(structure,species,concentration=concentration, chem_potential=chem_potential,\
-        lambda_1 = lambda_1, theta=theta) 
-   
-    bqm = BinaryQuadraticModel.from_qubo(Q)
-
-    return bqm
-
-
-def build_qubo_discrete_constraints(structure,species, concentration=None, chem_potential = None,
-                                    lambda_1 = 2, theta=100):
-    
-    num_sites = structure.num_sites
-    num_species = len(species)
-    num_elements = num_sites*num_species
-    
-    A = build_adjacency_matrix(structure)
-    
-    Q = np.zeros((num_elements,num_elements))
-    
-    if concentration is not None and type(concentration) is list:
-        
-        for n in range(num_species):
-            for i in range(n,num_elements,num_species): #i-i k-k diagonal
-                Q[i,i] = lambda_1*(1-2*concentration[n]) - theta   
-                for k in range(1,num_species-n%num_species): #i-i k-l off-diagonal
-                    if i+k < num_elements:
-                        Q[i,i+k] = 2*theta
-        for n in range(num_elements):                
-            for j in range(n+num_species,num_elements,num_species): #i-i k-k diagonal
-
-                    Q[n,j] = 2*lambda_1
-    
-    elif chem_potential is not None and type(chem_potential) is list:
-        
-        for n in range(num_species):
-            for i in range(n,num_elements,num_species): #i-i k-k diagonal
-                Q[i,i] = chem_potential[n] - theta   
-                for k in range(1,num_species-n%num_species): #i-i k-l off-diagonal
-                    if i+k < num_elements:
-                        Q[i,i+k] = 2*theta
-    return Q
-
 
 def build_qubo_discrete_vacancies(structure,num_vac, alpha = 1, lambda_1 = 2, theta=100):
     
@@ -511,13 +438,46 @@ def build_qubo_discrete_vacancies(structure,num_vac, alpha = 1, lambda_1 = 2, th
     return Q
 
 
+def build_qubo(structure, num_vac=0, coord_obj=False, coord_const=False, alpha = 1, lambda_1 = 2, beta=1):
+    
+    num_sites = structure.num_sites
+    num_atoms = num_sites - num_vac
+    
+    A = np.triu(build_adjacency_matrix(structure),0)
+    
+    L = np.ones((structure.num_sites,structure.num_sites))*2*lambda_1
+    L = np.triu(L,1)
+
+    Q = np.zeros((num_sites,num_sites))
+
+    for i in range(0,num_sites): #diag
+        Q[i,i] = lambda_1*(1-2*num_atoms) 
+    
+    if type(coord_const) == int:
+        for i in range(0,num_sites): #diag      
+            Q[i,i] = Q[i,i]-beta*np.sum(A[i,:])
+
+    if coord_obj == True:
+        B = np.triu(build_adj_adjacency_matrix(structure),0)
+        Q = Q - beta*B
+    elif type(coord_const) == int:
+        B = np.triu(build_adj_adjacency_matrix(structure),0)
+        Q = Q - coord_const*beta*B
+        
+    Q = Q -alpha*A+L
+
+    
+    
+    return Q
+
+
 def build_qubo_matrix(bqm, transpose= True):
     
     # Returns the qubo matrix from a bqm model (cqm notr supported)
     
     # Build a n_atoms x n_atoms matrix containing only 0s    
     num_items = len(bqm.to_numpy_vectors().linear_biases)   
-    qubo_matrix = np.array([[0]*num_items]*num_items)
+    qubo_matrix = np.array([[0.]*num_items]*num_items)
     
     # Add the h_ii elements (diagonal)
     np.fill_diagonal(qubo_matrix,bqm.to_numpy_vectors().linear_biases)
@@ -854,6 +814,7 @@ def save_json_discrete_cp(structure,sampleset, bqm, theta = 10, cp_1 = 0, cp_2 =
 
 
 def save_json_old(structure,dataframe, bqm, use_coord = True, num_vacancies = 0, 
+
                           weight_1=10, weight_2 = 1, lagrange = 1000,
               num_reads = 1000, time_limit=5, label='Test anneal', 
               remove_broken_chains = True, file_path = 'data', file_name = '', save_qubo = True,
@@ -923,3 +884,166 @@ def save_json_old(structure,dataframe, bqm, use_coord = True, num_vacancies = 0,
 
     with open(file_name, 'w') as f:
         json.dump(json_object, f)        
+
+
+### ALL DISCRETE FUNCTIONS
+
+def build_qubo_discrete_constraints(structure,species, concentration=None, chem_potential = None,
+                                    lambda_1 = 2, theta=100):
+    
+    num_sites = structure.num_sites
+    num_species = len(species)
+    num_elements = num_sites*num_species
+    
+    A = build_adjacency_matrix(structure)
+    
+    Q = np.zeros((num_elements,num_elements))
+    
+    if concentration is not None and type(concentration) is list:
+        
+        for n in range(num_species):
+            for i in range(n,num_elements,num_species): #i-i k-k diagonal
+                Q[i,i] = lambda_1*(1-2*concentration[n]) - theta   
+                for k in range(1,num_species-n%num_species): #i-i k-l off-diagonal
+                    if i+k < num_elements:
+                        Q[i,i+k] = 2*theta
+        for n in range(num_elements):                
+            for j in range(n+num_species,num_elements,num_species): #i-i k-k diagonal
+
+                    Q[n,j] = 2*lambda_1
+    
+    elif chem_potential is not None and type(chem_potential) is list:
+        
+        for n in range(num_species):
+            for i in range(n,num_elements,num_species): #i-i k-k diagonal
+                Q[i,i] = chem_potential[n] - theta   
+                for k in range(1,num_species-n%num_species): #i-i k-l off-diagonal
+                    if i+k < num_elements:
+                        Q[i,i+k] = 2*theta
+    return Q
+
+def build_interaction_matrix(structure, species, parameters, alpha=1, max_neigh = 1):
+    
+    #returns an N_sites x N_sites matrix where the i,j element represent the interaction between i and j
+    #parameters is a list of list where the 
+        # first row represents the first neightbour interaction 
+        # second row represents the second neightbour interaction and so on
+
+        #Within the same row, the k-element represent the interaction between species i+j
+        #(Think of it as an upper triangular matrix)
+
+    num_sites = structure.num_sites
+    num_species = len(species)
+    num_elements = num_sites*num_species
+
+    distance_matrix = np.round(structure.distance_matrix,5)
+    shells = np.unique(np.round(distance_matrix,5))
+    
+    distance_matrix_filter = np.zeros((num_sites,num_sites),int)
+
+    for i,s in enumerate(shells[0:max_neigh+1]):
+        row_index = np.where(distance_matrix == s)[0]
+        col_index = np.where(distance_matrix == s)[1]
+        distance_matrix_filter[row_index,col_index] = i
+    distance_matrix_filter = np.triu(distance_matrix_filter,0)
+    distance_matrix_filter
+
+    #loop 
+    
+    interaction_matrix = np.zeros((num_elements,num_elements))
+    parameters = np.array(parameters)
+    for i in range(num_sites):
+        for j in range(i,num_sites):
+            g = distance_matrix_filter[i,j]
+            if g > 0:
+                for k in range(num_species):
+                    for l in range(k,num_species):
+                        param = alpha*parameters[g-1][k+l] #the k+l sum is uniquely defining the pair potential
+                        interaction_matrix[i*num_species+k,j*num_species+l] = param
+                
+    return interaction_matrix
+
+
+def build_quadratic_model_discrete(structure ,species, parameters,
+    concentration = None, chem_potential=None, max_neigh = 1, alpha=1,lambda_1 = 2, theta=10, test=False):
+
+    #combine the build_qubo_discrete_constraints and build_ip_matrix to make the QUBO matrix and convert to bqm
+
+    from dimod import BinaryQuadraticModel, Binary
+    
+    Q = build_interaction_matrix(structure, species, parameters, alpha=alpha, max_neigh = max_neigh, test=test)+ \
+        build_qubo_discrete_constraints(structure,species,concentration=concentration, chem_potential=chem_potential,\
+        lambda_1 = lambda_1, theta=theta) 
+   
+    bqm = BinaryQuadraticModel.from_qubo(Q)
+
+    return bqm
+
+def build_ip_parameters(structure, buckingham):
+    #This function takes the IP parameters and returns a number (list) for the QUBO matrix
+    '''
+    num_sites = structure.num_sites
+    num_species = len(species)
+    num_elements = num_sites*num_species
+    
+    distance_matrix = np.round(structure.distance_matrix,5)
+    shells = np.unique(np.round(distance_matrix,5))
+    
+    # Generate an all False matrix
+    distance_matrix_filter = (distance_matrix == -1)
+
+    
+    # Only add the atoms within the shells up to max_neigh 
+    for neigh in range(1,max_neigh+1):
+    distance_matrix_filter +=  distance_matrix == shells[neigh] 
+    
+    ip_matrix = np.zeros((num_elements,num_elements))
+    parameters = np.array(parameters)
+    for i in range(num_sites):
+        for j in range(i,num_sites):
+            if distance_matrix_filter[i,j] == True:
+                index = -1
+                for k in range(num_species):
+                    for l in range(k,num_species):
+                        index += 1
+                        param = parameters[index]                       
+                        if test == True:
+                            ip_matrix[i*num_species+k,j*num_species+l] = \
+                            adjacency_matrix[i,j]*param
+                        else:
+                            ip_matrix[i*num_species+k,j*num_species+l] = \
+                            param[0] * np.exp((-distance_matrix[i,j])/(param[1]))- \
+                            ((param[2])/((distance_matrix[i,j])**6))            
+                        return ip_matrix'''
+    return None
+def build_qubo_discrete_vacancies(structure,num_vac, alpha = 1, lambda_1 = 2, theta=100):
+    
+    # PROBABLY REPLACED BY ABOVE FUNCTIONS
+
+
+    num_sites = structure.num_sites
+    num_atoms = num_sites - num_vac
+    A = build_adjacency_matrix(structure)
+    
+    Q = np.zeros((2*num_sites,2*num_sites))
+    
+    for i in range(0,2*num_sites,2): #xc
+        Q[i,i] = lambda_1*(1-2*num_atoms) - theta
+        #print(i,lambda_1*(1-2*num_atoms) - theta)
+    for i in range(1,2*num_sites,2): #xv
+        Q[i,i] = lambda_1*(1-2*num_vac) - theta
+        #print(i,lambda_1*(1-2*num_vac) - theta)
+    for i in range(0,2*num_sites,2): #xcxv
+        Q[i,i+1] = 2*theta
+        #print(i,lambda_1*(1-2*num_vac) - theta)
+    for i in range(0,2*num_sites,2): 
+        for j in range(i+2,2*num_sites,2):
+            Q[i,j] = 2*lambda_1
+    for i in range(1,2*num_sites,2): 
+        for j in range(i+2,2*num_sites,2):
+            Q[i,j] = 2*lambda_1
+    for i in range(0,2*num_sites,2): 
+        for j in range(i+2,2*num_sites,2):
+            Q[i,j+1] = alpha*A[int(i/2),int(j/2)]
+            Q[i+1,j] = alpha*A[int(i/2),int(j/2)]
+    return Q
