@@ -97,7 +97,21 @@ def convert_discrete_df(df,num_species,remove_unfeasible=True):
     
     return df
 
-
+def df2structure(structure,df):
+    
+    num_sites = structure.num_sites
+    configurations = df.iloc[:,0:num_sites].to_numpy()
+    
+    #Replace the C atom with an H atom where the vacancies are
+    all_structures = []
+    for config in configurations:
+        structure_2 = copy.deepcopy(structure)
+        for j in np.where(config == 0)[0]:
+            structure_2.replace(j,1)
+        all_structures.append(structure_2)
+    
+    return all_structures
+    
 def display_low_E_structures(structure,energies,configurations, min_energy = 0, view = False):
     
     from pymatgen.io.ase import AseAtomsAdaptor
@@ -290,6 +304,24 @@ def find_energy_distribution_discrete(dataframe, remove_broken_chains = False, o
     
     return unique_energy, unique_multiplicity
 
+def find_multiplicity(all_structures,descriptor_unique=[None]):
+    
+    descriptor = build_descriptor(all_structures)
+    
+    if len(descriptor_unique) > 0:
+        descriptor_unique, descriptor_first, descriptor_count = \
+                                    np.unique(descriptor, axis=0,return_counts=True, return_index=True)
+    group_structures = []
+    for desc in descriptor_unique:
+        structure_desc = []
+        for i,d in enumerate(descriptor):
+            if np.all(np.array(desc) == np.array(d)):
+                structure_desc.append(i)
+        group_structures.append(len(structure_desc))
+        
+    group_structures = np.array(group_structures)
+    
+    return group_structures
 
 def find_vacancy_distribution(dataframe, remove_broken_chains = False, vacancies = 0):
     
@@ -533,7 +565,6 @@ def find_ratio_feasible_discrete(dataframe,num_vacancies, remove_broken_chains =
 def find_symmetry_equivalent_structures(dataframe, structure, vacancies=None):
     #New descriptor-based version
 
-    from pymatgen.analysis.structure_matcher import StructureMatcher 
     import copy 
 
     df = dataframe
