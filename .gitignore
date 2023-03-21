@@ -7,6 +7,9 @@
 *.prop3d
 *.ERROR
 slurm-*
+#Other
+*.ppt
+*.pptx
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
