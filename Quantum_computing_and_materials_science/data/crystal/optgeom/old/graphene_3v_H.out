@@ -1,0 +1,2223 @@
+date:                Mon Oct 31 22:15:45 GMT 2022
+hostname:            nid005741
+system:              Linux nid005741 4.12.14-197.78_9.1.64-cray_shasta_c #1 SMP Wed Aug 25 14:56:40 UTC 2021 (4e2a900) x86_64 x86_64 x86_64 GNU/Linux
+user:                bcamino
+input:               /mnt/lustre/a2fs-work2/work/e05/e05/bcamino/quantum_computing/test_model/optgeom/graphene_3v_H.d12
+output:              /mnt/lustre/a2fs-work2/work/e05/e05/bcamino/quantum_computing/test_model/optgeom/graphene_3v_H.out
+executable script:   /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm
+executable:          Pcrystal
+Command:             srun --hint=nomultithread --distribution=block:block Pcrystal
+Slurm JobID:         
+temporary directory: /mnt/lustre/a2fs-work2/work/e05/e05/bcamino/quantum_computing/test_model/optgeom/tmp_graphene_3v_H_      
+input data /mnt/lustre/a2fs-work2/work/e05/e05/bcamino/quantum_computing/test_model/optgeom/graphene_3v_H.d12
+Final
+EXTERNAL
+SYMMREMO
+OPTGEOM
+ATOMONLY
+END
+END
+6 8
+0 0 6 2.0 1.0
+  13575.349682      0.00022245814352
+  2035.2333680      0.00172327382520
+  463.22562359      0.00892557153140
+  131.20019598      0.03572798450200
+  42.853015891      0.11076259931000
+  15.584185766      0.24295627626000
+0 0 2 2.0 1.0
+  6.2067138508      0.41440263448000
+  2.5764896527      0.23744968655000
+0 0 1 0.0 1.0
+  0.4941102000      1.00000000000000
+0 0 1 0.0 1.0
+  0.1644071000      1.00000000000000
+0 2 4 2.0 1.0
+  34.697232244      0.00533336578050
+  7.9582622826      0.03586410909200
+  2.3780826883      0.14215873329000
+  0.8143320818      0.34270471845000
+0 2 1 0.0 1.0
+  0.5662417100      1.00000000000000
+0 2 1 0.0 1.0
+  0.1973545000      1.00000000000000
+0 3 1 0.0 1.0
+  0.5791584200      1.00000000000000
+99 0
+ENDBS
+DFT
+PBE  
+ENDDFT
+TOLINTEG
+8 8 8 8 16
+SCFDIR
+SHRINK
+8 16  
+MAXCYCLE
+200
+TOLDEE
+9 
+ENDSCF
+input data /mnt/lustre/a2fs-work2/work/e05/e05/bcamino/quantum_computing/test_model/optgeom/graphene_3v_H.gui
+         128 PROCESSORS WORKING
+
+         
+ *******************************************************************************
+ *                                                                             *
+ *                               CRYSTAL17                                     *
+ *                      public : 1.0.2 - March 1st, 2018 STFC/Archer2 build    *
+ *                       HTTP://WWW.CRYSTAL.UNITO.IT                           *
+ *                                                                             *
+ *                              MAIN AUTHORS                                   *
+ *                                                                             *
+ *  R. DOVESI(1,11), V.R. SAUNDERS(2), C. ROETTI(1,11), R. ORLANDO(1,11),      *
+ *  C.M. ZICOVICH-WILSON(1,3), F. PASCALE(4), B. CIVALLERI(1,11),              *
+ *  K. DOLL(5), N.M. HARRISON(2,6), I.J. BUSH(7), Ph. D'ARCO(8),               *
+ *  M. LLUNELL(9), M. CAUSA'(10), Y. NOEL(8), L. MASCHIO(1,11), A. ERBA(1,11)  *
+ *  M. RE'RAT(14), S. CASASSA(1,11)                                            *
+ *                                                                             *
+ *        CONTRIBUTIONS TO THE CODE HAVE ALSO BEEN GIVEN BY                    *
+ *                                                                             *
+ *  M. FERRABONE(1,11), M. DE LA PIERRE(1,11), M. FERRERO(1,11),               *
+ *  J. BAIMA(1,11), E. ALBANESE(1,11), M.F. PEINTINGER(12), R. BAST(13),       *
+ *  B. KIRTMAN(15), V. LACIVITA(1,11), R. DEMICHELIS(1,16)                     *
+ *  G. BRANDEBURG(17), S. SALUSTRO(1,11), G. SANSONE(1,11)                     *
+ *  M.T. RUGGIERO(18)                                                          *
+ *                                                                             *
+ * (1) THEORETICAL CHEMISTRY GROUP - UNIVERSITA' DI TORINO - TORINO (ITALY)    *
+ * (2) COMPUTATIONAL SCIENCE & ENGINEERING DEPARTMENT - STFC DARESBURY (UK)    *
+ * (3) UNIVERSIDAD AUTONOMA DEL ESTADO DE MORELOS - CUERNAVACA (MEXICO)        *
+ * (4) UNIVERSITE' DE LORRAINE - NANCY (FRANCE)                                *
+ * (5) UNIVERSITAET STUTTGART- STUTTGART (GERMANY)                             *
+ * (6) IMPERIAL COLLEGE - LONDON (UK)                                          *
+ * (7) OXFORD E-RESEARCH CENTRE - OXFORD (UK)                                  *
+ * (8) UPMC - SORBONNE UNIVERSITES - PARIS (FRANCE)                            *
+ * (9) UNIVERSIDAD DE BARCELONA - BARCELONA (SPAIN)                            *
+ *(10) UNIVERSITA' DI NAPOLI "FEDERICO II" - NAPOLI (ITALY)                    *
+ *(11) NIS - NANOSTRUCTURED INTERFACES AND SURFACES - TORINO (ITALY)           *
+ *(12) MPI FUER CHEMISCHE ENERGIEKONVERSION - MUELHEIM AN DER RUHR (GERMANY)   *
+ *(13) UNIVERSITY OF TROMSO - TROMSO (NORWAY)                                  *
+ *(14) UNIVERSITE' DE PAU ET DES PAYS DE L'ADOUR - PAU (FRANCE)                *
+ *(15) UNIVERSITY OF CALIFORNIA SANTA BARBARA - SANTA BARBARA (USA)            *
+ *(16) CURTIN UNIVERSITY - PERTH (AUSTRALIA)                                   *
+ *(17) UNIVERSITY COLLEGE LONDON - LONDON (UK)                                 *
+ *(18) CAMBRIDGE UNIVERSITY - CAMBRIDGE (UK)                                   *
+ *                                                                             *
+ *******************************************************************************
+ EEEEEEEEEE STARTING  DATE 31 10 2022 TIME 22:15:47.9
+ Final                                                                           
+
+ GEOMETRY INPUT FROM EXTERNAL FILE (FORTRAN UNIT 34)
+ 3D - CRYSTAL 
+
+ *******************************************************************************
+ LATTICE PARAMETERS  (ANGSTROMS AND DEGREES) - PRIMITIVE CELL
+       A          B          C        ALPHA      BETA     GAMMA        VOLUME
+    7.40317    7.40317    8.68504    90.00000  90.00000 120.00000    412.228566
+ INFORMATION **** CHKGRP **** SPGR WITH NO INVERSION
+
+ NUMBER OF IRREDUCIBLE ATOMS IN THE CELL:   15
+
+ CARTESIAN COORDINATES (ANGSTROM) - IRREDUCIBLE ATOMS AND SYMMETRY RELATED
+
+ AT.IRR.  AT  AT.N.          X                   Y                   Z
+     1     1     6    3.701586212049E+00  4.986594190562E+00  2.605511400000E+00
+     2     2     6    2.467724141366E+00 -1.424741197304E+00  2.605511400000E+00
+     3     3     6    3.701586212049E+00  7.123705986520E-01  2.605511400000E+00
+     4     4     6    4.935448282733E+00  2.849482394607E+00  2.605511400000E+00
+     5     5     6    3.701586212049E+00 -3.561852993259E+00  2.605511400000E+00
+     6     6     6    6.169310353416E+00  7.123705986520E-01  2.605511400000E+00
+     7     7     6    1.233862070683E+00 -7.123705986520E-01  2.605511400000E+00
+     8     8     6    2.467724141366E+00  1.424741197304E+00  2.605511400000E+00
+     9     9     6    3.701586212049E+00  3.561852993259E+00  2.605511400000E+00
+    10    10     6    2.467724141366E+00 -2.849482394607E+00  2.605511400000E+00
+    11    11     6    3.701586212049E+00 -7.123705986520E-01  2.605511400000E+00
+    12    12     6    4.935448282733E+00  1.424741197304E+00  2.605511400000E+00
+    13    13     6    3.701586212049E+00 -4.986594190562E+00  2.605511400000E+00
+    14    14     6    4.935448282733E+00 -2.849482394607E+00  2.605511400000E+00
+    15    15     6    6.169310353416E+00 -7.123705986520E-01  2.605511400000E+00
+
+ SPACE  GROUP  N.                     :    1
+ NUMBER OF SYMMETRY OPERATORS         :    1
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     1.111111111111E-01 -1.111111111111E-01  3.000000000000E-01
+      2 T   6 C     4.444444444445E-01  2.222222222222E-01  3.000000000000E-01
+      3 T   6 C     4.444444444444E-01 -4.444444444444E-01  3.000000000000E-01
+      4 T   6 C     4.444444444446E-01 -1.111111111110E-01  3.000000000000E-01
+      5 T   6 C    -2.222222222222E-01  2.222222222222E-01  3.000000000000E-01
+      6 T   6 C    -2.222222222221E-01 -1.111111111110E-01  3.000000000000E-01
+      7 T   6 C     2.222222222222E-01  1.111111111111E-01  3.000000000000E-01
+      8 T   6 C     2.222222222222E-01  4.444444444445E-01  3.000000000000E-01
+      9 T   6 C     2.222222222222E-01 -2.222222222222E-01  3.000000000000E-01
+     10 T   6 C    -4.444444444445E-01  1.111111111111E-01  3.000000000000E-01
+     11 T   6 C    -4.444444444444E-01  4.444444444444E-01  3.000000000000E-01
+     12 T   6 C    -4.444444444443E-01 -2.222222222221E-01  3.000000000000E-01
+     13 T   6 C    -1.111111111111E-01  1.111111111111E-01  3.000000000000E-01
+     14 T   6 C    -1.111111111110E-01  4.444444444446E-01  3.000000000000E-01
+     15 T   6 C    -1.111111111110E-01 -2.222222222221E-01  3.000000000000E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+ *******************************************************************************
+ * GEOMETRY EDITING - INPUT COORDINATES ARE GIVEN IN ANGSTROM         
+ *******************************************************************************
+
+ USE OF SYMMETRY WILL BE SUBSEQUENTLY SUSPENDED
+ INFORMATION **** NEW DEFAULT **** FINALRUN 4 FOR GEOMETRY OPTIMIZATIONS
+ INFORMATION **** NEW DEFAULT **** OPTGEOM OPTIMIZES BOTH ATOMIC COORDINATES AND CELL PARAMETERS
+ INFORMATION **** NEW DEFAULT **** TOL. ON ATOMIC DISP TO REDEFINE REF. GEOMETRY: 0.8 Angs
+ INFORMATION **** NEW DEFAULT **** N POINTS TO REDEFINE REF. GEOMETRY: N OF OPT DEGS OF FREEDOM
+ INFORMATION **** NEW DEFAULT **** TOL. ON ENERGY TO REDEFINE REF. GEOMETRY: 10**-3*(5*N. ATOMS)
+ INFORMATION **** ATOMONLY **** ONLY ATOMIC COORDINATES ARE OPTIMIZED
+
+ IMPORTANT INFORMATION:
+ THE COORDINATE SYSTEM ADOPTED IN THE OPTIMIZATION IS NOT IN
+ GENERAL HOMOGENEOUS UNITS. FOR THIS REASON THE GRADIENT AND 
+ HESSIAN MATRIX IN TERMS OF THIS SYSTEM ARE GIVEN WITHOUT
+ UNITS. FOR MORE DETAILS SEE THE MANUAL.
+
+ *******************************************************************************
+ ATOMIC POSITIONS OPTIMIZATION CONTROL
+
+ INITIAL TRUST RADIUS         0.50000 MAXIMUM TRUST RADIUS               4.00000
+ MAXIMUM GRADIENT COMPONENT   0.00045 MAXIMUM DISPLACEMENT COMPONENT     0.00180
+ R.M.S. OF GRADIENT COMPONENT 0.00030 R.M.S. OF DISPLACEMENT COMPONENTS  0.00120
+ THRESHOLD ON ENERGY CHANGE 0.100E-06 EXTRAPOLATING POLYNOMIAL ORDER           2
+ MAXIMUM ALLOWED NUMBER OF STEPS   -1 SORTING OF ENERGY POINTS:               NO
+ ANALYTICAL  GRADIENT                 HESSIAN UPDATING                      BFGS
+ STEP SIZE NUMERICAL GRADIENT 0.00100
+ INITIAL HESSIAN MATRIX: SCHLEGEL MODEL 2
+ *******************************************************************************
+
+
+ GCALCO - MAX INDICES DIRECT LATTICE VECTOR    16    16    12
+ NO.OF VECTORS CREATED 6999 STARS  379 RMAX   166.99060 BOHR
+
+ GEOMETRY FOR WAVE FUNCTION - DIMENSIONALITY OF THE SYSTEM    3
+ (NON PERIODIC DIRECTION: LATTICE PARAMETER FORMALLY SET TO 500)
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     1.111111111111E-01 -1.111111111111E-01  3.000000000000E-01
+      2 T   6 C     4.444444444445E-01  2.222222222222E-01  3.000000000000E-01
+      3 T   6 C     4.444444444444E-01 -4.444444444444E-01  3.000000000000E-01
+      4 T   6 C     4.444444444446E-01 -1.111111111110E-01  3.000000000000E-01
+      5 T   6 C    -2.222222222222E-01  2.222222222222E-01  3.000000000000E-01
+      6 T   6 C    -2.222222222221E-01 -1.111111111110E-01  3.000000000000E-01
+      7 T   6 C     2.222222222222E-01  1.111111111111E-01  3.000000000000E-01
+      8 T   6 C     2.222222222222E-01  4.444444444445E-01  3.000000000000E-01
+      9 T   6 C     2.222222222222E-01 -2.222222222222E-01  3.000000000000E-01
+     10 T   6 C    -4.444444444445E-01  1.111111111111E-01  3.000000000000E-01
+     11 T   6 C    -4.444444444444E-01  4.444444444444E-01  3.000000000000E-01
+     12 T   6 C    -4.444444444443E-01 -2.222222222221E-01  3.000000000000E-01
+     13 T   6 C    -1.111111111111E-01  1.111111111111E-01  3.000000000000E-01
+     14 T   6 C    -1.111111111110E-01  4.444444444446E-01  3.000000000000E-01
+     15 T   6 C    -1.111111111110E-01 -2.222222222221E-01  3.000000000000E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ ****    1 SYMMOPS - TRANSLATORS IN FRACTIONAL UNITS
+ **** MATRICES AND TRANSLATORS IN THE CRYSTALLOGRAPHIC REFERENCE FRAME
+   V INV                    ROTATION MATRICES                   TRANSLATORS
+   1   1  1.00  0.00  0.00  0.00  1.00  0.00  0.00  0.00  1.00  0.00  0.00  0.00
+
+ DIRECT LATTICE VECTORS CARTESIAN COMPONENTS (ANGSTROM)
+          X                    Y                    Z
+   0.370158621205E+01  -0.641133538787E+01   0.000000000000E+00
+   0.370158621205E+01   0.641133538787E+01   0.000000000000E+00
+   0.000000000000E+00   0.000000000000E+00   0.868503800000E+01
+
+
+ CARTESIAN COORDINATES - PRIMITIVE CELL
+ *******************************************************************************
+ *      ATOM          X(ANGSTROM)         Y(ANGSTROM)         Z(ANGSTROM)
+ *******************************************************************************
+    1     6 C     3.701586212049E+00  4.986594190562E+00  2.605511400000E+00
+    2     6 C     2.467724141366E+00 -1.424741197304E+00  2.605511400000E+00
+    3     6 C     3.701586212049E+00  7.123705986520E-01  2.605511400000E+00
+    4     6 C     4.935448282733E+00  2.849482394607E+00  2.605511400000E+00
+    5     6 C     3.701586212049E+00 -3.561852993259E+00  2.605511400000E+00
+    6     6 C     6.169310353416E+00  7.123705986520E-01  2.605511400000E+00
+    7     6 C     1.233862070683E+00 -7.123705986520E-01  2.605511400000E+00
+    8     6 C     2.467724141366E+00  1.424741197304E+00  2.605511400000E+00
+    9     6 C     3.701586212049E+00  3.561852993259E+00  2.605511400000E+00
+   10     6 C     2.467724141366E+00 -2.849482394607E+00  2.605511400000E+00
+   11     6 C     3.701586212049E+00 -7.123705986520E-01  2.605511400000E+00
+   12     6 C     4.935448282733E+00  1.424741197304E+00  2.605511400000E+00
+   13     6 C     3.701586212049E+00 -4.986594190562E+00  2.605511400000E+00
+   14     6 C     4.935448282733E+00 -2.849482394607E+00  2.605511400000E+00
+   15     6 C     6.169310353416E+00 -7.123705986520E-01  2.605511400000E+00
+
+ *******************************************************************************
+ LOCAL ATOMIC FUNCTIONS BASIS SET
+ *******************************************************************************
+   ATOM   X(AU)   Y(AU)   Z(AU)  N. TYPE  EXPONENT  S COEF   P COEF   D/F/G COEF
+ *******************************************************************************
+   1 C    6.995   9.423   4.924
+                                  1 S  
+                                         1.358E+04 2.225E-04 0.000E+00 0.000E+00
+                                         2.035E+03 1.723E-03 0.000E+00 0.000E+00
+                                         4.632E+02 8.926E-03 0.000E+00 0.000E+00
+                                         1.312E+02 3.573E-02 0.000E+00 0.000E+00
+                                         4.285E+01 1.108E-01 0.000E+00 0.000E+00
+                                         1.558E+01 2.430E-01 0.000E+00 0.000E+00
+                                  2 S  
+                                         6.207E+00 4.144E-01 0.000E+00 0.000E+00
+                                         2.576E+00 2.374E-01 0.000E+00 0.000E+00
+                                  3 S  
+                                         4.941E-01 1.000E+00 0.000E+00 0.000E+00
+                                  4 S  
+                                         1.644E-01 1.000E+00 0.000E+00 0.000E+00
+                           5-     7 P  
+                                         3.470E+01 0.000E+00 5.333E-03 0.000E+00
+                                         7.958E+00 0.000E+00 3.586E-02 0.000E+00
+                                         2.378E+00 0.000E+00 1.422E-01 0.000E+00
+                                         8.143E-01 0.000E+00 3.427E-01 0.000E+00
+                           8-    10 P  
+                                         5.662E-01 0.000E+00 1.000E+00 0.000E+00
+                          11-    13 P  
+                                         1.974E-01 0.000E+00 1.000E+00 0.000E+00
+                          14-    18 D  
+                                         5.792E-01 0.000E+00 0.000E+00 1.000E+00
+   2 C    4.663  -2.692   4.924
+   3 C    6.995   1.346   4.924
+   4 C    9.327   5.385   4.924
+   5 C    6.995  -6.731   4.924
+   6 C   11.658   1.346   4.924
+   7 C    2.332  -1.346   4.924
+   8 C    4.663   2.692   4.924
+   9 C    6.995   6.731   4.924
+  10 C    4.663  -5.385   4.924
+  11 C    6.995  -1.346   4.924
+  12 C    9.327   2.692   4.924
+  13 C    6.995  -9.423   4.924
+  14 C    9.327  -5.385   4.924
+  15 C   11.658  -1.346   4.924
+ INFORMATION **** SET_MPP **** PCRYSTAL CALCULATION
+ INFORMATION **** READM2 **** NEW DEFAULT: FOCK/KS MATRIX MIXING SET TO 30 %
+ INFORMATION **** READM2 **** NEW DEFAULT: FULL DIRECT SCF MODE
+ INFORMATION **** READM2 **** NEW DEFAULT: COULOMB BIPOLAR BUFFER SET TO 32 Mb
+ INFORMATION **** READM2 **** NEW DEFAULT: EXCHANGE BIPOLAR BUFFER SET TO 32 Mb
+
+ *******************************************************************************
+ NEW DEFAULT: DFT INTEGRATION GRID INCREASED TO XLGRID
+ NEW DEFAULT: DIIS ACCELERATOR ACTIVE
+ USE KEYWORD NODIIS TO TURN IT OFF
+ *******************************************************************************
+
+ INFORMATION **** TOLINTEG **** COULOMB AND EXCHANGE SERIES TOLERANCES MODIFIED
+ INFORMATION **** READM2 **** FULL DIRECT SCF (MONO AND BIEL INT) SELECTED
+ INFORMATION **** MAXCYCLE **** MAX NUMBER OF SCF CYCLES SET TO         200
+ INFORMATION **** TOLDEE **** SCF TOL ON TOTAL ENERGY SET TO           9
+ *******************************************************************************
+ N. OF ATOMS PER CELL        15  COULOMB OVERLAP TOL         (T1) 10**   -8
+ NUMBER OF SHELLS           120  COULOMB PENETRATION TOL     (T2) 10**   -8
+ NUMBER OF AO               270  EXCHANGE OVERLAP TOL        (T3) 10**   20
+ N. OF ELECTRONS PER CELL    90  EXCHANGE PSEUDO OVP (F(G))  (T4) 10**   20
+ CORE ELECTRONS PER CELL     30  EXCHANGE PSEUDO OVP (P(G))  (T5) 10**   20
+ N. OF SYMMETRY OPERATORS     1  POLE ORDER IN MONO ZONE                  4
+ *******************************************************************************
+ TYPE OF CALCULATION :  RESTRICTED CLOSED SHELL
+ KOHN-SHAM HAMILTONIAN
+
+ (EXCHANGE)[CORRELATION] FUNCTIONAL:(PERDEW-BURKE-ERNZERHOF)[PERDEW-BURKE-ERNZERHOF]
+
+
+ CAPPA:IS1  8;IS2  8;IS3  8; K PTS MONK NET 260; SYMMOPS:K SPACE   2;G SPACE   1
+
+ *******************************************************************************
+ MAX NUMBER OF SCF CYCLES     200  CONVERGENCE ON DELTAP        10**-19
+ WEIGHT OF F(I) IN F(I+1)      30% CONVERGENCE ON ENERGY        10**- 9
+ SHRINK. FACT.(MONKH.)    8  8  8  NUMBER OF K POINTS IN THE IBZ    260
+ SHRINKING FACTOR(GILAT NET)   16  NUMBER OF K POINTS(GILAT NET)   2052
+ *******************************************************************************
+ *** K POINTS COORDINATES (OBLIQUE COORDINATES IN UNITS OF IS =  8)
+   1-R(  0  0  0)   2-C(  1  0  0)   3-C(  2  0  0)   4-C(  3  0  0)
+   5-R(  4  0  0)   6-C(  0  1  0)   7-C(  1  1  0)   8-C(  2  1  0)
+   9-C(  3  1  0)  10-C(  4  1  0)  11-C(  5  1  0)  12-C(  6  1  0)
+  13-C(  7  1  0)  14-C(  0  2  0)  15-C(  1  2  0)  16-C(  2  2  0)
+  17-C(  3  2  0)  18-C(  4  2  0)  19-C(  5  2  0)  20-C(  6  2  0)
+  21-C(  7  2  0)  22-C(  0  3  0)  23-C(  1  3  0)  24-C(  2  3  0)
+  25-C(  3  3  0)  26-C(  4  3  0)  27-C(  5  3  0)  28-C(  6  3  0)
+  29-C(  7  3  0)  30-R(  0  4  0)  31-C(  1  4  0)  32-C(  2  4  0)
+  33-C(  3  4  0)  34-R(  4  4  0)  35-C(  0  0  1)  36-C(  1  0  1)
+  37-C(  2  0  1)  38-C(  3  0  1)  39-C(  4  0  1)  40-C(  5  0  1)
+  41-C(  6  0  1)  42-C(  7  0  1)  43-C(  0  1  1)  44-C(  1  1  1)
+  45-C(  2  1  1)  46-C(  3  1  1)  47-C(  4  1  1)  48-C(  5  1  1)
+  49-C(  6  1  1)  50-C(  7  1  1)  51-C(  0  2  1)  52-C(  1  2  1)
+  53-C(  2  2  1)  54-C(  3  2  1)  55-C(  4  2  1)  56-C(  5  2  1)
+  57-C(  6  2  1)  58-C(  7  2  1)  59-C(  0  3  1)  60-C(  1  3  1)
+  61-C(  2  3  1)  62-C(  3  3  1)  63-C(  4  3  1)  64-C(  5  3  1)
+  65-C(  6  3  1)  66-C(  7  3  1)  67-C(  0  4  1)  68-C(  1  4  1)
+  69-C(  2  4  1)  70-C(  3  4  1)  71-C(  4  4  1)  72-C(  5  4  1)
+  73-C(  6  4  1)  74-C(  7  4  1)  75-C(  0  5  1)  76-C(  1  5  1)
+  77-C(  2  5  1)  78-C(  3  5  1)  79-C(  4  5  1)  80-C(  5  5  1)
+  81-C(  6  5  1)  82-C(  7  5  1)  83-C(  0  6  1)  84-C(  1  6  1)
+  85-C(  2  6  1)  86-C(  3  6  1)  87-C(  4  6  1)  88-C(  5  6  1)
+  89-C(  6  6  1)  90-C(  7  6  1)  91-C(  0  7  1)  92-C(  1  7  1)
+  93-C(  2  7  1)  94-C(  3  7  1)  95-C(  4  7  1)  96-C(  5  7  1)
+  97-C(  6  7  1)  98-C(  7  7  1)  99-C(  0  0  2) 100-C(  1  0  2)
+ 101-C(  2  0  2) 102-C(  3  0  2) 103-C(  4  0  2) 104-C(  5  0  2)
+ 105-C(  6  0  2) 106-C(  7  0  2) 107-C(  0  1  2) 108-C(  1  1  2)
+ 109-C(  2  1  2) 110-C(  3  1  2) 111-C(  4  1  2) 112-C(  5  1  2)
+ 113-C(  6  1  2) 114-C(  7  1  2) 115-C(  0  2  2) 116-C(  1  2  2)
+ 117-C(  2  2  2) 118-C(  3  2  2) 119-C(  4  2  2) 120-C(  5  2  2)
+ 121-C(  6  2  2) 122-C(  7  2  2) 123-C(  0  3  2) 124-C(  1  3  2)
+ 125-C(  2  3  2) 126-C(  3  3  2) 127-C(  4  3  2) 128-C(  5  3  2)
+ 129-C(  6  3  2) 130-C(  7  3  2) 131-C(  0  4  2) 132-C(  1  4  2)
+ 133-C(  2  4  2) 134-C(  3  4  2) 135-C(  4  4  2) 136-C(  5  4  2)
+ 137-C(  6  4  2) 138-C(  7  4  2) 139-C(  0  5  2) 140-C(  1  5  2)
+ 141-C(  2  5  2) 142-C(  3  5  2) 143-C(  4  5  2) 144-C(  5  5  2)
+ 145-C(  6  5  2) 146-C(  7  5  2) 147-C(  0  6  2) 148-C(  1  6  2)
+ 149-C(  2  6  2) 150-C(  3  6  2) 151-C(  4  6  2) 152-C(  5  6  2)
+ 153-C(  6  6  2) 154-C(  7  6  2) 155-C(  0  7  2) 156-C(  1  7  2)
+ 157-C(  2  7  2) 158-C(  3  7  2) 159-C(  4  7  2) 160-C(  5  7  2)
+ 161-C(  6  7  2) 162-C(  7  7  2) 163-C(  0  0  3) 164-C(  1  0  3)
+ 165-C(  2  0  3) 166-C(  3  0  3) 167-C(  4  0  3) 168-C(  5  0  3)
+ 169-C(  6  0  3) 170-C(  7  0  3) 171-C(  0  1  3) 172-C(  1  1  3)
+ 173-C(  2  1  3) 174-C(  3  1  3) 175-C(  4  1  3) 176-C(  5  1  3)
+ 177-C(  6  1  3) 178-C(  7  1  3) 179-C(  0  2  3) 180-C(  1  2  3)
+ 181-C(  2  2  3) 182-C(  3  2  3) 183-C(  4  2  3) 184-C(  5  2  3)
+ 185-C(  6  2  3) 186-C(  7  2  3) 187-C(  0  3  3) 188-C(  1  3  3)
+ 189-C(  2  3  3) 190-C(  3  3  3) 191-C(  4  3  3) 192-C(  5  3  3)
+ 193-C(  6  3  3) 194-C(  7  3  3) 195-C(  0  4  3) 196-C(  1  4  3)
+ 197-C(  2  4  3) 198-C(  3  4  3) 199-C(  4  4  3) 200-C(  5  4  3)
+ 201-C(  6  4  3) 202-C(  7  4  3) 203-C(  0  5  3) 204-C(  1  5  3)
+ 205-C(  2  5  3) 206-C(  3  5  3) 207-C(  4  5  3) 208-C(  5  5  3)
+ 209-C(  6  5  3) 210-C(  7  5  3) 211-C(  0  6  3) 212-C(  1  6  3)
+ 213-C(  2  6  3) 214-C(  3  6  3) 215-C(  4  6  3) 216-C(  5  6  3)
+ 217-C(  6  6  3) 218-C(  7  6  3) 219-C(  0  7  3) 220-C(  1  7  3)
+ 221-C(  2  7  3) 222-C(  3  7  3) 223-C(  4  7  3) 224-C(  5  7  3)
+ 225-C(  6  7  3) 226-C(  7  7  3) 227-R(  0  0  4) 228-C(  1  0  4)
+ 229-C(  2  0  4) 230-C(  3  0  4) 231-R(  4  0  4) 232-C(  0  1  4)
+ 233-C(  1  1  4) 234-C(  2  1  4) 235-C(  3  1  4) 236-C(  4  1  4)
+ 237-C(  5  1  4) 238-C(  6  1  4) 239-C(  7  1  4) 240-C(  0  2  4)
+ 241-C(  1  2  4) 242-C(  2  2  4) 243-C(  3  2  4) 244-C(  4  2  4)
+ 245-C(  5  2  4) 246-C(  6  2  4) 247-C(  7  2  4) 248-C(  0  3  4)
+ 249-C(  1  3  4) 250-C(  2  3  4) 251-C(  3  3  4) 252-C(  4  3  4)
+ 253-C(  5  3  4) 254-C(  6  3  4) 255-C(  7  3  4) 256-R(  0  4  4)
+ 257-C(  1  4  4) 258-C(  2  4  4) 259-C(  3  4  4) 260-R(  4  4  4)
+
+ DIRECT LATTICE VECTORS COMPON. (A.U.)     RECIP. LATTICE VECTORS COMPON. (A.U.) 
+        X            Y            Z              X            Y            Z
+    6.9949842  -12.1156680    0.0000000      0.4491208   -0.2593000    0.0000000
+    6.9949842   12.1156680    0.0000000      0.4491208    0.2593000   -0.0000000
+    0.0000000    0.0000000   16.4123433     -0.0000000    0.0000000    0.3828329
+
+ DISK SPACE FOR EIGENVECTORS (FTN 10)    37324800 REALS
+
+ SYMMETRY ADAPTION OF THE BLOCH FUNCTIONS DISABLED
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT gordsh1     TELAPSE        2.46 TCPU        1.94
+
+ MATRIX SIZE: P(G)  110388, F(G)   55374, P(G) IRR   55659, F(G) IRR   55659
+ MAX G-VECTOR INDEX FOR 1- AND 2-ELECTRON INTEGRALS  27
+
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT INPUT       TELAPSE        2.47 TCPU        1.95
+
+ NEIGHBORS OF THE NON-EQUIVALENT ATOMS
+
+ N = NUMBER OF NEIGHBORS AT DISTANCE R
+    ATOM  N     R/ANG      R/AU   NEIGHBORS (ATOM LABELS AND CELL INDICES)
+   1 C    3     1.4247     2.6924    7 C    0 1 0    9 C    0 0 0   15 C   -1 0 0
+   1 C    3     2.4677     4.6633    2 C    0 1 0    4 C    0 0 0    6 C   -1 0 0
+   1 C    3     2.8495     5.3847   10 C    0 1 0   13 C   -1 1 0   14 C   -1 0 0
+   1 C    6     3.7695     7.1233    8 C    0 0 0    8 C    0 1 0   11 C   -1 0 0
+                                    11 C    0 1 0   12 C    0 0 0   12 C   -1 0 0
+   1 C    6     4.2742     8.0771    3 C    0 0 0    3 C   -1 0 0    3 C    0 1 0
+                                     5 C   -1 0 0    5 C    0 1 0    5 C   -1 1 0
+   1 C    3     4.9354     9.3266    2 C   -1 0 0    4 C   -1 0 0    6 C    0 0 0
+
+   2 C    3     1.4247     2.6924    7 C    0 0 0   10 C    0 0 0   11 C    0 0 0
+   2 C    4     2.4677     4.6633    1 C    0-1 0    3 C    0 0 0    4 C    0-1 0
+                                     5 C    0 0 0
+   2 C    3     2.8495     5.3847    8 C    0 0 0    9 C    0-1 0   14 C    0 0 0
+   2 C    6     3.7695     7.1233   12 C    0 0 0   12 C    0-1 0   13 C    0 0 0
+                                    13 C   -1 0 0   15 C    0 0 0   15 C   -1-1 0
+   2 C    3     4.2742     8.0771    6 C    0 0 0    6 C   -1-1 0    6 C    0-1 0
+   2 C    4     4.9354     9.3266    1 C    1 0 0    3 C    0-1 0    4 C    0 0 0
+                                     5 C   -1 0 0
+
+   3 C    3     1.4247     2.6924    8 C    0 0 0   11 C    0 0 0   12 C    0 0 0
+   3 C    3     2.4677     4.6633    2 C    0 0 0    4 C    0 0 0    6 C    0 0 0
+   3 C    3     2.8495     5.3847    7 C    0 0 0    9 C    0 0 0   15 C    0 0 0
+   3 C    6     3.7695     7.1233   10 C    0 0 0   10 C    0 1 0   13 C   -1 0 0
+                                    13 C    0 1 0   14 C    0 0 0   14 C   -1 0 0
+   3 C    6     4.2742     8.0771    1 C    0 0 0    1 C    1 0 0    1 C    0-1 0
+                                     5 C    0 0 0    5 C   -1 0 0    5 C    0 1 0
+   3 C    3     4.9354     9.3266    2 C    0 1 0    4 C    0-1 0    6 C   -1-1 0
+
+   4 C    3     1.4247     2.6924    9 C    0 0 0   10 C    0 1 0   12 C    0 0 0
+   4 C    5     2.4677     4.6633    1 C    0 0 0    2 C    0 1 0    3 C    0 0 0
+                                     5 C    0 1 0    6 C    0 0 0
+   4 C    3     2.8495     5.3847    7 C    0 1 0    8 C    0 0 0   13 C    0 1 0
+   4 C    6     3.7695     7.1233   11 C    0 0 0   11 C    0 1 0   14 C   -1 0 0
+                                    14 C    0 1 0   15 C    0 0 0   15 C   -1 0 0
+   4 C    5     4.9354     9.3266    1 C    1 0 0    2 C    0 0 0    3 C    0 1 0
+                                     5 C   -1 0 0    6 C   -1 0 0
+   4 C    6     5.1370     9.7075    7 C    0 0 0    7 C    1 1 0    8 C    1 1 0
+                                     8 C    0 1 0   13 C   -1 0 0   13 C   -1 1 0
+
+   5 C    3     1.4247     2.6924   10 C    0 0 0   13 C    0 0 0   14 C    0 0 0
+   5 C    3     2.4677     4.6633    2 C    0 0 0    4 C    0-1 0    6 C    0-1 0
+   5 C    3     2.8495     5.3847    8 C    1 0 0   11 C    0 0 0   12 C    0-1 0
+   5 C    6     3.7695     7.1233    7 C    0 0 0    7 C    1 0 0    9 C    1 0 0
+                                     9 C    0-1 0   15 C    0 0 0   15 C    0-1 0
+   5 C    6     4.2742     8.0771    1 C    1 0 0    1 C    0-1 0    1 C    1-1 0
+                                     3 C    0 0 0    3 C    1 0 0    3 C    0-1 0
+   5 C    3     4.9354     9.3266    2 C    1 0 0    4 C    1 0 0    6 C    0 0 0
+
+   6 C    3     1.4247     2.6924   12 C    0 0 0   13 C    0 1 0   15 C    0 0 0
+   6 C    4     2.4677     4.6633    1 C    1 0 0    3 C    0 0 0    4 C    0 0 0
+                                     5 C    0 1 0
+   6 C    3     2.8495     5.3847    7 C    1 1 0   10 C    0 1 0   11 C    0 0 0
+   6 C    6     3.7695     7.1233    8 C    0 0 0    8 C    1 1 0    9 C    0 0 0
+                                     9 C    1 0 0   14 C    0 0 0   14 C    0 1 0
+   6 C    3     4.2742     8.0771    2 C    0 0 0    2 C    1 1 0    2 C    0 1 0
+   6 C    4     4.9354     9.3266    1 C    0 0 0    3 C    1 1 0    4 C    1 0 0
+                                     5 C    0 0 0
+
+   7 C    2     1.4247     2.6924    1 C    0-1 0    2 C    0 0 0
+   7 C    6     2.4677     4.6633    8 C    0 0 0    9 C    0-1 0   10 C    0 0 0
+                                    11 C    0 0 0   13 C   -1 0 0   15 C   -1-1 0
+   7 C    3     2.8495     5.3847    3 C    0 0 0    4 C    0-1 0    6 C   -1-1 0
+   7 C    2     3.7695     7.1233    5 C    0 0 0    5 C   -1 0 0
+   7 C    6     4.2742     8.0771   12 C    0 0 0   12 C   -1-1 0   12 C    0-1 0
+                                    14 C    0 0 0   14 C   -1-1 0   14 C   -1 0 0
+   7 C    6     4.9354     9.3266    8 C    0-1 0    9 C    0 0 0   10 C   -1 0 0
+                                    11 C   -1-1 0   13 C    0 0 0   15 C    0 0 0
+
+   8 C    1     1.4247     2.6924    3 C    0 0 0
+   8 C    6     2.4677     4.6633    7 C    0 0 0    9 C    0 0 0   11 C    0 0 0
+                                    12 C    0 0 0   13 C   -1 0 0   14 C   -1 0 0
+   8 C    3     2.8495     5.3847    2 C    0 0 0    4 C    0 0 0    5 C   -1 0 0
+   8 C    4     3.7695     7.1233    1 C    0 0 0    1 C    0-1 0    6 C    0 0 0
+                                     6 C   -1-1 0
+   8 C    6     4.2742     8.0771   10 C    0 0 0   10 C   -1 0 0   10 C    0 1 0
+                                    15 C    0 0 0   15 C   -1-1 0   15 C   -1 0 0
+   8 C    6     4.9354     9.3266    7 C    0 1 0    9 C    0-1 0   11 C   -1 0 0
+                                    12 C   -1-1 0   13 C    0 1 0   14 C    0 0 0
+
+   9 C    2     1.4247     2.6924    1 C    0 0 0    4 C    0 0 0
+   9 C    6     2.4677     4.6633    7 C    0 1 0    8 C    0 0 0   10 C    0 1 0
+                                    12 C    0 0 0   14 C   -1 0 0   15 C   -1 0 0
+   9 C    2     2.8495     5.3847    2 C    0 1 0    3 C    0 0 0
+   9 C    4     3.7695     7.1233    5 C   -1 0 0    5 C    0 1 0    6 C    0 0 0
+                                     6 C   -1 0 0
+   9 C    6     4.2742     8.0771   11 C    0 0 0   11 C   -1 0 0   11 C    0 1 0
+                                    13 C   -1 0 0   13 C    0 1 0   13 C   -1 1 0
+   9 C    6     4.9354     9.3266    7 C    0 0 0    8 C    0 1 0   10 C   -1 0 0
+                                    12 C   -1 0 0   14 C    0 1 0   15 C    0 0 0
+
+  10 C    3     1.4247     2.6924    2 C    0 0 0    4 C    0-1 0    5 C    0 0 0
+  10 C    6     2.4677     4.6633    7 C    0 0 0    9 C    0-1 0   11 C    0 0 0
+                                    12 C    0-1 0   13 C    0 0 0   14 C    0 0 0
+  10 C    2     2.8495     5.3847    1 C    0-1 0    6 C    0-1 0
+  10 C    2     3.7695     7.1233    3 C    0 0 0    3 C    0-1 0
+  10 C    6     4.2742     8.0771    8 C    0 0 0    8 C    1 0 0    8 C    0-1 0
+                                    15 C    0 0 0   15 C   -1-1 0   15 C    0-1 0
+  10 C    6     4.9354     9.3266    7 C    1 0 0    9 C    1 0 0   11 C    0-1 0
+                                    12 C    0 0 0   13 C   -1 0 0   14 C   -1-1 0
+
+  11 C    2     1.4247     2.6924    2 C    0 0 0    3 C    0 0 0
+  11 C    6     2.4677     4.6633    7 C    0 0 0    8 C    0 0 0   10 C    0 0 0
+                                    12 C    0 0 0   14 C    0 0 0   15 C    0 0 0
+  11 C    2     2.8495     5.3847    5 C    0 0 0    6 C    0 0 0
+  11 C    4     3.7695     7.1233    1 C    1 0 0    1 C    0-1 0    4 C    0 0 0
+                                     4 C    0-1 0
+  11 C    6     4.2742     8.0771    9 C    0 0 0    9 C    1 0 0    9 C    0-1 0
+                                    13 C    0 0 0   13 C   -1 0 0   13 C    0 1 0
+  11 C    6     4.9354     9.3266    7 C    1 1 0    8 C    1 0 0   10 C    0 1 0
+                                    12 C    0-1 0   14 C   -1 0 0   15 C   -1-1 0
+
+  12 C    3     1.4247     2.6924    3 C    0 0 0    4 C    0 0 0    6 C    0 0 0
+  12 C    6     2.4677     4.6633    8 C    0 0 0    9 C    0 0 0   10 C    0 1 0
+                                    11 C    0 0 0   13 C    0 1 0   15 C    0 0 0
+  12 C    1     2.8495     5.3847    5 C    0 1 0
+  12 C    4     3.7695     7.1233    1 C    0 0 0    1 C    1 0 0    2 C    0 0 0
+                                     2 C    0 1 0
+  12 C    6     4.2742     8.0771    7 C    0 0 0    7 C    1 1 0    7 C    0 1 0
+                                    14 C    0 0 0   14 C   -1 0 0   14 C    0 1 0
+  12 C    6     4.9354     9.3266    8 C    1 1 0    9 C    1 0 0   10 C    0 0 0
+                                    11 C    0 1 0   13 C   -1 0 0   15 C   -1 0 0
+
+  13 C    2     1.4247     2.6924    5 C    0 0 0    6 C    0-1 0
+  13 C    6     2.4677     4.6633    7 C    1 0 0    8 C    1 0 0   10 C    0 0 0
+                                    12 C    0-1 0   14 C    0 0 0   15 C    0-1 0
+  13 C    2     2.8495     5.3847    1 C    1-1 0    4 C    0-1 0
+  13 C    4     3.7695     7.1233    2 C    0 0 0    2 C    1 0 0    3 C    1 0 0
+                                     3 C    0-1 0
+  13 C    6     4.2742     8.0771    9 C    1 0 0    9 C    0-1 0    9 C    1-1 0
+                                    11 C    0 0 0   11 C    1 0 0   11 C    0-1 0
+  13 C    6     4.9354     9.3266    7 C    0 0 0    8 C    0-1 0   10 C    1 0 0
+                                    12 C    1 0 0   14 C    0-1 0   15 C    0 0 0
+
+  14 C    1     1.4247     2.6924    5 C    0 0 0
+  14 C    6     2.4677     4.6633    8 C    1 0 0    9 C    1 0 0   10 C    0 0 0
+                                    11 C    0 0 0   13 C    0 0 0   15 C    0 0 0
+  14 C    2     2.8495     5.3847    1 C    1 0 0    2 C    0 0 0
+  14 C    6     3.7695     7.1233    3 C    0 0 0    3 C    1 0 0    4 C    1 0 0
+                                     4 C    0-1 0    6 C    0 0 0    6 C    0-1 0
+  14 C    6     4.2742     8.0771    7 C    0 0 0    7 C    1 1 0    7 C    1 0 0
+                                    12 C    0 0 0   12 C    1 0 0   12 C    0-1 0
+  14 C    6     4.9354     9.3266    8 C    0 0 0    9 C    0-1 0   10 C    1 1 0
+                                    11 C    1 0 0   13 C    0 1 0   15 C    0-1 0
+
+  15 C    2     1.4247     2.6924    1 C    1 0 0    6 C    0 0 0
+  15 C    6     2.4677     4.6633    7 C    1 1 0    9 C    1 0 0   11 C    0 0 0
+                                    12 C    0 0 0   13 C    0 1 0   14 C    0 0 0
+  15 C    1     2.8495     5.3847    3 C    0 0 0
+  15 C    6     3.7695     7.1233    2 C    0 0 0    2 C    1 1 0    4 C    0 0 0
+                                     4 C    1 0 0    5 C    0 0 0    5 C    0 1 0
+  15 C    6     4.2742     8.0771    8 C    0 0 0    8 C    1 1 0    8 C    1 0 0
+                                    10 C    0 0 0   10 C    1 1 0   10 C    0 1 0
+  15 C    6     4.9354     9.3266    7 C    0 0 0    9 C    0 0 0   11 C    1 1 0
+                                    12 C    1 0 0   13 C    0 0 0   14 C    0 1 0
+
+
+ SYMMETRY ALLOWED INTERNAL DEGREE(S) OF FREEDOM:  42
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SYMM        TELAPSE        2.48 TCPU        1.95
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT INT_SCREEN  TELAPSE        2.48 TCPU        1.95
+
+ *******************************************************************************
+ *                             OPTIMIZATION STARTS                             *
+ *******************************************************************************
+ RECLASIFICATION OF INDICES FOR INTEGRAL CALC ACCORDING TO DIFFERENT CRITERIA:
+           FIXDELTE                  FIXDELTX              FIXDELTN
+          0.10000000               0.80000000                 42
+ DEFAULT MAX NUM OF POINTS  100
+ *******************************************************************************
+
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT    1
+ INFORMATION **** EXCBUF **** EXCH. BIPO BUFFER: WORDS USED =           0
+
+ DFT PARAMETERS
+
+     ATOM       ELECTRONS   NET CHARGE   R(ANGSTROM)
+   1   6  C       6.0000      0.0000     0.77000000
+
+ SIZE OF GRID=     504337
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MAKE_GRID2  TELAPSE        2.90 TCPU        2.37
+ BECKE WEIGHT FUNCTION
+ RADSAFE =     2.00
+ TOLERANCES - DENSITY:10**- 6; POTENTIAL:10**- 9; GRID WGT:10**-14
+
+ RADIAL INTEGRATION  - INTERVALS (POINTS,UPPER LIMIT):            1( 75,  4.0*R)
+
+ ANGULAR INTEGRATION - INTERVALS (ACCURACY LEVEL [N. POINTS] UPPER LIMIT):
+  1(  4[  86]   0.2)  2(  8[ 194]   0.5)  3( 12[ 350]   0.9)  4( 16[ 974]   3.5)
+  5( 12[ 350]9999.0)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT INT_CALC    TELAPSE        2.93 TCPU        2.40
+
+ *******************************************************************************
+ Final                                                                           
+ CRYSTAL - SCF - TYPE OF CALCULATION :  RESTRICTED CLOSED SHELL
+ *******************************************************************************
+
+ CAPPA:IS1  8;IS2  8;IS3  8; K PTS MONK NET 260; SYMMOPS:K SPACE   2;G SPACE   1
+
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SDIK        TELAPSE        2.99 TCPU        2.46
+
+ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         ATOMIC WAVEFUNCTION(S)
+
+
+ NUCLEAR CHARGE  6.0  SYMMETRY SPECIES            S    P
+ N. ELECTRONS    6.0  NUMBER OF PRIMITIVE GTOS   10    6
+                      NUMBER OF CONTRACTED GTOS   4    3
+                      NUMBER OF CLOSED SHELLS     2    0
+                      OPEN SHELL OCCUPATION       0    2
+
+  ZNUC SCFIT  TOTAL HF ENERGY   KINETIC ENERGY   VIRIAL THEOREM ACCURACY
+   6.0  10   -3.768111494E+01  3.771190961E+01 -1.999183423E+00  3.4E-06
+
+ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   6.0000000   6.0000000   6.0000000   6.0000000   6.0000000   6.0000000
+   6.0000000   6.0000000   6.0000000   6.0000000   6.0000000   6.0000000
+   6.0000000   6.0000000   6.0000000
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE        3.00 TCPU        2.47
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE        3.53 TCPU        3.00
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE        3.77 TCPU        3.24
+ NUMERICALLY INTEGRATED DENSITY     89.9998092205
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE        3.92 TCPU        3.39
+ CYC   0 ETOT(AU) -5.736366612078E+02 DETOT -5.74E+02 tst  0.00E+00 PX  1.00E+00
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE        3.93 TCPU        3.40
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE        4.09 TCPU        3.56
+ INSULATING STATE
+ TOP OF VALENCE BANDS -    BAND     45; K    9; EIG -2.2533012E-01 AU
+ TOP OF VALENCE BANDS -    BAND     45; K    1; EIG -2.3652289E-01 AU
+ BOTTOM OF VIRTUAL BANDS - BAND     46; K   10; EIG -2.2531342E-01 AU
+ INDIRECT ENERGY BAND GAP:   0.0005 eV
+ BOTTOM OF VIRTUAL BANDS - BAND     46; K    1; EIG -1.9888869E-01 AU
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE        4.14 TCPU        3.61
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   6.1193792   6.0899661   6.1513220   6.0881686   6.0857583   6.1051877
+   6.0725929   5.6925523   6.2802079   6.0547499   6.0837746   6.0377276
+   5.6761244   5.6337908   5.8286979
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE        4.14 TCPU        3.61
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE        4.77 TCPU        4.23
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE        5.03 TCPU        4.50
+ NUMERICALLY INTEGRATED DENSITY     89.9998524685
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE        5.29 TCPU        4.76
+ CYC   1 ETOT(AU) -5.701831834514E+02 DETOT  3.45E+00 tst  0.00E+00 PX  1.00E+00
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE        5.31 TCPU        4.77
+ DIIS TEST: 0.12957E+01 AT SCF   CYCLE   1 - MIX   30 %
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE        5.47 TCPU        4.93
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.9988250E-01 (RES. CHARGE  9.29E-08;IT. 41)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE        5.57 TCPU        5.03
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.6327539   5.6920867   5.6191762   5.6369883   5.8041241   5.8290523
+   5.4814743   7.5282784   4.7055344   5.7642196   5.6882967   5.8486761
+   7.2855546   7.3800966   6.1036877
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE        5.57 TCPU        5.03
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE        6.20 TCPU        5.66
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE        6.46 TCPU        5.92
+ NUMERICALLY INTEGRATED DENSITY     89.9998163445
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE        6.84 TCPU        6.30
+ CYC   2 ETOT(AU) -5.684976800584E+02 DETOT  1.69E+00 tst  3.26E-01 PX  3.26E-01
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE        6.85 TCPU        6.31
+ DIIS TEST: 0.14604E+02 AT SCF   CYCLE   2 - DIIS ACTIVE - HISTORY:     2 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE        7.03 TCPU        6.49
+ INSULATING STATE
+ TOP OF VALENCE BANDS -    BAND     45; K   78; EIG -1.5432503E-01 AU
+ TOP OF VALENCE BANDS -    BAND     45; K    1; EIG -1.6074603E-01 AU
+ BOTTOM OF VIRTUAL BANDS - BAND     46; K   26; EIG -1.5381945E-01 AU
+ INDIRECT ENERGY BAND GAP:   0.0138 eV
+ BOTTOM OF VIRTUAL BANDS - BAND     46; K    1; EIG -1.3504194E-01 AU
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE        7.08 TCPU        6.54
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9040268   5.9027826   5.8037626   5.8962639   5.7234037   5.8092190
+   6.5781369   5.6775366   5.9649927   5.9813846   6.6752630   5.8610255
+   5.4864565   6.0155686   6.7201769
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE        7.08 TCPU        6.54
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE        7.71 TCPU        7.16
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE        7.97 TCPU        7.43
+ NUMERICALLY INTEGRATED DENSITY     89.9998129198
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE        8.34 TCPU        7.79
+ CYC   3 ETOT(AU) -5.699646635269E+02 DETOT -1.47E+00 tst  9.76E-02 PX  2.79E-01
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE        8.35 TCPU        7.81
+ DIIS TEST: 0.32738E+01 AT SCF   CYCLE   3 - DIIS ACTIVE - HISTORY:     3 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE        8.51 TCPU        7.97
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.6047986E-01 (RES. CHARGE  7.74E-13;IT. 12)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE        8.60 TCPU        8.05
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9091923   5.8986170   5.9240236   6.0246742   5.9100814   5.9272822
+   6.0377807   6.5058988   6.3105737   6.0309596   5.7315683   6.0985454
+   6.2317982   5.9296486   5.5293560
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE        8.60 TCPU        8.06
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE        9.23 TCPU        8.68
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE        9.49 TCPU        8.94
+ NUMERICALLY INTEGRATED DENSITY     89.9998141126
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE        9.75 TCPU        9.20
+ CYC   4 ETOT(AU) -5.701997220702E+02 DETOT -2.35E-01 tst  7.33E-02 PX  1.65E-01
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE        9.76 TCPU        9.22
+ DIIS TEST: 0.13895E+01 AT SCF   CYCLE   4 - DIIS ACTIVE - HISTORY:     4 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE        9.94 TCPU        9.39
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.6905064E-01 (RES. CHARGE  1.29E-11;IT. 10)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       10.04 TCPU        9.49
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9988668   5.9816830   6.0033036   5.9562089   6.0084272   6.0804700
+   5.7193641   5.5700491   5.5690783   6.1156877   6.0421794   6.0154385
+   6.2436934   6.5023224   6.1932275
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       10.04 TCPU        9.49
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       10.67 TCPU       10.11
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       10.97 TCPU       10.42
+ NUMERICALLY INTEGRATED DENSITY     89.9998180058
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       11.23 TCPU       10.67
+ CYC   5 ETOT(AU) -5.701635127264E+02 DETOT  3.62E-02 tst  9.27E-03 PX  1.82E-01
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       11.24 TCPU       10.69
+ DIIS TEST: 0.14558E+01 AT SCF   CYCLE   5 - DIIS ACTIVE - HISTORY:     5 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       11.42 TCPU       10.87
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7369911E-01 (RES. CHARGE  4.59E-10;IT. 12)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       11.52 TCPU       10.97
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   6.0045232   5.9950354   6.0307023   5.9570985   5.9559614   6.0179786
+   6.0741558   6.4611211   5.8218496   5.9555157   6.2382769   5.9816159
+   5.8770896   5.7973016   5.8317743
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       11.52 TCPU       10.97
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       12.15 TCPU       11.59
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       12.41 TCPU       11.85
+ NUMERICALLY INTEGRATED DENSITY     89.9998214326
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       12.67 TCPU       12.11
+ CYC   6 ETOT(AU) -5.703032388379E+02 DETOT -1.40E-01 tst  1.38E-02 PX  1.81E-01
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       12.68 TCPU       12.12
+ DIIS TEST: 0.46500E+00 AT SCF   CYCLE   6 - DIIS ACTIVE - HISTORY:     6 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       12.86 TCPU       12.30
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7707446E-01 (RES. CHARGE  5.97E-12;IT. 10)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       12.95 TCPU       12.39
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   6.0087287   5.9594978   5.9673575   5.9730947   5.9475395   5.9951283
+   6.0476169   5.9612906   6.1056207   6.0196973   5.9600119   5.9521805
+   5.9521656   6.0777098   6.0723603
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       12.96 TCPU       12.39
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       13.58 TCPU       13.02
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       13.84 TCPU       13.28
+ NUMERICALLY INTEGRATED DENSITY     89.9998239511
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       14.10 TCPU       13.53
+ CYC   7 ETOT(AU) -5.703557653970E+02 DETOT -5.25E-02 tst  2.81E-03 PX  1.21E-01
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       14.11 TCPU       13.55
+ DIIS TEST: 0.84147E-01 AT SCF   CYCLE   7 - DIIS ACTIVE - HISTORY:     7 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       14.29 TCPU       13.73
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7651651E-01 (RES. CHARGE  6.98E-12;IT. 14)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       14.39 TCPU       13.82
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9533823   5.9644172   5.9603642   5.9888653   5.9313752   5.9624185
+   6.1058246   5.9988259   5.9711128   6.0501872   6.1814973   6.0395401
+   6.0180998   6.0291714   5.8449183
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       14.39 TCPU       13.82
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       15.01 TCPU       14.44
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       15.28 TCPU       14.71
+ NUMERICALLY INTEGRATED DENSITY     89.9998231627
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       15.53 TCPU       14.96
+ CYC   8 ETOT(AU) -5.703586679175E+02 DETOT -2.90E-03 tst  5.94E-04 PX  4.66E-02
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       15.55 TCPU       14.98
+ DIIS TEST: 0.65016E-01 AT SCF   CYCLE   8 - DIIS ACTIVE - HISTORY:     8 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       15.73 TCPU       15.16
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7788285E-01 (RES. CHARGE  9.52E-10;IT. 10)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       15.82 TCPU       15.25
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9697492   5.9534866   5.9707685   5.9901086   5.9282079   5.9843721
+   6.0327391   6.0720846   5.9938383   6.0157211   6.0587534   6.0759774
+   5.9521317   5.9142758   6.0877858
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       15.82 TCPU       15.25
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       16.45 TCPU       15.87
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       16.71 TCPU       16.14
+ NUMERICALLY INTEGRATED DENSITY     89.9998238289
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       16.96 TCPU       16.39
+ CYC   9 ETOT(AU) -5.703606175530E+02 DETOT -1.95E-03 tst  5.23E-04 PX  3.87E-02
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       16.98 TCPU       16.41
+ DIIS TEST: 0.47079E-01 AT SCF   CYCLE   9 - DIIS ACTIVE - HISTORY:     9 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       17.16 TCPU       16.58
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7715025E-01 (RES. CHARGE  1.23E-11;IT. 14)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       17.25 TCPU       16.68
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9826278   5.9639036   5.9728622   5.9832014   5.9427539   5.9822511
+   6.0387083   6.0695293   5.9774908   6.0272511   6.0888898   5.9878686
+   5.9361935   6.0664793   5.9799894
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       17.25 TCPU       16.68
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       17.88 TCPU       17.30
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       18.14 TCPU       17.56
+ NUMERICALLY INTEGRATED DENSITY     89.9998226284
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       18.51 TCPU       17.94
+ CYC  10 ETOT(AU) -5.703656079327E+02 DETOT -4.99E-03 tst  4.00E-04 PX  3.85E-02
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       18.53 TCPU       17.96
+ DIIS TEST: 0.85686E-02 AT SCF   CYCLE  10 - DIIS ACTIVE - HISTORY:    10 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       18.71 TCPU       18.13
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7707538E-01 (RES. CHARGE  7.24E-12;IT.  8)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       18.80 TCPU       18.22
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9845697   5.9629317   5.9718315   5.9786832   5.9404314   5.9862169
+   6.0709405   6.0541650   5.9798910   6.0192693   6.0711443   5.9870095
+   5.9902734   6.0121711   5.9904714
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       18.80 TCPU       18.22
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       19.42 TCPU       18.84
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       19.69 TCPU       19.11
+ NUMERICALLY INTEGRATED DENSITY     89.9998230908
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       19.94 TCPU       19.36
+ CYC  11 ETOT(AU) -5.703664923375E+02 DETOT -8.84E-04 tst  7.37E-05 PX  1.10E-02
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       19.97 TCPU       19.39
+ DIIS TEST: 0.24944E-02 AT SCF   CYCLE  11 - DIIS ACTIVE - HISTORY:    11 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       20.15 TCPU       19.57
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7710181E-01 (RES. CHARGE  3.38E-12;IT.  8)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       20.24 TCPU       19.66
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9825371   5.9601927   5.9725848   5.9774295   5.9377869   5.9852549
+   6.0576134   6.0580454   6.0048017   6.0182208   6.0769325   6.0042018
+   5.9721083   6.0212735   5.9710165
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       20.24 TCPU       19.66
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       20.87 TCPU       20.28
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       21.13 TCPU       20.54
+ NUMERICALLY INTEGRATED DENSITY     89.9998228620
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       21.38 TCPU       20.80
+ CYC  12 ETOT(AU) -5.703667962481E+02 DETOT -3.04E-04 tst  7.72E-06 PX  5.22E-03
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       21.40 TCPU       20.82
+ DIIS TEST: 0.20355E-03 AT SCF   CYCLE  12 - DIIS ACTIVE - HISTORY:    12 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       21.58 TCPU       20.99
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7707558E-01 (RES. CHARGE  1.21E-10;IT.  6)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       21.67 TCPU       21.08
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9814024   5.9615725   5.9709393   5.9795741   5.9392139   5.9838809
+   6.0610242   6.0594300   6.0015809   6.0233436   6.0724517   6.0016404
+   5.9707397   6.0179041   5.9753022
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       21.67 TCPU       21.08
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       22.30 TCPU       21.71
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       22.56 TCPU       21.97
+ NUMERICALLY INTEGRATED DENSITY     89.9998229193
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       22.82 TCPU       22.23
+ CYC  13 ETOT(AU) -5.703668139258E+02 DETOT -1.77E-05 tst  1.04E-06 PX  1.01E-03
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       22.84 TCPU       22.25
+ DIIS TEST: 0.48660E-04 AT SCF   CYCLE  13 - DIIS ACTIVE - HISTORY:    13 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       23.02 TCPU       22.43
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7715113E-01 (RES. CHARGE  2.06E-13;IT. 10)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       23.11 TCPU       22.52
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9820817   5.9614554   5.9713753   5.9803384   5.9391819   5.9839491
+   6.0597325   6.0569876   6.0034641   6.0210210   6.0749113   5.9994444
+   5.9708245   6.0160610   5.9791718
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       23.11 TCPU       22.52
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       23.74 TCPU       23.14
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       24.00 TCPU       23.41
+ NUMERICALLY INTEGRATED DENSITY     89.9998229785
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       24.25 TCPU       23.66
+ CYC  14 ETOT(AU) -5.703668168231E+02 DETOT -2.90E-06 tst  2.12E-07 PX  7.57E-04
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       24.28 TCPU       23.68
+ DIIS TEST: 0.10267E-04 AT SCF   CYCLE  14 - DIIS ACTIVE - HISTORY:    14 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       24.46 TCPU       23.86
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7714680E-01 (RES. CHARGE  2.39E-12;IT.  6)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       24.54 TCPU       23.95
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9823411   5.9614264   5.9714800   5.9798159   5.9389580   5.9842243
+   6.0614950   6.0567522   6.0020002   6.0211085   6.0733128   6.0007399
+   5.9696652   6.0181276   5.9785528
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       24.55 TCPU       23.95
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       25.17 TCPU       24.57
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       25.43 TCPU       24.84
+ NUMERICALLY INTEGRATED DENSITY     89.9998229586
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       25.80 TCPU       25.20
+ CYC  15 ETOT(AU) -5.703668184065E+02 DETOT -1.58E-06 tst  1.10E-07 PX  4.76E-04
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       25.83 TCPU       25.23
+ DIIS TEST: 0.24769E-05 AT SCF   CYCLE  15 - DIIS ACTIVE - HISTORY:    15 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       26.09 TCPU       25.48
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7715770E-01 (RES. CHARGE  4.26E-14;IT.  8)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       26.21 TCPU       25.61
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9822992   5.9614624   5.9713630   5.9794056   5.9388308   5.9842369
+   6.0610030   6.0570114   6.0024911   6.0215651   6.0741664   6.0005492
+   5.9699893   6.0171141   5.9785128
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       26.21 TCPU       25.61
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       26.84 TCPU       26.24
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       27.11 TCPU       26.50
+ NUMERICALLY INTEGRATED DENSITY     89.9998229682
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       27.36 TCPU       26.76
+ CYC  16 ETOT(AU) -5.703668185871E+02 DETOT -1.81E-07 tst  1.40E-08 PX  2.13E-04
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       27.39 TCPU       26.79
+ DIIS TEST: 0.28722E-06 AT SCF   CYCLE  16 - DIIS ACTIVE - HISTORY:    16 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       27.57 TCPU       26.93
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7715633E-01 (RES. CHARGE  3.55E-14;IT.  6)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       27.65 TCPU       27.02
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9822282   5.9614495   5.9714052   5.9795961   5.9389170   5.9842001
+   6.0610903   6.0569464   6.0022906   6.0213988   6.0741603   6.0005525
+   5.9700465   6.0172913   5.9784273
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       27.65 TCPU       27.02
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       28.28 TCPU       27.65
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       28.54 TCPU       27.91
+ NUMERICALLY INTEGRATED DENSITY     89.9998229663
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       28.80 TCPU       28.17
+ CYC  17 ETOT(AU) -5.703668186847E+02 DETOT -9.76E-08 tst  5.81E-10 PX  4.81E-05
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       28.83 TCPU       28.20
+ DIIS TEST: 0.29205E-07 AT SCF   CYCLE  17 - DIIS ACTIVE - HISTORY:    17 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       29.08 TCPU       28.44
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7715625E-01 (RES. CHARGE  5.56E-11;IT.  4)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       29.17 TCPU       28.53
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9822463   5.9614575   5.9713972   5.9795822   5.9389110   5.9842056
+   6.0610870   6.0570027   6.0022861   6.0213983   6.0741397   6.0005718
+   5.9700941   6.0172816   5.9783389
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       29.17 TCPU       28.53
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       29.80 TCPU       29.16
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       30.06 TCPU       29.42
+ NUMERICALLY INTEGRATED DENSITY     89.9998229658
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       30.32 TCPU       29.67
+ CYC  18 ETOT(AU) -5.703668186971E+02 DETOT -1.24E-08 tst  1.03E-10 PX  1.11E-05
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       30.34 TCPU       29.70
+ DIIS TEST: 0.16924E-08 AT SCF   CYCLE  18 - DIIS ACTIVE - HISTORY:    17 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       30.52 TCPU       29.88
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7715602E-01 (RES. CHARGE  4.94E-10;IT.  4)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       30.61 TCPU       29.97
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9822374   5.9614531   5.9714044   5.9795790   5.9389139   5.9842066
+   6.0611012   6.0570070   6.0022939   6.0214015   6.0741462   6.0005628
+   5.9700912   6.0172799   5.9783218
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       30.61 TCPU       29.97
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       31.24 TCPU       30.59
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       31.50 TCPU       30.85
+ NUMERICALLY INTEGRATED DENSITY     89.9998229656
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       31.85 TCPU       31.20
+ CYC  19 ETOT(AU) -5.703668186966E+02 DETOT  5.26E-10 tst  4.12E-12 PX  2.92E-06
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT DIIS        TELAPSE       31.88 TCPU       31.23
+ DIIS TEST: 0.15989E-09 AT SCF   CYCLE  19 - DIIS ACTIVE - HISTORY:    18 CYCLES
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT FDIK        TELAPSE       32.06 TCPU       31.40
+ POSSIBLY CONDUCTING STATE - EFERMI(AU) -1.7715595E-01 (RES. CHARGE  4.00E-11;IT.  4)
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT PDIG        TELAPSE       32.14 TCPU       31.49
+ CHARGE NORMALIZATION FACTOR   1.00000000
+ TOTAL ATOMIC CHARGES:
+   5.9822409   5.9614557   5.9714024   5.9795806   5.9389123   5.9842056
+   6.0611004   6.0570115   6.0022904   6.0214000   6.0741502   6.0005634
+   5.9700923   6.0172768   5.9783174
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MOQGAD      TELAPSE       32.14 TCPU       31.49
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELLXN     TELAPSE       32.77 TCPU       32.12
+ +++ ENERGIES IN A.U. +++
+ ::: EXT EL-POLE                                  -8.0316819116996E+02
+ ::: EXT EL-SPHEROPOLE                             6.2072127794019E+00
+ ::: BIELET ZONE E-E                               1.1946019623268E+03
+ ::: TOTAL E-E                                     3.9764098393628E+02
+ ::: TOTAL E-N + N-E                              -1.5744503710423E+03
+ ::: TOTAL N-N                                     1.1926402148987E+02
+ ::: KINETIC ENERGY                                5.6733744364002E+02
+ ::: PSEUDO TOTAL   ENERGY                        -4.9020792197613E+02
+ ::: VIRIAL COEFFICIENT                            1.0729325891556E+00
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT MONMO3      TELAPSE       33.03 TCPU       32.38
+ NUMERICALLY INTEGRATED DENSITY     89.9998229656
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFT      TELAPSE       33.29 TCPU       32.64
+ CYC  20 ETOT(AU) -5.703668187000E+02 DETOT -3.45E-09 tst  3.54E-13 PX  2.92E-06
+
+ == SCF ENDED - CONVERGENCE ON ENERGY      E(AU) -5.7036681870001E+02 CYCLES  20
+
+
+ ENERGY EXPRESSION=HARTREE+FOCK EXCH*0.00000+(PBE        EXCH)*1.00000+PBE        CORR
+
+
+ TOTAL ENERGY(DFT)(AU)( 20) -5.7036681870001E+02 DE-3.4E-09 tester 3.5E-13
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT EDFT        TELAPSE       33.29 TCPU       32.64
+
+ *******************************************************************************
+ *                             FORCE CALCULATION                               *
+ *******************************************************************************
+
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT NUMDFG      TELAPSE       33.92 TCPU       33.27
+ INFORMATION **** EXCPOG **** EXCH. BIPO BUFFER LENGTH (WORDS) =           0
+ INFORMATION **** GENPOG **** BIPO BUFFER LENGTH (WORDS) =     1106000
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT SHELXG      TELAPSE       35.99 TCPU       35.33
+
+ CARTESIAN FORCES IN HARTREE/BOHR (ANALYTICAL)
+   ATOM                     X                   Y                   Z
+   1   6            -2.330377807965E-02 -1.511222523827E-02 -9.335206713903E-09
+   2   6             3.109398937178E-03  1.328249599535E-02 -8.200939609608E-09
+   3   6            -2.489726562038E-02 -7.322195615661E-03 -4.183804812423E-09
+   4   6            -1.158367646463E-02  4.891526182914E-03 -7.415555474712E-09
+   5   6             3.359301572445E-02 -1.165930681275E-02  4.435014568856E-09
+   6   6             2.431199517195E-03 -2.264783603546E-02  1.575282179001E-08
+   7   6            -6.909201804178E-03 -1.451410150377E-02  7.288337875662E-09
+   8   6             1.242119681651E-02  1.605942245075E-02  1.185803556550E-08
+   9   6             2.661716674176E-02 -5.590634350807E-03  1.263145960357E-08
+  10   6            -1.278879351185E-02  4.684079498335E-04  9.305935517383E-09
+  11   6             2.687606421866E-03  1.172860328024E-02 -1.436226488317E-08
+  12   6             7.475546193919E-03  2.540840079609E-02 -4.080037354424E-10
+  13   6            -1.787695319823E-02 -1.756442433847E-03 -1.800191649499E-08
+  14   6             2.263052172121E-02 -4.373460048469E-03  1.230077389860E-08
+  15   6            -1.360598339512E-02  1.113734538403E-02 -1.166480593127E-08
+
+ RESULTANT FORCE     5.440092820663E-14  1.598859933338E-13 -1.188359306726E-13
+
+ SYMMETRY ALLOWED FORCES (ANALYTICAL) (DIRECTION, FORCE)
+
+    1  1.4860720E-03    2 -2.8711326E-02    3 -9.6628488E-09    4 -1.0217398E-02
+    5  7.6303578E-03    6 -9.2024800E-09    7 -7.0383632E-03    8 -2.7726159E-02
+    9 -5.7586480E-09   10 -1.1746439E-02   11 -1.1720510E-02   12 -9.6357638E-09
+   13  2.5856318E-02   14  1.9515263E-02   15  1.8735323E-09   16  2.2192625E-02
+   17 -1.2663245E-02   18  1.4001284E-08   19  1.2387301E-02   20 -1.8424081E-02
+   21  6.6759707E-09   22 -3.9271711E-03   23  1.3347764E-02   24  1.2455052E-08
+   25  2.3383767E-02   26  1.6999417E-02   27  1.5217248E-08   28  3.3640081E-04
+   29 -1.3951121E-02   30  1.4362362E-08   31 -1.8390615E-03   32  4.1930366E-03
+   33 -8.8716237E-09   34 -1.3289697E-02   35  1.8099162E-02   36  4.6597759E-09
+   37 -5.5069748E-03   38 -1.7929308E-02   39 -1.4958136E-08   40  2.2309929E-02
+   41  1.6706339E-02   42  1.6946224E-08
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT TOTGRA      TELAPSE       37.04 TCPU       36.39
+ INFORMATION **** opta001 **** GEOMETRY OUTPUT FILE
+ CLASSICAL MODEL (SCHLEGEL) USED AS INITIAL HESSIAN MATRIX
+ REFERENCE GEOMETRY DEFINED
+
+ MAX GRADIENT      0.028711  THRESHOLD              0.000450 CONVERGED NO
+ RMS GRADIENT      0.013053  THRESHOLD              0.000300 CONVERGED NO
+
+ GRADIENT NORM     0.084592  GRADIENT THRESHOLD     0.500000
+
+ EIGENVALUES OF THE ESTIMATED HESSIAN
+  0.3109E-03  0.8200E-03  0.2543E-02  0.2889E-02  0.6819E-02  0.7748E-02
+  0.2116E-01  0.2414E-01  0.2458E-01  0.2696E-01  0.3223E-01  0.4048E-01
+  0.4668E-01  0.5212E-01  0.6301E-01  0.7189E-01  0.8067E-01  0.1165    
+  0.1310      0.1473      0.1606      0.1767      0.2297      0.3091    
+  0.3391      0.3920      0.4623      0.4681      0.4890      0.5502    
+  0.7944      0.8172       1.001       1.022       1.034       1.058    
+   1.092       1.112       1.175       1.194       1.402       1.414    
+ NEWTON STEP ( 0.1470007109E+01) EXCEEDS TRUST RADIUS ( 0.5000000000E+00)
+ LEVEL SHIFT     0.3108953459E-03
+
+ INITIAL TRUST RADIUS    0.5000000000E+00
+
+ PREDICTED ENERGY CHANGE    -0.177E-01
+
+ INITIAL DISPLACEMENTS
+  0.013117 -0.095389 -0.021207 -0.037414 -0.006307 -0.005032 -0.131202  0.015370
+ -0.036909 -0.001270  0.046466 -0.013692  0.089600  0.038728  0.050287  0.016744
+ -0.061349  0.003034 -0.003861 -0.099588 -0.022158 -0.215613  0.149879 -0.086406
+  0.022090  0.005885 -0.039141 -0.003857  0.069627 -0.007813 -0.182282  0.020945
+ -0.031240 -0.111128  0.049537 -0.049058 -0.056297 -0.030943  0.001814  0.177243
+  0.111644  0.088667
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OPTI        TELAPSE       37.06 TCPU       36.40
+
+ OPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPT
+
+ - INFORMATION ON SCF MOVED TO SCFOUT.LOG
+ GEOMETRY OPTIMIZATION INFORMATION STORED IN OPTINFO.DAT
+
+ OPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPTOPT
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT    2
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     1.082137942062E-01 -1.187173396718E-01  2.987516600625E-01
+      2 T   6 C     4.418235352524E-01  2.222639306203E-01  2.997936941029E-01
+      3 T   6 C     4.364679988178E-01 -4.426437186128E-01  2.979512543013E-01
+      4 T   6 C     4.473180479619E-01 -1.069589056766E-01  2.994932237729E-01
+      5 T   6 C    -2.136262312323E-01  2.254164900254E-01  3.032859204256E-01
+      6 T   6 C    -2.232861555491E-01 -1.160731334859E-01  3.002478240301E-01
+      7 T   6 C     2.184304269998E-01  1.037369295865E-01  2.987800467944E-01
+      8 T   6 C     2.144516390199E-01  4.573603811237E-01  2.952873788680E-01
+      9 T   6 C     2.260019896458E-01 -2.220814166581E-01  2.987076091289E-01
+     10 T   6 C    -4.402611141939E-01  1.159733493664E-01  3.008489766845E-01
+     11 T   6 C    -4.539876159150E-01  4.445575647584E-01  2.996679680128E-01
+     12 T   6 C    -4.454953049511E-01 -2.205009384149E-01  2.992074664153E-01
+     13 T   6 C    -1.096786287429E-01  1.060258863552E-01  3.027492462320E-01
+     14 T   6 C    -9.096972447836E-02  4.490030077982E-01  3.064340009603E-01
+     15 T   6 C    -1.154026568404E-01 -2.306954204466E-01  2.987937302085E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ TOTAL ENERGY(DFT)(AU)( 33) -5.7039422841351E+02     DE (AU)   -2.741E-02
+
+ UPDATED TRUST RADIUS     0.100E+01
+
+ SYMMETRY ALLOWED FORCES  (COORDINATE, FORCE)
+
+    1 -2.9624309E-03    2 -1.6978363E-02    3  6.2013793E-04    4 -1.1170872E-02
+    5  1.2411473E-02    6  6.9013735E-05    7 -1.0748242E-02    8 -2.5495914E-02
+    9  7.7263005E-04   10 -8.6757426E-03   11 -2.1755922E-03   12  5.8119112E-04
+   13  1.5547309E-02   14  7.6678192E-03   15 -3.2069463E-03   16  1.8129469E-02
+   17 -6.6734066E-03   18 -1.0389571E-04   19  2.9446050E-03   20 -2.6334512E-02
+   21 -2.4049980E-04   22 -2.8838904E-02   23  2.7533459E-02   24  1.8578313E-03
+   25  1.9084513E-02   26  1.0201020E-02   27 -1.8619921E-03   28  1.1322645E-03
+   29 -5.0552950E-03   30  4.0859118E-04   31 -1.7646487E-02   32  1.4421408E-02
+   33 -4.3048134E-04   34 -1.2397515E-02   35  2.3410378E-02   36 -8.3638716E-04
+   37 -8.3213866E-03   38 -8.6057990E-03   39 -2.1380690E-04   40  3.6468387E-02
+   41  1.1029303E-02   42  6.3023760E-04
+
+ GRADIENT NORM     0.087854  GRADIENT THRESHOLD     0.500000
+
+ EIGENVALUES OF THE ESTIMATED HESSIAN
+ -0.9412E-01  0.2997E-03  0.8160E-03  0.2543E-02  0.2888E-02  0.6816E-02
+  0.7747E-02  0.2104E-01  0.2405E-01  0.2692E-01  0.3217E-01  0.4017E-01
+  0.4566E-01  0.4956E-01  0.5214E-01  0.6301E-01  0.7932E-01  0.1163    
+  0.1293      0.1407      0.1518      0.1767      0.2293      0.2927    
+  0.3391      0.3900      0.4603      0.4639      0.4856      0.5447    
+  0.7885      0.8029      0.9524       1.018       1.029       1.054    
+   1.087       1.103       1.162       1.193       1.390       1.414    
+ NEWTON STEP ( 0.1414213562E+01) EXCEEDS TRUST RADIUS ( 0.1000000000E+01)
+ LEVEL SHIFT    -0.1558509940E+00
+
+ PREDICTED ENERGY CHANGE    -0.113E+00
+
+ MAX GRADIENT      0.036468  THRESHOLD              0.000450 CONVERGED NO
+ RMS GRADIENT      0.013556  THRESHOLD              0.000300 CONVERGED NO
+ MAX DISPLAC.      0.512277  THRESHOLD              0.001800 CONVERGED NO
+ RMS DISPLAC.      0.154303  THRESHOLD              0.001200 CONVERGED NO
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OPTI        TELAPSE       91.78 TCPU       90.75
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT    3
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     1.034444234806E-01 -1.275574966938E-01  2.989778099421E-01
+      2 T   6 C     4.379576649418E-01  2.261130461496E-01  2.998932000873E-01
+      3 T   6 C     4.231434636045E-01 -4.389383883922E-01  2.989419778696E-01
+      4 T   6 C     4.536802765134E-01 -9.935923884503E-02  3.000204801718E-01
+      5 T   6 C    -2.068419303593E-01  2.192306440234E-01  2.989032479061E-01
+      6 T   6 C    -2.213644418419E-01 -1.215392188955E-01  3.002946130778E-01
+      7 T   6 C     2.087911234465E-01  9.148728934753E-02  2.987883630725E-01
+      8 T   6 C     1.982796862254E-01  4.915871842001E-01  2.983222818094E-01
+      9 T   6 C     2.329179558398E-01 -2.223593716456E-01  2.965955054946E-01
+     10 T   6 C    -4.345191436873E-01  1.227356067358E-01  3.013911823796E-01
+     11 T   6 C    -4.682880191883E-01  4.497648114237E-01  2.993104757070E-01
+     12 T   6 C    -4.418755798872E-01 -2.154615805108E-01  2.986405669108E-01
+     13 T   6 C    -1.066208241262E-01  9.608952028406E-02  3.030168566243E-01
+     14 T   6 C    -5.575027082190E-02  4.390197013624E-01  3.078844528935E-01
+     15 T   6 C    -1.229543841392E-01 -2.441458418760E-01  2.990189860537E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ TOTAL ENERGY(DFT)(AU)( 20) -5.7050670760724E+02     DE (AU)   -1.125E-01
+
+ UPDATED TRUST RADIUS     0.200E+01
+
+ SYMMETRY ALLOWED FORCES  (COORDINATE, FORCE)
+
+    1  2.3626037E-03    2 -3.2612193E-02    3 -2.4754633E-03    4 -1.0554106E-02
+    5 -6.4471648E-03    6  7.2507202E-04    7 -3.8570355E-03    8 -1.6596353E-02
+    9  4.7112898E-04   10 -6.9968072E-03   11 -9.6520378E-04   12 -3.2993807E-03
+   13  2.4792520E-02   14 -8.4718686E-04   15  7.2346079E-03   16  1.1954136E-02
+   17 -1.9065835E-02   18  1.7819646E-03   19  7.6981876E-03   20  1.0581051E-02
+   21  1.5857299E-03   22 -1.1529256E-01   23  6.6825434E-02   24  4.6704763E-03
+   25  2.2148204E-02   26 -1.3517877E-02   27  5.5053840E-03   28 -1.4007359E-02
+   29  8.8073415E-03   30 -1.6945009E-03   31 -3.5554974E-02   32  2.0683589E-03
+   33  6.7535399E-04   34 -4.0460025E-02   35  2.4783830E-03   36  4.1196550E-03
+   37 -3.8694684E-02   38 -4.1719772E-03   39 -3.7067233E-03   40  6.5819422E-02
+   41  5.2197390E-03   42 -3.9766000E-03
+
+ GRADIENT NORM     0.174711  GRADIENT THRESHOLD     0.500000
+
+ EIGENVALUES OF THE ESTIMATED HESSIAN
+ -0.1173      0.2997E-03  0.8141E-03  0.2543E-02  0.2888E-02  0.6807E-02
+  0.7747E-02  0.2085E-01  0.2360E-01  0.2683E-01  0.3211E-01  0.3986E-01
+  0.4573E-01  0.4921E-01  0.5211E-01  0.6292E-01  0.7855E-01  0.9927E-01
+  0.1283      0.1407      0.1479      0.1765      0.2255      0.2906    
+  0.3389      0.3855      0.4534      0.4608      0.4828      0.5459    
+  0.7904      0.8051      0.9558       1.015       1.029       1.040    
+   1.089       1.101       1.163       1.188       1.390       1.414    
+ NEWTON STEP ( 0.2236067977E+01) EXCEEDS TRUST RADIUS ( 0.2000000000E+01)
+ LEVEL SHIFT    -0.1994617003E+00
+
+ PREDICTED ENERGY CHANGE    -0.566E+00
+
+ MAX GRADIENT      0.115293  THRESHOLD              0.000450 CONVERGED NO
+ RMS GRADIENT      0.026958  THRESHOLD              0.000300 CONVERGED NO
+ MAX DISPLAC.      1.300765  THRESHOLD              0.001800 CONVERGED NO
+ RMS DISPLAC.      0.308607  THRESHOLD              0.001200 CONVERGED NO
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OPTI        TELAPSE      126.97 TCPU      125.70
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT    4
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     1.041558666054E-01 -1.370887657315E-01  2.983406817632E-01
+      2 T   6 C     4.339836928379E-01  2.254797796387E-01  3.004198458585E-01
+      3 T   6 C     3.983344909615E-01 -4.432374302003E-01  2.992835793979E-01
+      4 T   6 C     4.578970631491E-01 -9.700978079941E-02  2.968023295772E-01
+      5 T   6 C    -1.961600995960E-01  2.132628239634E-01  3.074404137608E-01
+      6 T   6 C    -2.224619670034E-01 -1.298341075885E-01  3.015477607500E-01
+      7 T   6 C     2.090309089438E-01  9.181906612361E-02  2.994642169797E-01
+      8 T   6 C     1.475904352700E-01 -4.360967159857E-01  3.007540376812E-01
+      9 T   6 C     2.390207753403E-01 -2.394475718952E-01  3.002543687942E-01
+     10 T   6 C    -4.284183907044E-01  1.295072534737E-01  2.981716826234E-01
+     11 T   6 C    -4.909585572138E-01  4.445541158133E-01  2.981652401276E-01
+     12 T   6 C    -4.441423786706E-01 -2.200658471647E-01  3.002797143754E-01
+     13 T   6 C    -1.066860198891E-01  8.611658472529E-02  2.966945348780E-01
+     14 T   6 C     2.141833725548E-02  4.301736750151E-01  3.025040106456E-01
+     15 T   6 C    -1.226041572854E-01 -2.514664127204E-01  2.998775827873E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ ENERGY DIFFERENCE WITH RESPECT TO FIRST CALCULATION USING
+ THE PRESENT REFERENCE GEOMETRY:  1.398889072353E-01
+
+ MAXIMUM ATOM DISPLACEMENT WITH RESPECT TO
+ THE PRESENT REFERENCE GEOMETRY:   2.372383811307E+00
+
+ REFERENCE GEOMETRY WILL BE CHANGED
+
+ TOTAL ENERGY(DFT)(AU)( 22) -5.7032087802924E+02     DE (AU)    1.858E-01
+
+ SYMMETRY ALLOWED FORCES  (COORDINATE, FORCE)
+
+    1  2.5499233E-03    2  5.6969868E-03    3  3.5603066E-03    4  6.3425248E-03
+    5 -1.3306131E-02    6 -3.9523654E-03    7  1.6182718E-01    8  2.0368870E-03
+    9 -5.8563130E-04   10  1.9605422E-02   11  3.0635790E-03   12  5.4571681E-03
+   13  7.4861095E-02   14  6.3888527E-02   15 -1.7510337E-02   16  5.0307325E-02
+   17 -2.2013156E-02   18 -8.4931840E-03   19  3.8043919E-02   20 -2.1929787E-02
+   21 -3.0282880E-03   22  5.7674752E-01   23  8.6256451E-01   24 -1.9247855E-02
+   25  3.9436333E-02   26  3.9185174E-01   27 -1.3176347E-02   28  1.2161814E-01
+   29  1.8785700E-01   30  6.0847021E-04   31  7.2997703E-02   32  2.5712031E-01
+   33 -4.4421987E-03   34  1.5393550E-01   35  2.8324141E-01   36 -1.1846662E-02
+   37  2.4289756E-01   38  4.3147637E-01   39 -1.3887925E-04   40 -4.2315298E-01
+   41 -7.5423829E-01   42  1.4799226E-02
+
+ GRADIENT NORM     1.578970  GRADIENT THRESHOLD     0.500000
+
+ HESSIAN UPDATE SKIPPED
+
+ EIGENVALUES OF THE ESTIMATED HESSIAN
+ -0.1173      0.2997E-03  0.8141E-03  0.2543E-02  0.2888E-02  0.6807E-02
+  0.7747E-02  0.2085E-01  0.2360E-01  0.2683E-01  0.3211E-01  0.3986E-01
+  0.4573E-01  0.4921E-01  0.5211E-01  0.6292E-01  0.7855E-01  0.9927E-01
+  0.1283      0.1407      0.1479      0.1765      0.2255      0.2906    
+  0.3389      0.3855      0.4534      0.4608      0.4828      0.5459    
+  0.7904      0.8051      0.9558       1.015       1.029       1.040    
+   1.089       1.101       1.163       1.188       1.390       1.414    
+ NEWTON STEP ( 0.2236067977E+01) EXCEEDS TRUST RADIUS ( 0.2000000000E+01)
+ LEVEL SHIFT    -0.2382969086E+00
+
+ PREDICTED ENERGY CHANGE    -0.270E+01
+
+ MAX GRADIENT      0.862565  THRESHOLD              0.000450 CONVERGED NO
+ RMS GRADIENT      0.243640  THRESHOLD              0.000300 CONVERGED NO
+ MAX DISPLAC.      0.839224  THRESHOLD              0.001800 CONVERGED NO
+ RMS DISPLAC.      0.308607  THRESHOLD              0.001200 CONVERGED NO
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OPTI        TELAPSE      163.14 TCPU      161.67
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT    5
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     1.047179210274E-01 -1.283675034287E-01  2.988704969957E-01
+      2 T   6 C     4.341116082088E-01  2.242523478478E-01  2.999039713580E-01
+      3 T   6 C     4.378353934236E-01 -4.219737645006E-01  2.992672863365E-01
+      4 T   6 C     4.582969702920E-01 -9.735704601801E-02  2.984750559877E-01
+      5 T   6 C    -2.215154951587E-01  1.828290446285E-01  3.022970911548E-01
+      6 T   6 C    -2.165534962669E-01 -1.262422167982E-01  3.005228325151E-01
+      7 T   6 C     2.066705888675E-01  9.179872433068E-02  2.992006062449E-01
+      8 T   6 C     2.318584170494E-01 -3.752848312042E-01  2.988433196087E-01
+      9 T   6 C     2.412533014385E-01 -2.190679639440E-01  2.980390383345E-01
+     10 T   6 C    -4.367614482527E-01  1.173823158603E-01  3.000132496385E-01
+     11 T   6 C    -4.799607632989E-01  4.471457150751E-01  2.987800828058E-01
+     12 T   6 C    -4.318902460112E-01 -2.124525232295E-01  2.994044902477E-01
+     13 T   6 C    -1.050332659858E-01  8.593036050612E-02  2.998833186096E-01
+     14 T   6 C    -1.020748663672E-01  3.474780366358E-01  3.067507861295E-01
+     15 T   6 C    -1.209546189650E-01 -2.494040290937E-01  2.997483740331E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ MAXIMUM ATOM DISPLACEMENT WITH RESPECT TO
+ THE PRESENT REFERENCE GEOMETRY:   1.526228743395E+00
+
+ REFERENCE GEOMETRY WILL BE CHANGED
+
+ TOTAL ENERGY(DFT)(AU)( 23) -5.7025078461248E+02     DE (AU)    7.009E-02
+
+ SYMMETRY ALLOWED FORCES  (COORDINATE, FORCE)
+
+    1 -2.9120909E-02    2 -5.3760604E-03    3 -1.4535805E-03    4 -9.6605696E-03
+    5  2.0962561E-02    6  3.1171326E-04    7 -4.8006424E-02    8 -5.7089525E-03
+    9 -4.9317378E-04   10  5.1962726E-02   11  6.7984931E-02   12  8.8210200E-04
+   13 -1.6930310E-01   14 -4.0535260E-01   15 -2.2722973E-02   16  1.2218848E-02
+   17 -3.3393559E-02   18 -1.8909538E-03   19 -3.9942442E-03   20 -4.5141382E-02
+   21 -4.3953000E-03   22  1.7261325E-01   23 -5.4310519E-01   24  1.7789755E-04
+   25 -2.2269192E-01   26  2.1529195E-01   27 -4.4781830E-03   28 -1.0584859E-01
+   29 -1.3932757E-01   30 -5.4805540E-03   31 -5.6769296E-02   32 -1.4975194E-01
+   33 -5.9447299E-03   34 -1.0343646E-01   35 -1.4015900E-01   36 -7.0757524E-03
+   37 -1.7204908E-02   38 -2.5669660E-01   39 -8.7902483E-03   40  1.1200136E-01
+   41  3.9921038E-01   42  1.3898169E-02
+
+ GRADIENT NORM     0.976587  GRADIENT THRESHOLD     0.500000
+
+ HESSIAN UPDATE SKIPPED
+
+ EIGENVALUES OF THE ESTIMATED HESSIAN
+ -0.1173      0.2997E-03  0.8141E-03  0.2543E-02  0.2888E-02  0.6807E-02
+  0.7747E-02  0.2085E-01  0.2360E-01  0.2683E-01  0.3211E-01  0.3986E-01
+  0.4573E-01  0.4921E-01  0.5211E-01  0.6292E-01  0.7855E-01  0.9927E-01
+  0.1283      0.1407      0.1479      0.1765      0.2255      0.2906    
+  0.3389      0.3855      0.4534      0.4608      0.4828      0.5459    
+  0.7904      0.8051      0.9558       1.015       1.029       1.040    
+   1.089       1.101       1.163       1.188       1.390       1.414    
+ NEWTON STEP ( 0.2236067977E+01) EXCEEDS TRUST RADIUS ( 0.2000000000E+01)
+ LEVEL SHIFT    -0.2643513884E+00
+
+ PREDICTED ENERGY CHANGE    -0.150E+01
+
+ MAX GRADIENT      0.543105  THRESHOLD              0.000450 CONVERGED NO
+ RMS GRADIENT      0.150691  THRESHOLD              0.000300 CONVERGED NO
+ MAX DISPLAC.      1.472028  THRESHOLD              0.001800 CONVERGED NO
+ RMS DISPLAC.      0.308607  THRESHOLD              0.001200 CONVERGED NO
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OPTI        TELAPSE      202.26 TCPU      200.50
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT    6
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     9.914095780590E-02 -1.160443702909E-01  2.989572816840E-01
+      2 T   6 C     4.339652438681E-01  2.266273696835E-01  2.997278923029E-01
+      3 T   6 C     4.377202127232E-01 -4.316679546748E-01  2.990744292631E-01
+      4 T   6 C     4.577796980435E-01 -8.834358096451E-02  2.999562330940E-01
+      5 T   6 C    -2.320723737829E-01  1.803772506611E-01  2.954055590492E-01
+      6 T   6 C    -2.192054628214E-01 -1.289866998665E-01  3.000447755749E-01
+      7 T   6 C     2.054604731396E-01  9.488251993311E-02  2.986487838384E-01
+      8 T   6 C     2.418610841222E-01 -4.904237823064E-01  2.983776275589E-01
+      9 T   6 C     2.406827871683E-01 -1.720814723418E-01  2.963374445934E-01
+     10 T   6 C    -4.456685959361E-01  1.145777531491E-01  3.009913428808E-01
+     11 T   6 C    -4.710224178939E-01  4.492059086939E-01  2.991386175018E-01
+     12 T   6 C    -4.405836524189E-01 -2.119708431985E-01  2.986960149495E-01
+     13 T   6 C    -1.067205610509E-01  8.124250747644E-02  3.025536351462E-01
+     14 T   6 C    -7.825033047285E-02  4.079234187862E-01  3.124857064155E-01
+     15 T   6 C    -1.230870624934E-01 -2.486513580726E-01  2.996046561473E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ MAXIMUM ATOM DISPLACEMENT WITH RESPECT TO
+ THE PRESENT REFERENCE GEOMETRY:   1.685139545033E+00
+
+ REFERENCE GEOMETRY WILL BE CHANGED
+
+ TOTAL ENERGY(DFT)(AU)( 24) -5.7032520186763E+02     DE (AU)   -7.442E-02
+
+ SYMMETRY ALLOWED FORCES  (COORDINATE, FORCE)
+
+    1 -3.8874492E-02    2 -5.3842172E-02    3  6.0376291E-04    4 -1.2130775E-02
+    5  7.5677917E-03    6  4.1349655E-04    7  2.8826685E-02    8  3.5460505E-02
+    9  3.7297884E-03   10 -3.4638492E-02   11 -1.1346176E-01   12 -1.3187573E-03
+   13  8.7506371E-02   14  1.3266454E-01   15  9.0061258E-03   16 -1.1738408E-02
+   17 -5.1107263E-02   18  5.9237940E-03   19 -5.6921477E-03   20  6.2192783E-02
+   21  1.6038217E-03   22 -1.9250267E-01   23 -4.8276818E-02   24 -2.9649902E-03
+   25  1.0339916E-01   26 -1.1148694E-01   27  2.6672773E-03   28 -7.1218164E-03
+   29  8.6463743E-02   30 -2.9460848E-03   31  5.2593186E-02   32 -4.2284893E-02
+   33  1.0757332E-03   34  3.2614973E-03   35  2.8498978E-02   36  2.7031339E-03
+   37 -1.8474939E-02   38  4.3022558E-02   39 -7.4031874E-03   40  3.7216397E-02
+   41  1.6612715E-02   42  2.2653886E-03
+
+ GRADIENT NORM     0.363562  GRADIENT THRESHOLD     0.500000
+
+ HESSIAN UPDATE SKIPPED
+
+ EIGENVALUES OF THE ESTIMATED HESSIAN
+ -0.1173      0.2997E-03  0.8141E-03  0.2543E-02  0.2888E-02  0.6807E-02
+  0.7747E-02  0.2085E-01  0.2360E-01  0.2683E-01  0.3211E-01  0.3986E-01
+  0.4573E-01  0.4921E-01  0.5211E-01  0.6292E-01  0.7855E-01  0.9927E-01
+  0.1283      0.1407      0.1479      0.1765      0.2255      0.2906    
+  0.3389      0.3855      0.4534      0.4608      0.4828      0.5459    
+  0.7904      0.8051      0.9558       1.015       1.029       1.040    
+   1.089       1.101       1.163       1.188       1.390       1.414    
+ NEWTON STEP ( 0.2236067977E+01) EXCEEDS TRUST RADIUS ( 0.2000000000E+01)
+ LEVEL SHIFT    -0.1735620585E+00
+
+ PREDICTED ENERGY CHANGE    -0.564E+00
+
+ MAX GRADIENT      0.192503  THRESHOLD              0.000450 CONVERGED NO
+ RMS GRADIENT      0.056099  THRESHOLD              0.000300 CONVERGED NO
+ MAX DISPLAC.      1.435421  THRESHOLD              0.001800 CONVERGED NO
+ RMS DISPLAC.      0.308607  THRESHOLD              0.001200 CONVERGED NO
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OPTI        TELAPSE      242.13 TCPU      240.10
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT    7
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     9.501407399710E-02 -1.346400816102E-01  2.986365496259E-01
+      2 T   6 C     4.332277781095E-01  2.284803284489E-01  3.001141583700E-01
+      3 T   6 C     4.121770559931E-01 -4.371016427404E-01  3.001897253585E-01
+      4 T   6 C     4.578531727312E-01 -9.482960307708E-02  2.965971326147E-01
+      5 T   6 C    -2.037508625100E-01  1.974626401356E-01  3.056645668165E-01
+      6 T   6 C    -2.238813090218E-01 -1.371821057349E-01  3.022697719175E-01
+      7 T   6 C     2.074317496390E-01  9.780733786713E-02  2.991762816496E-01
+      8 T   6 C     1.708647750937E-01 -4.395360275414E-01  2.982831584008E-01
+      9 T   6 C     2.458124873571E-01 -2.076930923492E-01  2.999703994336E-01
+     10 T   6 C    -4.312890671628E-01  1.315863732875E-01  2.971120041567E-01
+     11 T   6 C    -4.864382653234E-01  4.419020420539E-01  2.981802418675E-01
+     12 T   6 C    -4.429114177777E-01 -2.156802716562E-01  3.005237554095E-01
+     13 T   6 C    -1.019566482085E-01  8.175959044378E-02  2.947084397514E-01
+     14 T   6 C    -2.287442007945E-03  4.150393094772E-01  3.084622065536E-01
+     15 T   6 C    -1.298660809080E-01 -2.607081303373E-01  3.001116080743E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ TOTAL ENERGY(DFT)(AU)( 48) -9.1434527856829E+02     DE (AU)   -3.440E+02
+
+ UPDATED TRUST RADIUS     0.400E+01
+
+ SYMMETRY ALLOWED FORCES  (COORDINATE, FORCE)
+
+    1  1.5720886E+01    2 -5.0265738E+01    3  8.8954447E+01    4  5.0783410E+01
+    5  1.0272566E+02    6 -9.4081647E+01    7  9.3652297E+01    8  9.3404584E+01
+    9 -9.1828328E+01   10  5.8815868E+01   11 -7.3254220E+01   12 -3.8745031E+00
+   13 -1.0701872E+01   14  7.5374752E+01   15 -1.4014219E+02   16  1.5789444E+01
+   17 -5.2477651E+01   18 -1.9477422E+02   19  1.1175262E+02   20 -2.2631306E+01
+   21 -7.9693037E+01   22 -2.1447520E+02   23 -2.9863553E+02   24  2.3361778E+02
+   25 -4.2087170E+00   26 -4.5527225E+01   27 -1.7725769E+02   28 -5.2891595E+01
+   29 -1.8106497E+02   30  1.1997551E+02   31 -1.4021109E+02   32 -1.7524840E+02
+   33  6.0736070E+01   34 -7.6397572E+01   35 -8.5418554E+01   36  5.7006754E+01
+   37 -1.4302647E+02   38 -2.1862850E+02   39  2.1751997E+02   40  2.0301177E+02
+   41  1.1814486E+02   42 -1.5368669E+02
+
+ GRADIENT NORM   831.394356  GRADIENT THRESHOLD     0.500000
+
+ EIGENVALUES OF THE ESTIMATED HESSIAN
+  -1999.      0.1025E-03  0.7279E-03  0.1933E-02  0.2585E-02  0.6056E-02
+  0.7071E-02  0.1653E-01  0.2086E-01  0.2584E-01  0.2757E-01  0.3850E-01
+  0.4004E-01  0.4769E-01  0.5229E-01  0.5979E-01  0.7730E-01  0.9292E-01
+  0.1285      0.1373      0.1473      0.1726      0.2279      0.3091    
+  0.3417      0.3777      0.4139      0.4608      0.4952      0.5334    
+  0.7977      0.8180      0.9198       1.011       1.032       1.037    
+   1.101       1.121       1.157       1.188       1.381       1.422    
+ NEWTON STEP ( 0.4123105626E+01) EXCEEDS TRUST RADIUS ( 0.4000000000E+01)
+ LEVEL SHIFT    -0.2206410752E+04
+
+ PREDICTED ENERGY CHANGE    -0.193E+05
+
+ MAX GRADIENT     *********  THRESHOLD              0.000450 CONVERGED NO
+ RMS GRADIENT     *********  THRESHOLD              0.000300 CONVERGED NO
+ MAX DISPLAC.      1.436670  THRESHOLD              0.001800 CONVERGED NO
+ RMS DISPLAC.      0.617213  THRESHOLD              0.001200 CONVERGED NO
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OPTI        TELAPSE      316.02 TCPU      313.52
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT    8
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     9.062128714255E-02 -1.539008162674E-01  3.238314679875E-01
+      2 T   6 C     4.700157990084E-01  2.691466956518E-01  2.717330830381E-01
+      3 T   6 C     4.584001675190E-01 -4.031411396623E-01  2.745660502084E-01
+      4 T   6 C     4.567611159983E-01 -1.272601010085E-01  2.979107760456E-01
+      5 T   6 C    -2.000853977475E-01  2.238777179191E-01  2.689848084997E-01
+      6 T   6 C    -2.367268751378E-01 -1.618630549226E-01  2.545085886606E-01
+      7 T   6 C     2.318286209992E-01  8.657279838141E-02  2.895839803463E-01
+      8 T   6 C     3.486920169906E-02  4.478635846988E-01  3.775491824704E-01
+      9 T   6 C     2.422652338026E-01 -2.102363838291E-01  2.578915716605E-01
+     10 T   6 C    -4.729220014371E-01  8.287953268512E-02  3.432816489141E-01
+     11 T   6 C     4.569909201367E-01  4.097588146604E-01  3.217425868152E-01
+     12 T   6 C    -4.441091186842E-01 -1.994307421699E-01  3.186506838685E-01
+     13 T   6 C    -1.288407370880E-01  6.629087578967E-02  3.456119274883E-01
+     14 T   6 C     1.502111571860E-01 -4.608950764003E-01  2.493879120260E-01
+     15 T   6 C    -1.092793733966E-01 -2.029960388589E-01  3.047657319707E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ ENERGY DIFFERENCE WITH RESPECT TO FIRST CALCULATION USING
+ THE PRESENT REFERENCE GEOMETRY:  3.440200767007E+02
+
+ MAXIMUM ATOM DISPLACEMENT WITH RESPECT TO
+ THE PRESENT REFERENCE GEOMETRY:   2.964842204336E+00
+
+ REFERENCE GEOMETRY WILL BE CHANGED
+
+ TOTAL ENERGY(DFT)(AU)( 36) -5.6982001694366E+02     DE (AU)    3.445E+02
+
+ SYMMETRY ALLOWED FORCES  (COORDINATE, FORCE)
+
+    1  7.7425723E-02    2  8.1210284E-02    3 -5.6187800E-02    4  1.1125434E-01
+    5 -3.0737321E-01    6 -3.7684071E-02    7  2.1471078E-02    8 -1.7839289E-01
+    9  4.1818140E-02   10 -5.0202630E-01   11  2.7782104E-01   12 -5.6517848E-02
+   13  3.4837628E-03   14 -7.3166908E-02   15  9.6472868E-02   16 -1.7998418E-01
+   17  7.1656995E-02   18  1.0492786E-02   19 -8.3340262E-02   20 -3.3471371E-02
+   21  9.9859973E-03   22 -7.3831499E-02   23 -5.5798676E-02   24 -6.3626438E-02
+   25 -1.0269856E-01   26 -1.4775199E-01   27  2.4785672E-02   28 -3.9399513E-02
+   29  8.7385257E-02   30 -5.6272765E-02   31 -2.4256965E-01   32  3.0051574E-01
+   33  2.1232039E-02   34  3.3066420E-01   35 -2.2955192E-01   36  9.8129598E-03
+   37 -9.2536990E-02   38  5.4291098E-02   39 -7.8092445E-02   40 -9.5268945E-02
+   41  9.1664019E-02   42  4.4644852E-03
+
+ GRADIENT NORM     0.977620  GRADIENT THRESHOLD     0.500000
+
+ HESSIAN UPDATE SKIPPED
+
+ EIGENVALUES OF THE ESTIMATED HESSIAN
+  -1999.      0.1025E-03  0.7279E-03  0.1933E-02  0.2585E-02  0.6056E-02
+  0.7071E-02  0.1653E-01  0.2086E-01  0.2584E-01  0.2757E-01  0.3850E-01
+  0.4004E-01  0.4769E-01  0.5229E-01  0.5979E-01  0.7730E-01  0.9292E-01
+  0.1285      0.1373      0.1473      0.1726      0.2279      0.3091    
+  0.3417      0.3777      0.4139      0.4608      0.4952      0.5334    
+  0.7977      0.8180      0.9198       1.011       1.032       1.037    
+   1.101       1.121       1.157       1.188       1.381       1.422    
+ NEWTON STEP ( 0.4123105626E+01) EXCEEDS TRUST RADIUS ( 0.4000000000E+01)
+ LEVEL SHIFT    -0.1998617138E+04
+
+ PREDICTED ENERGY CHANGE    -0.160E+05
+
+ MAX GRADIENT      0.502026  THRESHOLD              0.000450 CONVERGED NO
+ RMS GRADIENT      0.150850  THRESHOLD              0.000300 CONVERGED NO
+ MAX DISPLAC.      1.436590  THRESHOLD              0.001800 CONVERGED NO
+ RMS DISPLAC.      0.617213  THRESHOLD              0.001200 CONVERGED NO
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OPTI        TELAPSE      371.83 TCPU      368.88
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT    9
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     9.501553918593E-02 -1.346397866798E-01  2.986353190033E-01
+      2 T   6 C     4.332273886950E-01  2.284710769301E-01  3.001129400108E-01
+      3 T   6 C     4.121803862405E-01 -4.371040141146E-01  3.001910323575E-01
+      4 T   6 C     4.578392654091E-01 -9.482203544447E-02  2.965955210899E-01
+      5 T   6 C    -2.037461445454E-01  1.974649026053E-01  3.056675102368E-01
+      6 T   6 C    -2.238863970754E-01 -1.371821742882E-01  3.022697873247E-01
+      7 T   6 C     2.074309632212E-01  9.780809822507E-02  2.991763793871E-01
+      8 T   6 C     1.708531589378E-01 -4.395421234957E-01  2.982816062365E-01
+      9 T   6 C     2.458109615029E-01 -2.077011512625E-01  2.999708711529E-01
+     10 T   6 C    -4.312851008846E-01  1.315925537961E-01  2.971107496370E-01
+     11 T   6 C    -4.864378812557E-01  4.419112341229E-01  2.981813506378E-01
+     12 T   6 C    -4.429006923891E-01 -2.156878935611E-01  3.005244344342E-01
+     13 T   6 C    -1.019562455252E-01  8.176374821114E-02  2.947067701578E-01
+     14 T   6 C    -2.282642631395E-03  4.150441970885E-01  3.084631426223E-01
+     15 T   6 C    -1.298625588850E-01 -2.607099654652E-01  3.001125857112E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ MAXIMUM ATOM DISPLACEMENT WITH RESPECT TO
+ THE PRESENT REFERENCE GEOMETRY:   2.191116578060E+00
+
+ REFERENCE GEOMETRY WILL BE CHANGED
+
+ TOTAL ENERGY(DFT)(AU)( 24) -5.7061119431016E+02     DE (AU)   -7.912E-01
+
+ SYMMETRY ALLOWED FORCES  (COORDINATE, FORCE)
+
+    1  3.0919559E-02    2  2.1926434E-02    3  2.2327360E-03    4  1.3097809E-02
+    5 -3.8381561E-02    6 -4.1311622E-03    7  5.3472426E-02    8  9.9563361E-04
+    9 -3.0353772E-03   10  1.7854203E-02   11  5.8546276E-02   12  2.8480999E-03
+   13  4.4428695E-02   14  9.7081386E-02   15 -9.7727129E-03   16  2.7068176E-02
+   17  9.6800596E-03   18 -1.1378762E-02   19  4.3834525E-03   20 -2.6652911E-02
+   21 -2.1143421E-03   22  1.3791045E-01   23  1.5436856E-01   24 -4.2285943E-03
+   25 -1.1380046E-02   26 -2.9584241E-02   27 -1.0952573E-02   28  6.2430167E-02
+   29  5.7470883E-03   30  3.8135221E-03   31 -2.4231243E-02   32  9.2444394E-02
+   33 -1.3256113E-03   34  3.8232439E-02   35  1.8963878E-02   36 -6.2939615E-03
+   37  5.4839717E-02   38  6.2748632E-02   39  7.2306230E-03   40 -1.0798331E-01
+   41 -1.2723403E-01   42  1.1778121E-03
+
+ GRADIENT NORM     0.341601  GRADIENT THRESHOLD     0.500000
+
+ HESSIAN UPDATE SKIPPED
+
+ EIGENVALUES OF THE ESTIMATED HESSIAN
+  -1999.      0.1025E-03  0.7279E-03  0.1933E-02  0.2585E-02  0.6056E-02
+  0.7071E-02  0.1653E-01  0.2086E-01  0.2584E-01  0.2757E-01  0.3850E-01
+  0.4004E-01  0.4769E-01  0.5229E-01  0.5979E-01  0.7730E-01  0.9292E-01
+  0.1285      0.1373      0.1473      0.1726      0.2279      0.3091    
+  0.3417      0.3777      0.4139      0.4608      0.4952      0.5334    
+  0.7977      0.8180      0.9198       1.011       1.032       1.037    
+   1.101       1.121       1.157       1.188       1.381       1.422    
+ NEWTON STEP ( 0.4123105626E+01) EXCEEDS TRUST RADIUS ( 0.4000000000E+01)
+ LEVEL SHIFT    -0.1998604786E+04
+
+ PREDICTED ENERGY CHANGE    -0.160E+05
+
+ MAX GRADIENT      0.154369  THRESHOLD              0.000450 CONVERGED NO
+ RMS GRADIENT      0.052710  THRESHOLD              0.000300 CONVERGED NO
+ MAX DISPLAC.      1.436704  THRESHOLD              0.001800 CONVERGED NO
+ RMS DISPLAC.      0.617213  THRESHOLD              0.001200 CONVERGED NO
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OPTI        TELAPSE      411.59 TCPU      408.38
+ *******************************************************************************
+ COORDINATE OPTIMIZATION - POINT   10
+ *******************************************************************************
+ LATTICE PARAMETERS (ANGSTROMS AND DEGREES) - BOHR = 0.5291772083 ANGSTROM
+ PRIMITIVE CELL - CENTRING CODE 1/0 VOLUME=   412.228566 - DENSITY  0.725 g/cm^3
+         A              B              C           ALPHA      BETA       GAMMA 
+     7.40317242     7.40317242     8.68503800    90.000000  90.000000 120.000000
+ *******************************************************************************
+ ATOMS IN THE ASYMMETRIC UNIT   15 - ATOMS IN THE UNIT CELL:   15
+     ATOM                 X/A                 Y/B                 Z/C    
+ *******************************************************************************
+      1 T   6 C     9.940702969891E-02 -1.153810023326E-01  2.734407348414E-01
+      2 T   6 C     3.964409175352E-01  1.878060739296E-01  3.284938350929E-01
+      3 T   6 C     3.659650243665E-01 -4.710606361768E-01  3.258146603279E-01
+      4 T   6 C     4.589305407785E-01 -6.239368262778E-02  2.952819015283E-01
+      5 T   6 C    -2.074037333861E-01  1.710581634661E-01  3.423471036283E-01
+      6 T   6 C    -2.110420719724E-01 -1.125046971942E-01  3.500307105534E-01
+      7 T   6 C     1.830335601192E-01  1.090428733540E-01  3.087686222834E-01
+      8 T   6 C     3.068460278010E-01 -3.269399106270E-01  2.190154099527E-01
+      9 T   6 C     2.493573320009E-01 -2.051634385561E-01  3.420493558240E-01
+     10 T   6 C    -3.896516986590E-01  1.802999941964E-01  2.509413392422E-01
+     11 T   6 C    -4.298690911221E-01  4.740539810629E-01  2.746191213224E-01
+     12 T   6 C    -4.417035508812E-01 -2.319365304551E-01  2.823975690662E-01
+     13 T   6 C    -7.507228949054E-02  9.723377035729E-02  2.438034851934E-01
+     14 T   6 C    -1.547882721758E-01  2.909729406999E-01  3.675376684182E-01
+     15 T   6 C    -1.504497246124E-01 -3.184212324292E-01  2.954584827253E-01
+
+ T = ATOM BELONGING TO THE ASYMMETRIC UNIT
+
+ MAXIMUM ATOM DISPLACEMENT WITH RESPECT TO
+ THE PRESENT REFERENCE GEOMETRY:   2.191252023990E+00
+
+ REFERENCE GEOMETRY WILL BE CHANGED
+ ERROR **** NEIGHB **** USE KEYWORD SMALLDIST TO RUN ANYWAY
+ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT ERR         TELAPSE      413.60 TCPU      408.38
+MPICH ERROR [Rank 95] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 95 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 95
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 95
+MPICH ERROR [Rank 110] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 110 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 110
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 110
+MPICH ERROR [Rank 4] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 4 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 4
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 4
+MPICH ERROR [Rank 1] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 1 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 1
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 1
+MPICH ERROR [Rank 65] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 65 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 65
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 65
+MPICH ERROR [Rank 98] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 98 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 98
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 98
+MPICH ERROR [Rank 56] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 56 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 56
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 56
+MPICH ERROR [Rank 43] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 43 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 43
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 43
+MPICH ERROR [Rank 62] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 62 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 62
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 62
+MPICH ERROR [Rank 37] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 37 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 37
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 37
+MPICH ERROR [Rank 38] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 38 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 38
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 38
+MPICH ERROR [Rank 48] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 48 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 48
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 48
+MPICH ERROR [Rank 87] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 87 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 87
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 87
+MPICH ERROR [Rank 73] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 73 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 73
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 73
+MPICH ERROR [Rank 64] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 64 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 64
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 64
+MPICH ERROR [Rank 115] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 115 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 115
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 115
+MPICH ERROR [Rank 112] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 112 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 112
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 112
+MPICH ERROR [Rank 78] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 78 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 78
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 78
+MPICH ERROR [Rank 58] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 58 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 58
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 58
+MPICH ERROR [Rank 25] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 25 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 25
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 25
+MPICH ERROR [Rank 16] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 16 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 16
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 16
+MPICH ERROR [Rank 63] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 63 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 63
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 63
+MPICH ERROR [Rank 19] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 19 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 19
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 19
+MPICH ERROR [Rank 24] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 24 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 24
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 24
+MPICH ERROR [Rank 44] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 44 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 44
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 44
+MPICH ERROR [Rank 39] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 39 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 39
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 39
+MPICH ERROR [Rank 69] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 69 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 69
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 69
+MPICH ERROR [Rank 52] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 52 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 52
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 52
+MPICH ERROR [Rank 124] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 124 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 124
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 124
+MPICH ERROR [Rank 74] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 74 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 74
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 74
+MPICH ERROR [Rank 111] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 111 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 111
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 111
+MPICH ERROR [Rank 122] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 122 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 122
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 122
+MPICH ERROR [Rank 116] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 116 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 116
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 116
+MPICH ERROR [Rank 29] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 29 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 29
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 29
+MPICH ERROR [Rank 50] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 50 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 50
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 50
+MPICH ERROR [Rank 90] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 90 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 90
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 90
+MPICH ERROR [Rank 10] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 10 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 10
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 10
+MPICH ERROR [Rank 71] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 71 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 71
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 71
+MPICH ERROR [Rank 125] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 125 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 125
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 125
+MPICH ERROR [Rank 106] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 106 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 106
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 106
+MPICH ERROR [Rank 107] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 107 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 107
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 107
+MPICH ERROR [Rank 120] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 120 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 120
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 120
+MPICH ERROR [Rank 75] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 75 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 75
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 75
+MPICH ERROR [Rank 76] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 76 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 76
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 76
+MPICH ERROR [Rank 97] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 97 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 97
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 97
+MPICH ERROR [Rank 113] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 113 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 113
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 113
+MPICH ERROR [Rank 33] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 33 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 33
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 33
+MPICH ERROR [Rank 121] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 121 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 121
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 121
+MPICH ERROR [Rank 17] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 17 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 17
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 17
+MPICH ERROR [Rank 34] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 34 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 34
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 34
+MPICH ERROR [Rank 49] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 49 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 49
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 49
+MPICH ERROR [Rank 6] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 6 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 6
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 6
+MPICH ERROR [Rank 27] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 27 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 27
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 27
+MPICH ERROR [Rank 61] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 61 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 61
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 61
+MPICH ERROR [Rank 12] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 12 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 12
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 12
+MPICH ERROR [Rank 36] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 36 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 36
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 36
+MPICH ERROR [Rank 42] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 42 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 42
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 42
+MPICH ERROR [Rank 40] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 40 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 40
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 40
+MPICH ERROR [Rank 94] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 94 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 94
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 94
+MPICH ERROR [Rank 2] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 2 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 2
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 2
+MPICH ERROR [Rank 8] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 8 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 8
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 8
+MPICH ERROR [Rank 22] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 22 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 22
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 22
+MPICH ERROR [Rank 23] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 23 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 23
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 23
+MPICH ERROR [Rank 46] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 46 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 46
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 46
+MPICH ERROR [Rank 54] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 54 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 54
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 54
+MPICH ERROR [Rank 92] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 92 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 92
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 92
+MPICH ERROR [Rank 93] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 93 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 93
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 93
+MPICH ERROR [Rank 114] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 114 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 114
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 114
+MPICH ERROR [Rank 20] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 20 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 20
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 20
+MPICH ERROR [Rank 96] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 96 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 96
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 96
+MPICH ERROR [Rank 123] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 123 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 123
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 123
+MPICH ERROR [Rank 55] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 55 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 55
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 55
+MPICH ERROR [Rank 103] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 103 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 103
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 103
+MPICH ERROR [Rank 119] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 119 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 119
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 119
+MPICH ERROR [Rank 32] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 32 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 32
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 32
+MPICH ERROR [Rank 67] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 67 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 67
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 67
+MPICH ERROR [Rank 101] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 101 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 101
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 101
+MPICH ERROR [Rank 108] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 108 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 108
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 108
+MPICH ERROR [Rank 5] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 5 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 5
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 5
+MPICH ERROR [Rank 14] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 14 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 14
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 14
+MPICH ERROR [Rank 59] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 59 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 59
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 59
+MPICH ERROR [Rank 13] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 13 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 13
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 13
+MPICH ERROR [Rank 102] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 102 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 102
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 102
+MPICH ERROR [Rank 126] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 126 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 126
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 126
+MPICH ERROR [Rank 85] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 85 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 85
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 85
+MPICH ERROR [Rank 30] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 30 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 30
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 30
+MPICH ERROR [Rank 31] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 31 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 31
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 31
+MPICH ERROR [Rank 72] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 72 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 72
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 72
+MPICH ERROR [Rank 105] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 105 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 105
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 105
+MPICH ERROR [Rank 26] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 26 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 26
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 26
+MPICH ERROR [Rank 86] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 86 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 86
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 86
+MPICH ERROR [Rank 104] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 104 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 104
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 104
+MPICH ERROR [Rank 117] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 117 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 117
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 117
+MPICH ERROR [Rank 11] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 11 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 11
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 11
+MPICH ERROR [Rank 60] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 60 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 60
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 60
+MPICH ERROR [Rank 7] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 7 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 7
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 7
+MPICH ERROR [Rank 70] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 70 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 70
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 70
+MPICH ERROR [Rank 3] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 3 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 3
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 3
+MPICH ERROR [Rank 9] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 9 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 9
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 9
+MPICH ERROR [Rank 41] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 41 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 41
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 41
+MPICH ERROR [Rank 82] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 82 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 82
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 82
+MPICH ERROR [Rank 100] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 100 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 100
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 100
+MPICH ERROR [Rank 109] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 109 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 109
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 109
+MPICH ERROR [Rank 35] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 35 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 35
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 35
+MPICH ERROR [Rank 51] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 51 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 51
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 51
+MPICH ERROR [Rank 57] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 57 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 57
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 57
+MPICH ERROR [Rank 77] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 77 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 77
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 77
+MPICH ERROR [Rank 99] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 99 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 99
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 99
+MPICH ERROR [Rank 127] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 127 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 127
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 127
+MPICH ERROR [Rank 28] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 28 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 28
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 28
+MPICH ERROR [Rank 45] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 45 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 45
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 45
+MPICH ERROR [Rank 53] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 53 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 53
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 53
+MPICH ERROR [Rank 68] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 68 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 68
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 68
+MPICH ERROR [Rank 88] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 88 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 88
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 88
+MPICH ERROR [Rank 118] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 118 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 118
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 118
+MPICH ERROR [Rank 18] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 18 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 18
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 18
+MPICH ERROR [Rank 47] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 47 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 47
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 47
+MPICH ERROR [Rank 79] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 79 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 79
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 79
+MPICH ERROR [Rank 83] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 83 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 83
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 83
+MPICH ERROR [Rank 89] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 89 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 89
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 89
+MPICH ERROR [Rank 91] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 91 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 91
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 91
+MPICH ERROR [Rank 15] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 15 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 15
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 15
+MPICH ERROR [Rank 21] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 21 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 21
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 21
+MPICH ERROR [Rank 66] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 66 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 66
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 66
+MPICH ERROR [Rank 80] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 80 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 80
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 80
+MPICH ERROR [Rank 84] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 84 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 84
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 84
+MPICH ERROR [Rank 81] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 81 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 81
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 81
+MPICH ERROR [Rank 0] [job id 2541589.14] [Mon Oct 31 22:22:39 2022] [nid005741] - Abort(1) (rank 0 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 0
+
+aborting job:
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 0
+srun: error: nid005741: tasks 0-127: Exited with exit code 255
+srun: launch/slurm: _step_signal: Terminating StepId=2541589.14
+end_date Mon Oct 31 22:22:39 GMT 2022
+ 
+TEMPORARY          SAVED (in /mnt/lustre/a2fs-work2/work/e05/e05/bcamino/quantum_computing/test_model/optgeom)
+binary wf (fort.9) is not written on this node
+fort.87            graphene_3v_H.ERROR120      Oct 31 22:22
+fort.34            graphene_3v_H.gui 1311     Oct 31 22:22
+fort.33            graphene_3v_H.xyz 10421    Oct 31 22:22
+SCFOUT.LOG         graphene_3v_H.SCFLOG342302   Oct 31 22:22
+OPTINFO.DAT        graphene_3v_H.OPTINFO11906031 Oct 31 22:22
+HESSOPT.DAT        graphene_3v_H.HESSOPT37485    Oct 31 22:22
+opta001            opta002            
+Disk usage:<du -m>
+578	/mnt/lustre/a2fs-work2/work/e05/e05/bcamino/quantum_computing/test_model/optgeom/tmp_graphene_3v_H_
+</du -m>
+Filesystem                                          1K-blocks          Used     Available Use% Mounted on
+10.253.102.2@o2ib1:10.253.102.3@o2ib1:/cls01097 3582178503216 1815310273032 1730664582608  52% /mnt/lustre/a2fs-work2
+10.253.102.2@o2ib1:10.253.102.3@o2ib1:/cls01097 3582178503216 1815310273032 1730664582608  52% /mnt/lustre/a2fs-work2
