@@ -1,0 +1,125 @@
+#!/bin/bash
+#SBATCH --nodes=40
+#SBATCH --ntasks-per-node=32
+#SBATCH --cpus-per-task=1
+#SBATCH --time=24:00:00
+
+# Replace [budget code] below with your full project code
+#SBATCH --account=e05-power-smw
+#SBATCH --partition=standard
+#SBATCH --qos=standard
+#SBATCH --export=none
+
+module load epcc-job-env
+module load other-software
+module load crystal
+
+# Address the memory leak
+export FI_MR_CACHE_MAX_COUNT=0
+
+# Run calculations
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_0v_A &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_0v_A &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_1v_A &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_1v_A &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_2v_A &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_2v_A &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_2v_B &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_2v_B &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_2v_C &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_2v_C &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_2v_D &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_2v_D &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_2v_E &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_2v_E &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_A &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_A &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_B &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_B &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_C &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_C &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_D &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_D &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_E &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_E &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_F &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_F &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_G &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_G &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_H &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_H &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_I &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_I &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_J &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_J &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_K &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_K &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_L &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_L &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_M &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_M &
+wait
+
+timeout 2876m /work/e05/e05/bcamino/runCRYSTAL/Pcry_slurm graphene_3v_N &
+wait
+/work/e05/e05/bcamino/runCRYSTAL/post_proc_slurm crys graphene_3v_N &
+wait
+

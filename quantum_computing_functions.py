@@ -1,6 +1,8 @@
 # Bruno Camino 19/07/2022
 
 import numpy as np
+import copy
+import time
 
 
 def build_adjacency_matrix(structure):
@@ -22,6 +24,7 @@ def build_adj_adjacency_matrix(structure):
     
     import numpy as np
   
+    ''' Old version
     A = build_adjacency_matrix(structure)
     B = np.zeros((structure.num_sites,structure.num_sites))
     
@@ -30,8 +33,15 @@ def build_adj_adjacency_matrix(structure):
         for j in range(len(neighbours)):
             for k in range(len(neighbours)):
                 if k > j:
-                    B[neighbours[j],neighbours[k]] = 1
-        
+                    B[neighbours[j],neighbours[k]] = 1'''
+    distance_matrix_pbc = np.round(structure.distance_matrix,5)
+
+    shells = np.unique(distance_matrix_pbc[0])
+
+    B = np.round(distance_matrix_pbc,5) == np.round(shells[1],5)
+    B = np.triu(B)
+    B = B.astype(int)
+    
     return B
 
 
@@ -95,6 +105,146 @@ def build_constrained_quadratic_model(structure,use_coord = False, num_vacancies
         
         return None
 
+
+def build_descriptor(structures,max_shell=3):
+    shells = np.unique(np.round(structures[0].distance_matrix[0],decimals=6),return_counts=True)[0].tolist()
+    neighbours_spatial_dist = []
+    neighbours_spatial_dist_all = []
+    
+    for k,structure in enumerate(structures): 
+        neighbours_spatial_dist = []
+
+        for j in range(structure.num_sites):
+            centered_sph_coords = []
+            neighbours_spatial_dist_atom = []
+
+            for m,n in enumerate(range(max_shell+1)):
+                centered_sph_coords = []
+
+                neighbours = structure.get_neighbors_in_shell(structure.sites[j].coords,shells[n],0.2)
+                new_cart_coords = [x.coords.tolist() for x in neighbours]
+                atom_numbers = [x.specie.number for x in neighbours]
+                
+                #SORT DESCRIPTOR
+                neighbours_spatial_dist_atom.extend(np.sort(np.array(atom_numbers)))
+
+            neighbours_spatial_dist.append(neighbours_spatial_dist_atom)
+
+        neighbours_spatial_dist_all.append(neighbours_spatial_dist)     
+
+    #ALL AT ONCE
+    neighbours_spatial_dist_all = np.array(neighbours_spatial_dist_all)
+
+    neighbours_spatial_dist_all_sorted = []
+    sorting = []
+
+    for k,structure in enumerate(range(neighbours_spatial_dist_all.shape[0])):
+        sorted_atoms = []
+        for i in range(neighbours_spatial_dist_all.shape[1]):
+            sorted_atoms.append(int(''.join([str(x) for x in neighbours_spatial_dist_all[k][i]])))
+        sorting.append(np.argsort(np.array(sorted_atoms))) 
+        neighbours_spatial_dist_all_sorted.append((np.array(neighbours_spatial_dist_all)[k][np.argsort(np.array(sorted_atoms))]).tolist())
+    neighbours_spatial_dist_all_sorted = np.array(neighbours_spatial_dist_all_sorted)   
+
+    neighbours_spatial_dist_all_sorted_sliced = neighbours_spatial_dist_all_sorted[:,:,1:]
+
+    n_structures = neighbours_spatial_dist_all_sorted_sliced.shape[0]
+    vector_len = neighbours_spatial_dist_all_sorted_sliced.shape[1] * neighbours_spatial_dist_all_sorted_sliced.shape[2]
+    neighbours_spatial_dist_all_sorted_sliced_flat = \
+    np.reshape(neighbours_spatial_dist_all_sorted_sliced, [n_structures,vector_len])
+
+    neighbours_spatial_dist_all_sorted_sliced_reduced = \
+    neighbours_spatial_dist_all_sorted_sliced[neighbours_spatial_dist_all_sorted_sliced != 8]
+
+    vector_len = int(neighbours_spatial_dist_all_sorted_sliced_reduced.shape[0]/n_structures)
+
+    neighbours_spatial_dist_all_sorted_sliced_reduced = \
+    np.reshape(neighbours_spatial_dist_all_sorted_sliced_reduced,[n_structures,vector_len])
+
+    descriptor = np.array(neighbours_spatial_dist_all_sorted_sliced_reduced)
+    
+    return descriptor
+
+def build_descriptor_new(structures,max_radius=5):
+    structure = structures[0]
+    the_descriptor = []
+
+    for i in range(structure.num_sites):
+
+        site_distance = []
+        unit_cell_neighbour = []
+        centered_cart_coords = []
+
+        for site in structure.get_all_neighbors(max_radius,sites=[structure.sites[i]])[0]:
+
+            site_distance.append(site.distance(structure.sites[i]))
+            centered_cart_coords.append(site.coords-structure.cart_coords[i])
+
+
+            for j,site2 in enumerate(structure.sites):
+                if site.is_periodic_image(site2) == True:
+                    unit_cell_neighbour.append(j)
+        unit_cell_neighbour = np.array(unit_cell_neighbour)
+
+        centered_sph_coords = cart2sph_array(centered_cart_coords)
+
+        spatial_distribution = np.argsort(np.array(centered_sph_coords)[:,0]*100+\
+                                        np.array(centered_sph_coords)[:,1]*10 +\
+                                        np.array(centered_sph_coords)[:,2])
+
+        the_descriptor.append(unit_cell_neighbour[spatial_distribution])
+    the_descriptor = np.array(the_descriptor)
+    #print(the_descriptor)
+    '''for k in unit_cell_neighbour[spatial_distribution]:
+        print(np.round(structure.distance_matrix[0][k],4),
+            np.round(structure.cart_coords[k]-structure.cart_coords[0],4))'''
+    descriptor_sorted = []
+    descriptor_non_sorted = []
+    descriptor_atom_number = []
+
+    for structure in structures:
+        descriptor_sorted.append(np.array(structure.atomic_numbers)[the_descriptor][np.argsort(structure.atomic_numbers),:])
+        descriptor_non_sorted.append(np.array(structure.atomic_numbers)[the_descriptor])
+
+        descriptor_atom_number.append(np.c_[structure.atomic_numbers,np.array(structure.atomic_numbers)[the_descriptor][np.argsort(structure.atomic_numbers),:]])
+    descriptor_sorted = np.array(descriptor_sorted)   
+    descriptor_non_sorted = np.array(descriptor_non_sorted)   
+    descriptor_atom_number = np.array(descriptor_atom_number)
+
+    neighbours_spatial_dist_all = copy.deepcopy(descriptor_atom_number)
+
+    #ALL AT ONCE
+    neighbours_spatial_dist_all = np.array(neighbours_spatial_dist_all)
+
+    neighbours_spatial_dist_all_sorted = []
+    sorting = []
+
+    for k,structure in enumerate(range(neighbours_spatial_dist_all.shape[0])):
+        sorted_atoms = []
+        for i in range(neighbours_spatial_dist_all.shape[1]):
+            sorted_atoms.append(int(''.join([str(x) for x in neighbours_spatial_dist_all[k][i]])))
+        sorting.append(np.argsort(np.array(sorted_atoms))) 
+        neighbours_spatial_dist_all_sorted.append((np.array(neighbours_spatial_dist_all)[k][np.argsort(np.array(sorted_atoms))]).tolist())
+    neighbours_spatial_dist_all_sorted = np.array(neighbours_spatial_dist_all_sorted)   
+
+    neighbours_spatial_dist_all_sorted_sliced = neighbours_spatial_dist_all_sorted[:,:,1:]
+
+    n_structures = neighbours_spatial_dist_all_sorted_sliced.shape[0]
+    vector_len = neighbours_spatial_dist_all_sorted_sliced.shape[1] * neighbours_spatial_dist_all_sorted_sliced.shape[2]
+    neighbours_spatial_dist_all_sorted_sliced_flat = \
+    np.reshape(neighbours_spatial_dist_all_sorted_sliced, [n_structures,vector_len])
+
+    neighbours_spatial_dist_all_sorted_sliced_reduced = \
+    neighbours_spatial_dist_all_sorted_sliced[neighbours_spatial_dist_all_sorted_sliced != 8]
+
+    vector_len = int(neighbours_spatial_dist_all_sorted_sliced_reduced.shape[0]/n_structures)
+
+    neighbours_spatial_dist_all_sorted_sliced_reduced = \
+    np.reshape(neighbours_spatial_dist_all_sorted_sliced_reduced,[n_structures,vector_len])
+
+    descriptor = np.array(neighbours_spatial_dist_all_sorted_sliced_reduced)
+    
+    return descriptor
 
 def build_discrete_quadratic_model_ip(structure,species,concentrations, parameters, max_neigh = 1,):
     # structure = pymatgen Structure object
@@ -408,7 +558,6 @@ def build_quadratic_model_discrete_OLD(structure,species,concentrations, paramet
     return bqm
 
 
-
 def build_qubo_discrete_vacancies(structure,num_vac, alpha = 1, lambda_1 = 2, theta=100):
     
     num_sites = structure.num_sites
@@ -571,6 +720,29 @@ def find_exact_solutions(bqm):
         return ExactCQMSolver().sample_cqm(bqm).to_pandas_dataframe()
 
 
+
+
+def generate_all_structures(structure_inp,num_vacancies):
+    
+    import itertools
+    
+    num_sites = structure_inp.num_sites
+    
+    num_atoms = num_sites - num_vacancies
+    
+    X = np.array(list(itertools.product([0, 1], repeat=num_sites)))
+    indices = np.where(np.sum(X,axis=1)==num_atoms)[0]
+    X_final = X[indices]
+
+    all_structures = []
+    for config in X_final:
+        structure = copy.deepcopy(structure_inp)
+        for j in np.where(config==0)[0]:
+            structure.replace(j,1)
+        all_structures.append(structure)    
+    return all_structures
+
+
 def load_json(file_name, return_param = True, return_qubo = True):
     
     import numpy as np
@@ -675,7 +847,7 @@ def save_json(structure,sampleset, bqm, use_coord = True, num_vacancies = 0,
                           weight_1=10, weight_2 = 1, lagrange = 1000,
               num_reads = 1000, time_limit=5, label='Test anneal', 
               remove_broken_chains = True, file_path = 'data', file_name = '', save_qubo = True,
-              chain_strength = None):
+              chain_strength = None, concentration=None, potential=None):
     
     # save the dataframe as a json file
     
@@ -724,8 +896,7 @@ def save_json(structure,sampleset, bqm, use_coord = True, num_vacancies = 0,
                   'chain_strength' : chain_strength,
                   #'qubo_matrix': qubo_matrix,
                   'qpu_anneal_time_per_sample': sampleset.info['timing']['qpu_anneal_time_per_sample'],
-                  'qubo_matrix': qubo_matrix
-                     
+                  'qubo_matrix': qubo_matrix                     
     }
     
     json_string = dataframe.to_json()    
@@ -769,6 +940,7 @@ def save_json_discrete_cp(structure,sampleset, bqm, theta = 10, cp_1 = 0, cp_2 =
     elif 'ConstrainedQuadraticModel' in str(type(bqm)):
         model = 'cqm'
         num_reads = 0
+    
     
     date_time = datetime.now(timezone.utc).strftime("%m/%d/%Y, %H:%M:%S")
     time_stamp = int(time.time())
@@ -888,14 +1060,29 @@ def save_json_old(structure,dataframe, bqm, use_coord = True, num_vacancies = 0,
 
 ### ALL DISCRETE FUNCTIONS
 
-def build_qubo_discrete_constraints(structure,species, concentration=None, chem_potential = None,
+def build_discrete_vector(x,num_species=None):
+    x = np.array(x)
+    unique_species = np.unique(x)
+
+    if num_species == None:
+        num_species = len(unique_species)
+        
+    x_binary = np.array([0]*len(x)*num_species)
+    
+    for i,atom in enumerate(unique_species):
+        position = np.where(x == atom)[0]
+        x_binary[position*num_species+i] = 1
+
+    return x_binary
+
+    
+def build_qubo_discrete_constraints(structure, species, concentration=None, chem_potential = None,
                                     lambda_1 = 2, theta=100):
     
     num_sites = structure.num_sites
     num_species = len(species)
     num_elements = num_sites*num_species
     
-    A = build_adjacency_matrix(structure)
     
     Q = np.zeros((num_elements,num_elements))
     
@@ -922,7 +1109,8 @@ def build_qubo_discrete_constraints(structure,species, concentration=None, chem_
                         Q[i,i+k] = 2*theta
     return Q
 
-def build_interaction_matrix(structure, species, parameters, alpha=1, max_neigh = 1):
+
+def build_interaction_matrix(structure, species, parameters, alpha=1, atomic_contribution=None, max_neigh = 1):
     
     #returns an N_sites x N_sites matrix where the i,j element represent the interaction between i and j
     #parameters is a list of list where the 
@@ -931,6 +1119,7 @@ def build_interaction_matrix(structure, species, parameters, alpha=1, max_neigh 
 
         #Within the same row, the k-element represent the interaction between species i+j
         #(Think of it as an upper triangular matrix)
+        
 
     num_sites = structure.num_sites
     num_species = len(species)
@@ -946,38 +1135,46 @@ def build_interaction_matrix(structure, species, parameters, alpha=1, max_neigh 
         col_index = np.where(distance_matrix == s)[1]
         distance_matrix_filter[row_index,col_index] = i
     distance_matrix_filter = np.triu(distance_matrix_filter,0)
-    distance_matrix_filter
-
-    #loop 
+    #distance_matrix_filter
     
     interaction_matrix = np.zeros((num_elements,num_elements))
+    
+    #loop 
+    if atomic_contribution != None:
+        for i in range(num_species):
+            interaction_matrix[np.arange(i,num_sites*num_species,num_species),np.arange(i,num_sites*num_species,num_species)] = atomic_contribution[i]
+    
+    
     parameters = np.array(parameters)
     for i in range(num_sites):
         for j in range(i,num_sites):
             g = distance_matrix_filter[i,j]
             if g > 0:
                 for k in range(num_species):
-                    for l in range(k,num_species):
+                    #for l in range(k,num_species): for upper diagonal
+                    for l in range(num_species):
                         param = alpha*parameters[g-1][k+l] #the k+l sum is uniquely defining the pair potential
                         interaction_matrix[i*num_species+k,j*num_species+l] = param
+                        #interaction_matrix[i*num_species-k,j*num_species+l] = param
                 
     return interaction_matrix
 
 
 def build_quadratic_model_discrete(structure ,species, parameters,
-    concentration = None, chem_potential=None, max_neigh = 1, alpha=1,lambda_1 = 2, theta=10, test=False):
+    concentration = None, chem_potential=None, max_neigh = 1, alpha=1,lambda_1 = 2, theta=10):
 
     #combine the build_qubo_discrete_constraints and build_ip_matrix to make the QUBO matrix and convert to bqm
 
     from dimod import BinaryQuadraticModel, Binary
     
-    Q = build_interaction_matrix(structure, species, parameters, alpha=alpha, max_neigh = max_neigh, test=test)+ \
+    Q = build_interaction_matrix(structure, species, parameters, alpha=alpha, max_neigh = max_neigh)+ \
         build_qubo_discrete_constraints(structure,species,concentration=concentration, chem_potential=chem_potential,\
         lambda_1 = lambda_1, theta=theta) 
    
     bqm = BinaryQuadraticModel.from_qubo(Q)
 
     return bqm
+
 
 def build_ip_parameters(structure, buckingham):
     #This function takes the IP parameters and returns a number (list) for the QUBO matrix
@@ -1016,7 +1213,10 @@ def build_ip_parameters(structure, buckingham):
                             ((param[2])/((distance_matrix[i,j])**6))            
                         return ip_matrix'''
     return None
+
+
 def build_qubo_discrete_vacancies(structure,num_vac, alpha = 1, lambda_1 = 2, theta=100):
+
     
     # PROBABLY REPLACED BY ABOVE FUNCTIONS
 
@@ -1047,3 +1247,155 @@ def build_qubo_discrete_vacancies(structure,num_vac, alpha = 1, lambda_1 = 2, th
             Q[i,j+1] = alpha*A[int(i/2),int(j/2)]
             Q[i+1,j] = alpha*A[int(i/2),int(j/2)]
     return Q
+
+
+def save_json_discrete(structure,sampleset, bqm, n_dopant_atom, lambda_1 = 0, theta = 0, 
+                            num_reads = 1000, time_limit=5, label='Test anneal', 
+                            remove_broken_chains = False, file_path = 'data', file_name = '', save_qubo = True,
+                            chain_strength = None, concentration = None, potential=None):
+    
+    # save the dataframe as a json file
+    
+    import json
+    from datetime import datetime,timezone
+    from os import path
+    import time
+    
+    dataframe = sampleset.to_pandas_dataframe()
+    
+    if 'chain_strength' in sampleset.info['embedding_context']:
+        chain_strength = sampleset.info['embedding_context']['chain_strength']
+    else:
+        chain_strength = -1
+    
+    if 'BinaryQuadraticModel' in str(type(bqm)):
+        model = 'bqm'
+        time_limit = 0
+    elif 'ConstrainedQuadraticModel' in str(type(bqm)):
+        model = 'cqm'
+        num_reads = 0
+    elif 'numpy.ndarray' in str(type(bqm)):
+        model = 'Q'
+        time_limit = 0
+    
+    date_time = datetime.now(timezone.utc).strftime("%m/%d/%Y, %H:%M:%S")
+    time_stamp = int(time.time())
+    
+    if save_qubo == True:
+        if model == 'Q':
+            qubo_matrix = bqm.flatten().tolist()
+        elif model == 'bqm':
+            qubo_matrix = build_qubo_matrix(bqm).flatten().tolist()
+    elif save_qubo == False:
+        qubo_matrix = None
+    
+    
+        
+    param_dict = {'date_time': date_time,
+                  'time_stamp': time_stamp,
+                  'structure': structure.composition.formula,
+                  'N atoms' : structure.num_sites,
+                    'model': model,
+                  'theta': theta,
+                  'lambda': lambda_1,
+                     'num_reads' : num_reads, 
+                  'time_limit': time_limit,
+                  'label':label, 
+                  'remove_broken_chains' : remove_broken_chains,
+                  'chain_strength' : chain_strength,
+                  #'qubo_matrix': qubo_matrix,
+                  'qpu_anneal_time_per_sample': sampleset.info['timing']['qpu_anneal_time_per_sample'],
+                  'qubo_matrix': qubo_matrix,
+                  'concentration': concentration,
+                  'potential': potential
+                     
+    }
+    
+    json_string = dataframe.to_json()    
+    json_object = json.loads(json_string)
+    json_object['parameters'] = param_dict
+
+
+    name = file_name + '_%s_%s_%s_l%s_t%s_r%s_t%s_%s.json'%(structure.composition.formula, str(n_dopant_atom),
+                                                                    model,lambda_1,
+                                                                    theta,num_reads,time_limit,time_stamp)
+    
+    file_name = path.join(file_path,name)
+
+    with open(file_name, 'w') as f:
+        json.dump(json_object, f)
+
+
+def save_json_discrete_potential(structure,sampleset, bqm, theta = 0, index = None,
+                            num_reads = 1000, time_limit=5, label='Test anneal', 
+                            remove_broken_chains = False, file_path = 'data', file_name = '', save_qubo = True,
+                            chain_strength = None, concentration = None, potential=None):
+    
+    # save the dataframe as a json file
+    
+    import json
+    from datetime import datetime,timezone
+    from os import path
+    import time
+    
+    dataframe = sampleset.to_pandas_dataframe()
+    
+    if 'chain_strength' in sampleset.info['embedding_context']:
+        chain_strength = sampleset.info['embedding_context']['chain_strength']
+    else:
+        chain_strength = -1
+    
+    if 'BinaryQuadraticModel' in str(type(bqm)):
+        model = 'bqm'
+        time_limit = 0
+    elif 'ConstrainedQuadraticModel' in str(type(bqm)):
+        model = 'cqm'
+        num_reads = 0
+    elif 'numpy.ndarray' in str(type(bqm)):
+        model = 'Q'
+        time_limit = 0
+    
+    date_time = datetime.now(timezone.utc).strftime("%m/%d/%Y, %H:%M:%S")
+    time_stamp = int(time.time())
+    
+    if save_qubo == True:
+        if model == 'Q':
+            qubo_matrix = bqm.flatten().tolist()
+        elif model == 'bqm':
+            qubo_matrix = build_qubo_matrix(bqm).flatten().tolist()
+    elif save_qubo == False:
+        qubo_matrix = None
+    
+    
+        
+    param_dict = {'date_time': date_time,
+                  'time_stamp': time_stamp,
+                  'structure': structure.composition.formula,
+                  'N atoms' : structure.num_sites,
+                    'model': model,
+                  'theta': theta,
+                     'num_reads' : num_reads, 
+                  'time_limit': time_limit,
+                  'label':label, 
+                  'remove_broken_chains' : remove_broken_chains,
+                  'chain_strength' : chain_strength,
+                  #'qubo_matrix': qubo_matrix,
+                  'qpu_anneal_time_per_sample': sampleset.info['timing']['qpu_anneal_time_per_sample'],
+                  'qubo_matrix': qubo_matrix,
+                  'concentration': concentration,
+                  'potential': potential
+                     
+    }
+    
+    json_string = dataframe.to_json()    
+    json_object = json.loads(json_string)
+    json_object['parameters'] = param_dict
+
+
+    name = file_name + '_%s_%s_i%s_t%s_r%s_t%s_%s.json'%(structure.composition.formula, model, index,
+                                                        theta,num_reads,time_limit,time_stamp)
+    
+    file_name = path.join(file_path,name)
+
+    with open(file_name, 'w') as f:
+        json.dump(json_object, f)

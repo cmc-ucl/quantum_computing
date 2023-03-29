@@ -1,19 +1,30 @@
 # Bruno Camino 19/07/2022
 
-from tkinter.messagebox import QUESTION
 import numpy as np
+import pandas as pd
+import copy
+import sys
+sys.path.append('../')
 
-def cart2sph(x, y, z):
-    hxy = np.hypot(x, y)
-    r = np.hypot(hxy, z)
-    el = np.arctan2(z, hxy)
-    az = np.arctan2(y, x)
-    if np.around(az,6) ==  np.around(2*np.pi,6) \
-    or np.around(az,6) ==  -np.around(2*np.pi,6):
-        az = 0.
-    if np.around(az,6) < 0.:
-        az = np.round(2*np.pi+az,6)
-    return [round(az,6), round(el,6), round(r,6)]
+from quantum_computing_functions import *
+
+def cart2sph_array(array):
+    sph_coordinates = []
+    for line in array:
+        x = line[0]
+        y = line[1]
+        z = line[2]
+        hxy = np.hypot(x, y)
+        r = np.hypot(hxy, z)
+        el = np.arctan2(z, hxy)
+        az = np.arctan2(y, x)
+        if np.around(az,6) ==  np.around(2*np.pi,6) \
+        or np.around(az,6) ==  -np.around(2*np.pi,6):
+            az = 0.
+        if np.around(az,6) < 0.:
+            az = np.round(2*np.pi+az,6)
+        sph_coordinates.append([round(r,6), round(el,6), round(az,6) ])   
+    return sph_coordinates
 
 
 def classifier(structures, max_shell=2):
@@ -75,28 +86,105 @@ def classifier(structures, max_shell=2):
         return neighbours_spatial_dist_all_sorted_sliced_flat  
 
 
-def convert_discrete_df(df,num_species,remove_unfeasible=True):
+def convert_df_binary2atom(dataframe,species):
     
-    num_sites = sum([type(x) == int for x in df.columns])
+    df  = copy.deepcopy(dataframe)
+    
+    if isinstance(df.columns[0], int):
+        num_sites = sum([type(x) == int for x in df.columns])
+    elif isinstance(df.columns[0], str):
+        num_sites = sum([x.isdigit() for x in df.columns])
+    
+    
+    
+    convert = lambda x: np.array(species)[x]
+    
+    labels = df.iloc[:,0:num_sites].to_numpy()
+    
+    new_labels = convert(labels)
+
+    for i in range(num_sites):
+        if isinstance(df.columns[0], int):
+            df.loc[:,int(i)] = new_labels[:,i]
+        elif isinstance(df.columns[0], str):
+            df.loc[:,str(i)] = new_labels[:,i]
+    
+    return df
+
+
+def convert_df_binary2atom_discrete(dataframe,species,remove_unfeasible=True):
+    
+    num_species = len(species)
+    
+    df  = copy.deepcopy(dataframe)
+    
+    if type(df.columns[0]) is str:
+        num_sites = int(sum([x.isdigit() for x in df.columns])/num_species)
+    else:
+        num_sites = int(sum([type(x) == int for x in dataframe.columns])/num_species)
+    
     sites = df.iloc[:,0:num_sites].to_numpy()
-    
+
     test_sum = sites[:,::num_species]
+
     for i in range(1,2):
         test_sum += sites[:,i::num_species]
     
-
+    
     unfeasible = np.where(np.prod(test_sum,axis=1) != 1)[0]
+    if isinstance(df.index[0], str): 
+        unfeasible = [str(x) for x in unfeasible]
+    elif isinstance(df.index[0], int):
+        unfeasible = [int(x) for x in unfeasible]
 
     df.drop(unfeasible, inplace=True)
     
-    new_labels = df.iloc[:,0:num_sites].to_numpy()[:,::num_species]
-    df.drop(np.arange(num_sites),axis=1,inplace=True)
+    convert = lambda x: np.array(species)[x]
+    
+    labels = df.iloc[:,0:num_sites*num_species].to_numpy()[:,::num_species]
+    new_labels = convert(labels)
+    if isinstance(df.columns[0], int): 
+        columns_drop = [int(x) for x in np.arange(num_sites,num_sites*num_species)]
+    elif isinstance(df.columns[0], str):
+        columns_drop = [str(x) for x in np.arange(num_sites,num_sites*num_species)]
 
     
+    df_1 = df.drop(columns_drop,axis=1,inplace=False)
+
     for i in range(new_labels.shape[1]):
-        df.insert(i, i, new_labels[:,i])
+        if isinstance(df.columns[0], int):
+            df_1.loc[:,int(i)] = new_labels[:,i]
+        elif isinstance(df.columns[0], str):
+            df_1.loc[:,str(i)] = new_labels[:,i]
     
-    return df
+    return df_1
+
+
+def df2structure(df,structure):
+    
+    from pymatgen.core.structure import Structure
+
+    num_sites = structure.num_sites
+    lattice = structure.lattice
+    atom_position = structure.cart_coords
+    
+    configurations = df.iloc[:,0:num_sites].to_numpy()
+    
+    zero_elements = np.where(configurations == 0) 
+    vacancies = False
+    if len(zero_elements[0]) > 0:
+        configurations[zero_elements] = 99
+        vacancies = True
+    
+    all_structures = []
+    for config in configurations:
+        all_structures.append(Structure(lattice, config, atom_position, coords_are_cartesian=True))
+    
+    if vacancies == True:
+        for structure in all_structures:
+            structure.remove_species([99])
+    
+    return all_structures
 
 
 def display_low_E_structures(structure,energies,configurations, min_energy = 0, view = False):
@@ -122,20 +210,30 @@ def display_low_E_structures(structure,energies,configurations, min_energy = 0, 
     return low_energy_structures
 
 
-def display_structures(structure, dataframe, index):
+def display_structures(structure, dataframe, index, discrete=False):
     
+    #structure = pymatgen structure object
+    #dataframe = sampleset.to_pandas_dataframe()
+    #index = list of indices of structures to visualise
+
     from pymatgen.io.ase import AseAtomsAdaptor
     from ase.visualize import view
     import copy
 
     num_atoms = structure.num_sites
     
-    for i in index:
-        structure_2 = copy.deepcopy(structure)
-        for j in np.where(dataframe.iloc[i,0:num_atoms] == 0)[0]:
-            structure_2.replace(j,1)
-        
-        view(AseAtomsAdaptor().get_atoms(structure_2))
+    if discrete == True:
+        for i in index:
+            structure_2 = copy.deepcopy(structure)
+            for j in dataframe.iloc[i,0:num_atoms].to_numpy():
+                structure_2.replace(j,1)
+    elif discrete == False:
+        for i in index:
+            structure_2 = copy.deepcopy(structure)
+            for j in np.where(dataframe.iloc[i,0:num_atoms] == 0)[0]:
+                structure_2.replace(j,1)
+            
+            view(AseAtomsAdaptor().get_atoms(structure_2))
 
 
 def find_all_structures(dataframe, min_energy = 0., return_count = False, sort_config = False, sort_energy = False):
@@ -282,6 +380,26 @@ def find_energy_distribution_discrete(dataframe, remove_broken_chains = False, o
     return unique_energy, unique_multiplicity
 
 
+def find_multiplicity(all_structures,descriptor_unique=[None]):
+    
+    descriptor = build_descriptor(all_structures)
+    
+    if len(descriptor_unique) > 0:
+        descriptor_unique, descriptor_first, descriptor_count = \
+                                    np.unique(descriptor, axis=0,return_counts=True, return_index=True)
+    group_structures = []
+    for desc in descriptor_unique:
+        structure_desc = []
+        for i,d in enumerate(descriptor):
+            if np.all(np.array(desc) == np.array(d)):
+                structure_desc.append(i)
+        group_structures.append(len(structure_desc))
+        
+    group_structures = np.array(group_structures)
+    
+    return group_structures
+
+
 def find_vacancy_distribution(dataframe, remove_broken_chains = False, vacancies = 0):
     
     if remove_broken_chains == True:
@@ -370,7 +488,18 @@ def find_num_broken_bonds(dataframe, remove_broken_chains = False, only_feasible
     return num_broken_bonds
 
 
-def find_ratio_acceptable(dataframe, remove_broken_chains = False):
+def find_ratio_acceptable(dataframe, num_species, remove_broken_chains = False):
+
+    total_reads = np.sum(dataframe['num_occurrences'].to_numpy())
+
+    df = convert_discrete_df(dataframe,num_species,remove_unfeasible=True)
+
+    reads_cleaned = np.sum(df['num_occurrences'].to_numpy())
+
+    return reads_cleaned/total_reads
+
+
+def find_ratio_acceptable_old(dataframe, remove_broken_chains = False):
     
     # remove_broken_chains = True : ratio wrt the total number of non broken chains solutions
     # remove_broken_chains = False : ratio wrt the total number of reads
@@ -388,11 +517,8 @@ def find_ratio_acceptable(dataframe, remove_broken_chains = False):
     else:
         
         num_atoms = sum([x.isdigit() for x in df.columns])
-        
         all_config = df.iloc[:,0:num_atoms].to_numpy()
-
         multiplicity = df['num_occurrences'].to_numpy()
-
         acceptable_config = np.where(np.all((all_config[:,::2]+all_config[:,1::2])-np.ones(18)==0,axis=1) 
                              == True )[0]
 
@@ -411,31 +537,33 @@ def find_ratio_broken_chains(dataframe):
     return np.round(broken/total,4)
 
 
-def find_ratio_feasible(dataframe,num_vacancies, remove_broken_chains = False):
+def find_ratio_feasible(dataframe,num_vacancies, remove_broken_chains = False, num_reads = None):
     
     # remove_broken_chains = True : ratio wrt the total number of non broken chains solutions
     # remove_broken_chains = False : ratio wrt the total number of reads
     
-    if remove_broken_chains == True:
-        total_reads = np.sum(dataframe[dataframe['chain_break_fraction'] == 0.]['num_occurrences'])
-        df = dataframe[dataframe['chain_break_fraction'] == 0]
-    elif remove_broken_chains == False:
-        total_reads = np.sum(dataframe['num_occurrences'])
+    if num_reads != None:
+        total_reads = num_reads
         df = dataframe
+    else:
+        if remove_broken_chains == True:
+            total_reads = np.sum(dataframe[dataframe['chain_break_fraction'] == 0.]['num_occurrences'])
+            df = dataframe[dataframe['chain_break_fraction'] == 0]
+        elif remove_broken_chains == False:
+            total_reads = np.sum(dataframe['num_occurrences'])
+            df = dataframe
     
     if len(df) == 0:
         return 0.
     
     else:
-        
-        num_atoms = sum([x.isdigit() for x in df.columns])
-        
+        if type(df.columns[0]) is str:
+            num_atoms = sum([x.isdigit() for x in df.columns]) 
+        else:
+            num_atoms = sum([type(x) == int for x in dataframe.columns])
         all_config = df.iloc[:,0:num_atoms].to_numpy()
-
-        multiplicity = df['num_occurrences'].to_numpy()
-        
+        multiplicity = df['num_occurrences'].to_numpy() 
         sum_vector = np.sum(all_config,axis=1)
-
         feasible_config = np.where(np.round(sum_vector,5) == np.round((num_atoms - num_vacancies),5))[0]
 
         total_feasible = np.sum(multiplicity[feasible_config])
@@ -490,7 +618,7 @@ def find_ratio_ground_state(dataframe,num_vacancies, remove_broken_chains = Fals
         return np.round(ratio_gs,4)
 
 
-def find_ratio_feasible_discrete(dataframe,num_vacancies, remove_broken_chains = False):
+def find_ratio_feasible_discrete(dataframe,concentration,name_species, remove_broken_chains = False):
     
     # remove_broken_chains = True : ratio wrt the total number of non broken chains solutions
     # remove_broken_chains = False : ratio wrt the total number of reads
@@ -506,7 +634,12 @@ def find_ratio_feasible_discrete(dataframe,num_vacancies, remove_broken_chains =
         return 0.
     
     else:
-        num_atoms = sum([x.isdigit() for x in df.columns])
+        num_species = len(concentration)
+        df_1 = convert_discrete_df(df,num_species,name_species)
+        rf = find_ratio_feasible(df_1,min(concentration),num_reads=total_reads)
+        
+        return np.round(rf,4)
+        '''num_atoms = sum([x.isdigit() for x in df.columns])
         
         all_config = df.iloc[:,0:num_atoms].to_numpy()
 
@@ -521,32 +654,96 @@ def find_ratio_feasible_discrete(dataframe,num_vacancies, remove_broken_chains =
         feasible_config = np.where((feasible_configurations * acceptable_config) == True)[0]
 
         total_feasible = np.sum(multiplicity[feasible_config])
-        ratio_feasible = total_feasible/total_reads
+        ratio_feasible = total_feasible/total_reads'''
 
         return np.round(ratio_feasible,4)
 
 
-def find_symmetry_equivalent_structures(dataframe, structure):
-    
-    from pymatgen.analysis.structure_matcher import StructureMatcher 
-    import copy 
+def find_symmetry_equivalent_structures(dataframe, structure, remove_unfeasible = False, species=None ,concentration=None,):
+    #spglib-based analysis
 
+    
+    #Concentration follows the order given in species
+    
+    import copy 
+    from pymatgen.analysis.structure_matcher import StructureMatcher 
 
     df = dataframe
+    
     num_sites = structure.num_sites
-    configurations = df.iloc[:,0:num_sites].to_numpy()
+    lattice = structure.lattice
+    atom_position = structure.cart_coords
     
-    multiplicity = dataframe['num_occurrences'].to_numpy()
-    chain_break = dataframe['chain_break_fraction'].to_numpy()
-    energies = dataframe['energy'].to_numpy()
+    '''if concentration is not None and species is not None:
+        feasible_config = []
+        all_config = df.iloc[:,0:num_sites].to_numpy()
+        #sum_vector = np.sum(all_config,axis=1)
+        #feasible_config = np.where(np.round(sum_vector,5) == np.round((num_atoms - vacancies),5))[0]
+        for config in all_config:
+            feasible = True
+            for i in range(len(concentration)):
+                feasible *= np.sum(config == species[i]) == concentration[i] 
+            #print(feasible)
+            feasible_config.append(feasible) 
+        
+        df = df.iloc[feasible_config,:]'''
     
-    #Replace the C atom with an H atom where the vacancies are
-    all_structures = []
-    for config in configurations:
-        structure_2 = copy.deepcopy(structure)
-        for j in np.where(config == 0)[0]:
-            structure_2.replace(j,1)
-        all_structures.append(structure_2)
+    if remove_unfeasible == True and species is not None and concentration is not None:
+        df = remove_unfeasible_solutions(dataframe,species,concentration)
+    
+    #configurations = df.iloc[:,0:num_sites].to_numpy()
+    
+    multiplicity = df['num_occurrences'].to_numpy()
+    chain_break = df['chain_break_fraction'].to_numpy()
+    energies = df['energy'].to_numpy()
+
+
+    '''#Replace the C atom with an H atom where the vacancies are
+    zero_elements = np.where(configurations == 0) 
+    configurations[zero_elements] = 99'''
+    
+    all_structures = df2structure(df,structure)
+    '''for config in configurations:
+        all_structures.append(Structure(lattice, config, atom_position, coords_are_cartesian=True))'''
+
+    
+    '''#Build the descriptor - WIP
+    descriptor = build_descriptor(all_structures)
+
+    descriptor_unique, descriptor_first, descriptor_count = \
+    np.unique(descriptor, axis=0,return_counts=True, return_index=True)
+
+    group_structures = []
+    for desc in descriptor_unique:
+        structure_desc = []
+        for i,d in enumerate(descriptor):
+            if np.all(np.array(desc) == np.array(d)):
+                structure_desc.append(i)
+        group_structures.append(structure_desc)'''
+    '''for structure in all_structures:
+        SpacegroupAnalyzer()
+    
+    unique_multiplicity = []
+    unique_chain_break = []
+    unique_structure_index = []
+    
+    for x in group_structures:
+        unique_structure_index.append(x[0])
+        unique_multiplicity.append(np.sum(multiplicity[x]))
+        unique_chain_break.append(np.average(chain_break[x],weights=multiplicity[x]))    
+    
+    df = df.iloc[unique_structure_index].copy()
+    
+    if len(df) == len(unique_multiplicity):
+        df['num_occurrences'] = unique_multiplicity
+        df['chain_break_fraction'] = unique_chain_break
+        
+        return df
+    
+    else:
+        print('Some structures might be unfeasible, try using a smaller energy range (lower energy)')
+        
+        return None'''
     
     #Find the unique structures
     unique_structures = StructureMatcher().group_structures(all_structures)
@@ -565,8 +762,9 @@ def find_symmetry_equivalent_structures(dataframe, structure):
     unique_multiplicity = []
     unique_chain_break = []
     for x in range(len(unique_structures)):
-        unique_multiplicity.append(np.sum(multiplicity[np.where(unique_structures_label==x)[0]]))
-        unique_chain_break.append(np.average(chain_break[np.where(unique_structures_label==x)[0]]))
+        multiplicity_tmp = multiplicity[np.where(unique_structures_label==x)[0]]
+        unique_multiplicity.append(np.sum(multiplicity_tmp))
+        unique_chain_break.append(np.average(chain_break[np.where(unique_structures_label==x)[0]],weights=multiplicity_tmp))
     
     df = df.iloc[np.unique(unique_structures_label,return_index=True)[1]]
     
@@ -660,8 +858,128 @@ def make_df(directory):
     return df_results
 
 
-def convert_df(df,remove_unfeasible=True):
+def make_df_paper(dataframe,num_vacancies,symmetrised=False,structure=None,num_runs=1,only_feasible = False):
     
+    import copy
+    import string
+    
+    total_runs = np.sum(dataframe['num_occurrences'].to_numpy())
+    
+    df = dataframe
+
+    num_atoms = sum([x.isdigit() for x in df.columns]) 
+    all_config = df.iloc[:,0:num_atoms].to_numpy()
+    sum_vector = np.sum(all_config,axis=1)
+    feasible_config = np.where(np.round(sum_vector,5) == np.round((num_atoms - num_vacancies),5))[0]
+    df = df.iloc[feasible_config,:]
+        
+    feasible_runs = np.sum(df['num_occurrences'].to_numpy())
+    
+
+    multiplicity = df['num_occurrences'].to_numpy()
+    
+    config = df.iloc[:,0:num_atoms].to_numpy()
+    unique_config = np.unique(config,axis=0)
+    
+    chain_break = df['chain_break_fraction'].to_numpy()
+    
+
+    chain_break_average = []
+    energy_average = []
+    total_occurrences = []
+
+    for c in unique_config:
+        
+        feasible = np.where((config == c).all(axis=1))[0]
+        broken = df.iloc[feasible,18].to_numpy()
+        energy = df.iloc[feasible,(num_atoms+1)].to_numpy()
+        weights = df.iloc[feasible,(num_atoms+2)].to_numpy()
+        
+        chain_break_average.append(np.average(broken,weights=weights))
+        energy_average.append(np.average(energy,weights=weights))
+        total_occurrences.append(np.sum(weights)) 
+        
+
+    df = pd.DataFrame(unique_config, columns=[str(x) for x in np.arange(num_atoms,dtype=int)])
+    df['chain_break_fraction'] = np.round(chain_break_average,4)
+    df['energy'] = energy_average
+    df['num_occurrences'] = total_occurrences
+    
+     
+    if symmetrised == True and structure != None:
+        
+        structure_tmp = copy.deepcopy(structure)
+        df = find_symmetry_equivalent_structures(df,structure_tmp)
+    
+    df.sort_values(by=['energy'], inplace=True)
+    df['chain_break_fraction'] = np.round(df['chain_break_fraction'].to_numpy(),5)
+    df['chain_break_fraction'] = df['chain_break_fraction'].apply(lambda x: x*100)
+    if only_feasible == True: 
+        df['num_occurrences'] = df['num_occurrences'].apply(lambda x: (x/feasible_runs)*100)
+    elif only_feasible == False:
+        df['num_occurrences'] = df['num_occurrences'].apply(lambda x: (x/total_runs)*100)
+    
+    df = df.rename(columns={"chain_break_fraction": "% broken chains", "energy": "Energy", "num_occurrences":"% occurrence"})
+
+    if len(df.index) < 27:
+        df.index = list(string.ascii_lowercase[0:len(df.index)])
+    
+    return df
+
+
+'''
+
+    # Convert a discrete df 
+    
+    import copy
+
+    df = copy.deepcopy(dataframe)
+
+    num_sites = sum([type(x) == int for x in df.columns])
+    sites = df.iloc[:,0:num_sites].to_numpy()
+    
+    sum_vector = sites[:,0::num_species]
+    for i in range(1,num_species):
+        sum_vector += sites[:,i::num_species]
+    unfeasible = np.where(np.prod(sum_vector,axis=1) != 1)[0]
+
+    #unfeasible = np.where(np.prod((np.sum([sites[:,x*num_species:(x+1)*num_species] 
+                                           #for x in range(num_species)],axis=0)),axis=1) != 1)[0]
+    
+
+    if ts == True:
+        print('test this')
+        unfeasible = np.concatenate((unfeasible,np.where(np.prod((np.sum([sites[:,x::num_species] 
+                                       for x in range(num_species)],axis=0)),axis=1) != 1)[0]))
+        unfeasible = np.unique(unfeasible)
+                                       
+    if remove_unfeasible == True:
+        df.drop(unfeasible, inplace=True)
+
+    if df.empty:
+        print('The dataframe is empty, increase the theta value')
+        return None
+    
+
+    new_labels_arr = df.iloc[:,0:num_sites].to_numpy()
+
+    new_labels = []
+    df.drop(np.arange(num_sites),axis=1,inplace=True)
+    for line in new_labels_arr:
+        new_labels_tmp=  [name_species[x] for x in np.where(line == 1)[0]%num_species]
+
+        new_labels.append(new_labels_tmp)
+    new_labels = np.array(new_labels)
+    for i in range(new_labels.shape[1]):
+        df.insert(i, i, new_labels[:,i])
+
+    
+    return df'''
+
+
+'''def convert_df(df,remove_unfeasible=True):
+    # Convert a discrete df 
+
     num_sites = sum([type(x) == int for x in df.columns])
     sites = df.iloc[:,0:num_sites].to_numpy()
     unfeasible = np.where(np.prod((sites[:,::2]+sites[:,1::2]),axis=1) != 1)[0]
@@ -674,6 +992,32 @@ def convert_df(df,remove_unfeasible=True):
     for i in range(new_labels.shape[1]):
         df.insert(i, i, new_labels[:,i])
     
+    return df'''
+
+
+def remove_unfeasible_solutions(dataframe,species,concentration):
+
+    df = copy.deepcopy(dataframe)
+
+
+    if isinstance(df.columns[0], int):
+        num_sites = sum([type(x) == int for x in df.columns])
+    elif isinstance(df.columns[0], str):
+        num_sites = sum([x.isdigit() for x in df.columns])
+
+    feasible_config = []
+    all_config = df.iloc[:,0:num_sites].to_numpy()
+    #sum_vector = np.sum(all_config,axis=1)
+    #feasible_config = np.where(np.round(sum_vector,5) == np.round((num_atoms - vacancies),5))[0]
+    for config in all_config:
+        feasible = True
+        for i in range(len(concentration)):
+            feasible *= np.sum(config == species[i]) == concentration[i] 
+        #print(feasible)
+        feasible_config.append(feasible) 
+    
+    df = df.iloc[feasible_config,:]
+
     return df
 
 
