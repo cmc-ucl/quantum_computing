@@ -1,0 +1,1 @@
+# Quantum computing and materials science: A practical guide to applying quantum annealing to the configurational analysis of materials
