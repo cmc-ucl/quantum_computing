@@ -165,6 +165,7 @@ def build_descriptor(structures,max_shell=3):
     
     return descriptor
 
+
 def build_descriptor_new(structures,max_radius=5):
     structure = structures[0]
     the_descriptor = []
@@ -245,6 +246,7 @@ def build_descriptor_new(structures,max_radius=5):
     descriptor = np.array(neighbours_spatial_dist_all_sorted_sliced_reduced)
     
     return descriptor
+
 
 def build_discrete_quadratic_model_ip(structure,species,concentrations, parameters, max_neigh = 1,):
     # structure = pymatgen Structure object
@@ -587,7 +589,7 @@ def build_qubo_discrete_vacancies(structure,num_vac, alpha = 1, lambda_1 = 2, th
     return Q
 
 
-def build_qubo(structure, num_vac=0, coord_obj=False, coord_const=False, alpha = 1, lambda_1 = 2, beta=1):
+def build_qubo_vacancies(structure, num_vac=0, coord_obj=False, coord_const=False, alpha = 1, lambda_1 = 2, beta=1):
     
     num_sites = structure.num_sites
     num_atoms = num_sites - num_vac
@@ -720,8 +722,6 @@ def find_exact_solutions(bqm):
         return ExactCQMSolver().sample_cqm(bqm).to_pandas_dataframe()
 
 
-
-
 def generate_all_structures(structure_inp,num_vacancies):
     
     import itertools
@@ -787,7 +787,70 @@ def plot_buckingham_potential(A, p, C, r_range=[0,5],coulomb= []):
     ax.set_xlim([0, 4])
     ax.set_ylim([-1, 300])
     ax.plot(x,y,'-')
+
+
+def qubo_classical_solver(Q, sort = True, discrete = False, return_df = True):
     
+    """Calculate the energy of all possible solutions for the QUBO model.
+
+    Extended description of function.
+
+    Args:
+        Q (numpy.array): QUBO matrix
+        sort (bool): return sorted solutions
+        discrete (bool): define if the QUBO model is discrete
+        return_df (bool): return Pandas dataframe if True ot x_classical, E_classical if False 
+
+    Returns:
+        Pandas.dataframe: all possible solutions + Energy
+
+    """
+    
+    
+    import itertools
+    import pandas as pd
+    
+    len_x = Q.shape[0]
+        
+    x = np.array(list(itertools.product([0, 1], repeat=len_x)))
+    
+    if sort == True:
+        x_tmp = []
+        for xx in x:
+            x_tmp.append(int(''.join(xx.astype('str'))))
+        sorting = np.argsort(x_tmp)        
+        x_1 = x[sorting]
+    else:
+        x_1 = x
+
+    if discrete == True: #TO TEST
+        
+        xx = np.array([[0,1]*len_x]*x.shape[0])
+        np.append(np.array(x)[:],np.array(x)[:],axis=1)
+
+        X = np.zeros((x.shape[0],2*x.shape[1]),dtype=int)
+        
+        for i in range(x.shape[0]):
+            X[i] = np.vstack([x_1[i,:], x_1[i,:]]).flatten(order='F')
+
+        x_classical = np.array(np.logical_xor(X,xx),dtype=int)
+    
+    elif discrete == False:
+        x_classical = x_1
+   
+
+    
+    E_tmp = np.matmul(x_classical,Q)
+    E_classical = np.sum(x_classical*E_tmp,axis=1)
+    
+    if return_df == True:
+        df = pd.DataFrame(x_classical)
+        df['Energy'] = E_classical
+        
+        return df 
+    else:
+        return x_classical, E_classical   
+
 
 def run_anneal(bqm,num_reads = 1000, time_limit=5, chain_strength = None, label='Test anneal', dataframe = False, 
                remove_broken_chains = False, return_config_E = False, annealing_time=20):
@@ -848,6 +911,76 @@ def save_json(structure,sampleset, bqm, use_coord = True, num_vacancies = 0,
               num_reads = 1000, time_limit=5, label='Test anneal', 
               remove_broken_chains = True, file_path = 'data', file_name = '', save_qubo = True,
               chain_strength = None, concentration=None, potential=None):
+    
+    # save the dataframe as a json file
+    
+    import json
+    from datetime import datetime,timezone
+    from os import path
+    import time
+    
+    dataframe = sampleset.to_pandas_dataframe()
+    
+    if 'chain_strength' in sampleset.info['embedding_context']:
+        chain_strength = sampleset.info['embedding_context']['chain_strength']
+    else:
+        chain_strength = -1
+    
+    if 'BinaryQuadraticModel' in str(type(bqm)):
+        model = 'bqm'
+        time_limit = 0
+    elif 'ConstrainedQuadraticModel' in str(type(bqm)):
+        model = 'cqm'
+        num_reads = 0
+    
+    date_time = datetime.now(timezone.utc).strftime("%m/%d/%Y, %H:%M:%S")
+    time_stamp = int(time.time())
+    
+    if save_qubo == True:
+        qubo_matrix = build_qubo_matrix(bqm).flatten().tolist()
+    elif save_qubo == False:
+        qubo_matrix = None
+    
+        
+    param_dict = {'date_time': date_time,
+                  'time_stamp': time_stamp,
+                  'structure': structure.composition.formula,
+                  'N atoms' : structure.num_sites,
+                    'model': model,
+                  'use_coord' : use_coord,
+                  'num_vacancies': num_vacancies,
+                  'weight_1': weight_1,
+                  'weight_2' : weight_2,
+                  'lagrange': lagrange,
+                     'num_reads' : num_reads, 
+                  'time_limit': time_limit,
+                  'label':label, 
+                  'remove_broken_chains' : remove_broken_chains,
+                  'chain_strength' : chain_strength,
+                  #'qubo_matrix': qubo_matrix,
+                  'qpu_anneal_time_per_sample': sampleset.info['timing']['qpu_anneal_time_per_sample'],
+                  'qubo_matrix': qubo_matrix                     
+    }
+    
+    json_string = dataframe.to_json()    
+    json_object = json.loads(json_string)
+    json_object['parameters'] = param_dict
+
+
+    name = file_name + '_%s_%s_v%s_c%s_w1%s_w2%s_l%s_r%s_t%s_%s.json'%(structure.composition.formula,
+                                                                    model,num_vacancies,str(use_coord)[0],
+                                                                    weight_1,weight_2,lagrange,num_reads,                                                                    
+                                                                    time_limit,time_stamp)
+    
+    file_name = path.join(file_path,name)
+
+    with open(file_name, 'w') as f:
+        json.dump(json_object, f)
+
+
+def save_json_concentration(sampleset, structure, bqm, species, concetration, 
+                          lambda_1, theta , file_name, num_reads = 1000, label='Test anneal', 
+               file_path = 'data', save_qubo = True, chain_strength = None, concentration=None, potential=None):
     
     # save the dataframe as a json file
     
@@ -1060,20 +1193,40 @@ def save_json_old(structure,dataframe, bqm, use_coord = True, num_vacancies = 0,
 
 ### ALL DISCRETE FUNCTIONS
 
-def build_discrete_vector(x,num_species=None):
-    x = np.array(x)
-    unique_species = np.unique(x)
+def build_binary_vector(atomic_numbers,atom_types=None):
+    """Summary line.
 
-    if num_species == None:
-        num_species = len(unique_species)
-        
-    x_binary = np.array([0]*len(x)*num_species)
+    Extended description of function.
+
+    Args:
+        atomic_numbers (list): List of atom number of the sites in the structure
+        atom_types (list): List of 2 elements. List element 0 = atomic_number of site == 0, 
+                           list element 1 = atomic_number of site == 1
+
+    Returns:
+        List: Binary list of atomic numbers
+
+    """
     
-    for i,atom in enumerate(unique_species):
-        position = np.where(x == atom)[0]
-        x_binary[position*num_species+i] = 1
+    atomic_numbers = np.array(atomic_numbers)
+    num_sites = len(atomic_numbers)
+    
+    if atom_types == None:
+        species = np.unique(atomic_numbers)
+    else:
+        species = atom_types
+    
+    binary_atomic_numbers = np.zeros(num_sites,dtype=int)
+    
+    for i,species_type in enumerate(species):
 
-    return x_binary
+        sites = np.where(atomic_numbers == species_type)[0]
+
+        binary_atomic_numbers[sites] = i
+    
+    return binary_atomic_numbers
+
+     
 
     
 def build_qubo_discrete_constraints(structure, species, concentration=None, chem_potential = None,
@@ -1110,7 +1263,48 @@ def build_qubo_discrete_constraints(structure, species, concentration=None, chem
     return Q
 
 
-def build_interaction_matrix(structure, species, parameters, alpha=1, atomic_contribution=None, max_neigh = 1):
+def build_qubo_binary_constraints(structure, concentration=None, chem_potential = None,
+                                    lambda_1 = 2):
+    """Summary line.
+
+    Extended description of function.
+
+    Args:
+        structure (pymatgen Structure object): Description of arg1
+        concentration (int): concentration of the species corresponding to |1>
+        chem_potential (float): chemical potential of the species corresponding to |1>
+
+    Returns:
+        numpy.array: QUBO matrix containing the contraints only
+
+    """
+    
+    if concentration is not None and chem_potential is not None:
+        print('Please select either concentration or chemical potential')
+        return None
+    
+    num_sites = structure.num_sites
+    #num_species = len(species)
+    num_elements = num_sites#*num_species
+    
+    
+    Q = np.zeros((num_elements,num_elements))
+    
+    if concentration is not None and type(concentration) is int:
+        
+        for i in range(0,num_sites): #diag
+            Q[i,i] = lambda_1*(1-2*concentration) 
+            for j in range(i+1,num_sites):
+                Q[i,j] = 2*lambda_1            
+    
+    elif chem_potential is not None and type(chem_potential) is float:
+        np.fill_diagonal(Q,chem_potential)
+        
+            
+    return Q
+
+
+def build_qubo_discrete_interaction(structure, species, parameters, alpha=1, atomic_contribution=None, max_neigh = 1):
     
     #returns an N_sites x N_sites matrix where the i,j element represent the interaction between i and j
     #parameters is a list of list where the 
@@ -1160,6 +1354,73 @@ def build_interaction_matrix(structure, species, parameters, alpha=1, atomic_con
     return interaction_matrix
 
 
+def build_qubo_binary_interaction(structure, parameters, max_neigh = None):
+    
+    #returns an N_sites x N_sites matrix where the i,j element represent the interaction between i and j
+    #parameters is a list of list where the 
+        # first row represents the first neightbour interaction 
+        # second row represents the second neightbour interaction and so on
+
+        #Within the same row, the k-element represent the interaction between species i+j
+        #(Think of it as an upper triangular matrix)
+        
+
+    num_sites = structure.num_sites
+    #num_species = len(species)
+    num_elements = num_sites#*num_species
+    
+    if max_neigh == None:
+        max_neigh = len(parameters)
+        
+    distance_matrix = np.round(structure.distance_matrix,5)
+    shells = np.unique(np.round(distance_matrix,5))
+    
+    distance_matrix_filter = np.zeros((num_sites,num_sites),int)
+
+    for i,s in enumerate(shells[0:max_neigh+1]):
+        row_index = np.where(distance_matrix == s)[0]
+        col_index = np.where(distance_matrix == s)[1]
+        distance_matrix_filter[row_index,col_index] = i
+    distance_matrix_filter = np.triu(distance_matrix_filter,0)
+    interaction_matrix = np.zeros((num_elements,num_elements))
+    
+    #I DON'T THINK THIS IS NEEDED FOR THE BINARY 
+    # if atomic_contribution != None:
+    #    for i in range(num_species):
+    #        interaction_matrix[np.arange(i,num_sites*num_species,num_species),np.arange(i,num_sites*num_species,num_species)] = atomic_contribution[i]
+    
+    parameters = np.array(parameters)
+    diag_element = parameters[:,1]-parameters[:,0] # DeltaEcc/cn
+    off_diag_element = (parameters[:,2]-parameters[:,0])-2*(parameters[:,1]-parameters[:,0]) #DeltaEnn/cc-2DeltaEcc/cn
+
+    for i in range(num_sites):
+        for j in range(0,num_sites):
+            g = distance_matrix_filter[i,j]
+            #print(i,j,g)
+            if g > 0:
+                interaction_matrix[i,i] += diag_element[g-1]
+                interaction_matrix[j,j] += diag_element[g-1]
+                interaction_matrix[i,j] += off_diag_element[g-1]
+                
+    return interaction_matrix
+
+
+def build_qubo_binary(structure , parameters,
+    concentration = None, chem_potential=None, max_neigh = 1, lambda_1 = 1):
+
+    #combine the build_qubo_discrete_constraints and build_ip_matrix to make the QUBO matrix and convert to bqm
+
+    from dimod import BinaryQuadraticModel, Binary
+    
+    Q = build_qubo_binary_interaction(structure, parameters, max_neigh = max_neigh)+ \
+        build_qubo_discrete_constraints(structure,concentration=concentration, chem_potential=chem_potential,\
+        lambda_1 = lambda_1) 
+   
+    #bqm = BinaryQuadraticModel.from_qubo(Q)
+
+    return Q
+
+
 def build_quadratic_model_discrete(structure ,species, parameters,
     concentration = None, chem_potential=None, max_neigh = 1, alpha=1,lambda_1 = 2, theta=10):
 
@@ -1167,7 +1428,7 @@ def build_quadratic_model_discrete(structure ,species, parameters,
 
     from dimod import BinaryQuadraticModel, Binary
     
-    Q = build_interaction_matrix(structure, species, parameters, alpha=alpha, max_neigh = max_neigh)+ \
+    Q = build_qubo_discrete_interaction(structure, species, parameters, alpha=alpha, max_neigh = max_neigh)+ \
         build_qubo_discrete_constraints(structure,species,concentration=concentration, chem_potential=chem_potential,\
         lambda_1 = lambda_1, theta=theta) 
    
@@ -1327,6 +1588,7 @@ def save_json_discrete(structure,sampleset, bqm, n_dopant_atom, lambda_1 = 0, th
 
 
 def save_json_discrete_potential(structure,sampleset, bqm, theta = 0, index = None,
+                                 
                             num_reads = 1000, time_limit=5, label='Test anneal', 
                             remove_broken_chains = False, file_path = 'data', file_name = '', save_qubo = True,
                             chain_strength = None, concentration = None, potential=None):
@@ -1394,6 +1656,79 @@ def save_json_discrete_potential(structure,sampleset, bqm, theta = 0, index = No
 
     name = file_name + '_%s_%s_i%s_t%s_r%s_t%s_%s.json'%(structure.composition.formula, model, index,
                                                         theta,num_reads,time_limit,time_stamp)
+    
+    file_name = path.join(file_path,name)
+
+    with open(file_name, 'w') as f:
+        json.dump(json_object, f)
+
+def save_json_binary_potential(structure,sampleset, bqm, index = None,
+                            num_reads = 1000, time_limit=5, label='Test anneal', 
+                            remove_broken_chains = False, file_path = 'data', file_name = '', save_qubo = True,
+                            chain_strength = None, concentration = None, potential=None):
+    
+    # save the dataframe as a json file
+    
+    import json
+    from datetime import datetime,timezone
+    from os import path
+    import time
+    
+    dataframe = sampleset.to_pandas_dataframe()
+    
+    if 'chain_strength' in sampleset.info['embedding_context']:
+        chain_strength = sampleset.info['embedding_context']['chain_strength']
+    else:
+        chain_strength = -1
+    
+    if 'BinaryQuadraticModel' in str(type(bqm)):
+        model = 'bqm'
+        time_limit = 0
+    elif 'ConstrainedQuadraticModel' in str(type(bqm)):
+        model = 'cqm'
+        num_reads = 0
+    elif 'numpy.ndarray' in str(type(bqm)):
+        model = 'Q'
+        time_limit = 0
+    
+    date_time = datetime.now(timezone.utc).strftime("%m/%d/%Y, %H:%M:%S")
+    time_stamp = int(time.time())
+    
+    if save_qubo == True:
+        if model == 'Q':
+            qubo_matrix = bqm.flatten().tolist()
+        elif model == 'bqm':
+            qubo_matrix = build_qubo_matrix(bqm).flatten().tolist()
+    elif save_qubo == False:
+        qubo_matrix = None
+    
+    
+        
+    param_dict = {'date_time': date_time,
+                  'time_stamp': time_stamp,
+                  'structure': structure.composition.formula,
+                  'N atoms' : structure.num_sites,
+                    'model': model,
+                     'num_reads' : num_reads, 
+                  'time_limit': time_limit,
+                  'label':label, 
+                  'remove_broken_chains' : remove_broken_chains,
+                  'chain_strength' : chain_strength,
+                  #'qubo_matrix': qubo_matrix,
+                  'qpu_anneal_time_per_sample': sampleset.info['timing']['qpu_anneal_time_per_sample'],
+                  'qubo_matrix': qubo_matrix,
+                  'concentration': concentration,
+                  'potential': potential
+                     
+    }
+    
+    json_string = dataframe.to_json()    
+    json_object = json.loads(json_string)
+    json_object['parameters'] = param_dict
+
+
+    name = file_name + '_%s_%s_i%s_t%s_r%s_%s.json'%(structure.composition.formula, model, index,
+                                                        num_reads,time_limit,time_stamp)
     
     file_name = path.join(file_path,name)
 
