@@ -488,15 +488,21 @@ def find_num_broken_bonds(dataframe, remove_broken_chains = False, only_feasible
     return num_broken_bonds
 
 
-def find_ratio_acceptable(dataframe, num_species, remove_broken_chains = False):
+def find_ratio_acceptable(dataframe, species, remove_broken_chains = False, total_reads = None):
 
-    total_reads = np.sum(dataframe['num_occurrences'].to_numpy())
+    # This refers to the one-hot encoding
 
-    df = convert_discrete_df(dataframe,num_species,remove_unfeasible=True)
-
-    reads_cleaned = np.sum(df['num_occurrences'].to_numpy())
-
-    return reads_cleaned/total_reads
+    if total_reads == None:
+        
+        total_reads = np.sum(dataframe['num_occurrences'].to_numpy())
+        df = convert_df_binary2atom_discrete(dataframe,species,remove_unfeasible=True)
+        reads_cleaned = np.sum(df['num_occurrences'].to_numpy())
+        
+        return reads_cleaned/total_reads
+    else:
+        reads_cleaned = np.sum(dataframe['num_occurrences'].to_numpy())
+        
+        return reads_cleaned/total_reads
 
 
 def find_ratio_acceptable_old(dataframe, remove_broken_chains = False):
@@ -537,12 +543,28 @@ def find_ratio_broken_chains(dataframe):
     return np.round(broken/total,4)
 
 
-def find_ratio_feasible(dataframe,num_vacancies, remove_broken_chains = False, num_reads = None):
+def find_ratio_feasible(dataframe, species, concentration, remove_broken_chains = False, total_reads = None):
     
+    # This refers to the concentration
+
     # remove_broken_chains = True : ratio wrt the total number of non broken chains solutions
     # remove_broken_chains = False : ratio wrt the total number of reads
     
-    if num_reads != None:
+    if total_reads == None:
+        
+        total_reads = np.sum(dataframe['num_occurrences'].to_numpy())
+        df = remove_unfeasible_solutions(dataframe,species,concentration)
+        reads_cleaned = np.sum(df['num_occurrences'].to_numpy())
+        
+        return reads_cleaned/total_reads
+    else:
+        reads_cleaned = np.sum(dataframe['num_occurrences'].to_numpy())
+        
+        return reads_cleaned/total_reads
+
+
+    '''OLD
+    if total_reads != None:
         total_reads = num_reads
         df = dataframe
     else:
@@ -569,9 +591,28 @@ def find_ratio_feasible(dataframe,num_vacancies, remove_broken_chains = False, n
         total_feasible = np.sum(multiplicity[feasible_config])
         ratio_feasible = total_feasible/total_reads
 
-        return np.round(ratio_feasible,4)
+        return np.round(ratio_feasible,4)'''
 
 
+def find_ratio_feasible_discrete(dataframe, species, concentration, remove_broken_chains = False, total_reads = None):
+    
+    # remove_broken_chains = True : ratio wrt the total number of non broken chains solutions
+    # remove_broken_chains = False : ratio wrt the total number of reads
+    
+    if total_reads == None:
+        
+        total_reads = np.sum(dataframe['num_occurrences'].to_numpy())
+        dataframe = convert_df_binary2atom_discrete(dataframe, species, remove_unfeasible=True)
+        df = remove_unfeasible_solutions(dataframe, species, concentration)
+        reads_cleaned = np.sum(df['num_occurrences'].to_numpy())
+        
+        return reads_cleaned/total_reads
+    else:
+        reads_cleaned = np.sum(dataframe['num_occurrences'].to_numpy())
+        
+        return reads_cleaned/total_reads
+
+    
 def find_ratio_ground_state(dataframe,num_vacancies, remove_broken_chains = False):
     
     # remove_broken_chains = True : ratio wrt the total number of non broken chains solutions
@@ -616,47 +657,6 @@ def find_ratio_ground_state(dataframe,num_vacancies, remove_broken_chains = Fals
         ratio_gs = total_gs/total_reads
 
         return np.round(ratio_gs,4)
-
-
-def find_ratio_feasible_discrete(dataframe,concentration,name_species, remove_broken_chains = False):
-    
-    # remove_broken_chains = True : ratio wrt the total number of non broken chains solutions
-    # remove_broken_chains = False : ratio wrt the total number of reads
-    
-    if remove_broken_chains == True:
-        total_reads = np.sum(dataframe[dataframe['chain_break_fraction'] == 0.]['num_occurrences'])
-        df = dataframe[dataframe['chain_break_fraction'] == 0]
-    elif remove_broken_chains == False:
-        total_reads = np.sum(dataframe['num_occurrences'])
-        df = dataframe
-    
-    if len(df) == 0:
-        return 0.
-    
-    else:
-        num_species = len(concentration)
-        df_1 = convert_discrete_df(df,num_species,name_species)
-        rf = find_ratio_feasible(df_1,min(concentration),num_reads=total_reads)
-        
-        return np.round(rf,4)
-        '''num_atoms = sum([x.isdigit() for x in df.columns])
-        
-        all_config = df.iloc[:,0:num_atoms].to_numpy()
-
-        multiplicity = df['num_occurrences'].to_numpy()
-
-        acceptable_config = np.all((all_config[:,::2]+all_config[:,1::2])-np.ones(int(num_atoms/2))==0,axis=1)
-        
-        sum_vector = np.sum(all_config[:,::2],axis=1)
-
-        feasible_configurations = np.round(sum_vector,5) == np.round((num_atoms/2 - num_vacancies),5)
-
-        feasible_config = np.where((feasible_configurations * acceptable_config) == True)[0]
-
-        total_feasible = np.sum(multiplicity[feasible_config])
-        ratio_feasible = total_feasible/total_reads'''
-
-        return np.round(ratio_feasible,4)
 
 
 def find_symmetry_equivalent_structures(dataframe, structure, remove_unfeasible = False, species=None ,concentration=None,):
@@ -927,7 +927,7 @@ def make_df_paper(dataframe,num_vacancies,symmetrised=False,structure=None,num_r
     return df
 
 
-'''
+def convert_discrete_df(dataframe,num_species,name_species,remove_unfeasible=True):
 
     # Convert a discrete df 
     
@@ -947,11 +947,11 @@ def make_df_paper(dataframe,num_vacancies,symmetrised=False,structure=None,num_r
                                            #for x in range(num_species)],axis=0)),axis=1) != 1)[0]
     
 
-    if ts == True:
+    '''if ts == True:
         print('test this')
         unfeasible = np.concatenate((unfeasible,np.where(np.prod((np.sum([sites[:,x::num_species] 
                                        for x in range(num_species)],axis=0)),axis=1) != 1)[0]))
-        unfeasible = np.unique(unfeasible)
+        unfeasible = np.unique(unfeasible)'''
                                        
     if remove_unfeasible == True:
         df.drop(unfeasible, inplace=True)
@@ -974,7 +974,7 @@ def make_df_paper(dataframe,num_vacancies,symmetrised=False,structure=None,num_r
         df.insert(i, i, new_labels[:,i])
 
     
-    return df'''
+    return df
 
 
 '''def convert_df(df,remove_unfeasible=True):
