@@ -33,10 +33,10 @@ def write_crystal_files_vacancies(dataframe,structure,input_file,input_name,dire
         structure_tmp = copy.deepcopy(structure)        
         structure_tmp.remove_sites(np.where(array == 0)[0])
         vac = structure.num_sites - structure_tmp.num_sites
-        structure_gui = cry_pmg2gui(structure_tmp,symmetry=False,dimensionality=dimensionality)
+        structure_gui = cry_pmg2gui(structure_tmp,pbc=[True, True, False],symmetry=False)
         name = input_name+'_%sv_%s'%(str(vac),i)
-        structure_gui.write_crystal_gui(directory+'/%s.gui'%name,symm=False)
-        crystal_input.write_crystal_input(directory+'/%s.d12'%name)
+        structure_gui.write_gui(directory+'/%s.gui'%name,symm=False)
+        crystal_input.to_file(directory+'/%s.d12'%name)
         
     
     if return_slurm == True:
