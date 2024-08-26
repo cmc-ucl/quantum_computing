@@ -1,7 +1,7 @@
 # Quantum Computing 
 This repository contains the work performed in the Computational Materials Chemistry group at UCL.
 
-**The data and code reported in "An accurate, practical and scalable application of quantum annealing to model thermodynamically accessible states of solid solutions" is contained in** <a href='https://github.com/cmc-ucl/QA_solid_solutions'>
+**The data and code reported in "An accurate, practical and scalable application of quantum annealing to model thermodynamically accessible states of solid solutions" is contained in <a href='https://github.com/cmc-ucl/QA_solid_solutions'>QA_solid_solutions</a>**
 
 At the moment, it is still a work in progress. The terminated work can be found in the following folders:
 
